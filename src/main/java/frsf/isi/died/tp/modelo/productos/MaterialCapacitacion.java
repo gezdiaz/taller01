@@ -13,9 +13,39 @@ import frsf.isi.died.tp.util.Ordenable;
  * Representa de manera abstracta los materiales de capacitación
  * 
  * @author mdominguez
+ * 
+ * nombres integrantes:
+ * Diaz, Gaston
+ * Vacca, Joaquin
+ * Proyecto GitHub:
+ * https://github.com/gezdiaz/taller01.git
  */
 public abstract class MaterialCapacitacion {
 	protected Integer id;
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getTitulo() {
+		return titulo;
+	}
+
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
+	}
+
+	public Double getCosto() {
+		return costo;
+	}
+
+	public void setCosto(Double costo) {
+		this.costo = costo;
+	}
+
 	/**
 	 * Titulo del material
 	 */
@@ -88,6 +118,9 @@ public abstract class MaterialCapacitacion {
 	//  retornando el titulo, y el precio 	 * usando el formato : 
 	// [Titulo: <titulo> ; Precio: <precio> ]
 	
+	public String toString() {
+		return "Titulo: "+titulo+" ; Precio: "+costo.toString();
+	}
 	
 	// TODO 10: implementar Ordenable
 
