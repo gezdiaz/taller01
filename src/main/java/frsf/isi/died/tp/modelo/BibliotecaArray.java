@@ -30,7 +30,7 @@ public class BibliotecaArray implements Biblioteca{
 	
 	public BibliotecaArray() {
 		cantidadMaterial=0;
-		this.materialCapacitacion= new MaterialCapacitacion[10];
+		this.materialCapacitacion= new MaterialCapacitacion[5];
 		// TODO 13: inicializar la variable de tipo ListaService para que apunte el servicio de operaciones de listas		
 	}
 
@@ -58,7 +58,7 @@ public class BibliotecaArray implements Biblioteca{
 		// No se puede usar para este método el operador "instanceOf" ni realizar ningun tipo de casting.
 		Integer cant = 0;
 		for(MaterialCapacitacion x: materialCapacitacion) {
-			if(x.esLibro()) cant++;
+			if(x!=null && x.esLibro()) cant++;
 		}
 		return cant;
 	}
@@ -71,7 +71,7 @@ public class BibliotecaArray implements Biblioteca{
 		// No se puede usar para este método el operador "instanceOf" ni realizar ningun tipo de casting. 
 		Integer cant = 0;
 		for(MaterialCapacitacion x: materialCapacitacion) {
-			if(x.esVideo()) cant++;
+			if(x!=null && x.esVideo()) cant++;
 		}
 		return cant;
 	}
