@@ -33,7 +33,7 @@ public class VideoTest {
 	@Test
 	public void testToString() {
 		Double precioEsperado = 100.0 + (200.0 * 0.15);
-		String esperado = "[Titulo Video 1; PRECIO: " + precioEsperado + "]";
+		String esperado = "[Titulo: Video 1; Precio: " + precioEsperado + "]";
 		String obtenido = videoTestear.toString();
 		assertEquals(esperado, obtenido);
 	}

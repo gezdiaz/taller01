@@ -5,7 +5,9 @@ import static org.junit.Assert.*;
 import org.junit.Ignore;
 import org.junit.Test;
 
-public class BibliotecaArrayTest {
+import junit.framework.TestCase;
+
+public class BibliotecaArrayTest{
 
 	@Ignore
 	public void testAgregarMaterialCapacitacion() {

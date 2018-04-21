@@ -119,7 +119,7 @@ public abstract class MaterialCapacitacion implements Ordenable{
 	// [Titulo: <titulo> ; Precio: <precio> ]
 	
 	public String toString() {
-		return "[Titulo: "+titulo+" ; Precio: "+(this.precio()).toString()+"]";
+		return "[Titulo: "+titulo+"; Precio: "+this.precio()+"]";
 	}
 	
 	// TODO 10: implementar Ordenable
