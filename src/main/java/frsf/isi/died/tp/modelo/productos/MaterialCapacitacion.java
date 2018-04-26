@@ -131,6 +131,12 @@ public abstract class MaterialCapacitacion implements Ordenable{
 		*/
 		
 	}
-	
+	@Override
+	public boolean equals(Object otroMaterial) {
+		if(otroMaterial.getClass() == this.getClass() ) {
+			return ((MaterialCapacitacion) otroMaterial).getTitulo() == this.titulo;
+		}
+		return false;
+	}
 
 }
