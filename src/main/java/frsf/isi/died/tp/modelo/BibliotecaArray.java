@@ -85,6 +85,12 @@ public class BibliotecaArray implements Biblioteca{
 		
 
 	@Override
+	public MaterialCapacitacion buscar(Integer costo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
 	public void ordenarPorPrecio(Boolean b) {
 		// TODO 15: invocar al metodo ordenar de la variable de tipo ListaService para que ordene el arreglo 
 		servicioLista.ordenar();

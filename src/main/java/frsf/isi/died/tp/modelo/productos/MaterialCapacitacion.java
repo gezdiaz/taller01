@@ -22,6 +22,7 @@ import frsf.isi.died.tp.util.Ordenable;
  */
 public abstract class MaterialCapacitacion implements Ordenable, Comparable<MaterialCapacitacion>{
 	protected Integer id;
+	
 	public Integer getId() {
 		return id;
 	}

@@ -62,6 +62,38 @@ public class BibliotecaList implements Biblioteca{
 		}
 		
 	}
+
+	@Override
+	public MaterialCapacitacion buscar(Integer precio) {
+		Collections.sort(materiales, (m1, m2) -> m1.getCosto().compareTo(m2.getCosto()));
+		return buscadorBinario(0, materiales.size()-1, precio);
+	}
+
+	private MaterialCapacitacion buscadorBinario(Integer i, Integer f, Integer precio) throws RuntimeException  {
+
+		Integer m = (i+f)/2;
+		Integer res;
+		
+		if(i>f) {
+			throw new RuntimeException("Material de precio "+precio+" no encontrado");
+		}else {
+			
+			res = precio.compareTo((materiales.get(m).getCosto().intValue()));
+				
+			switch(res) {
+			case -1: return buscadorBinario(i, m-1, precio);
+			case 0: return materiales.get(m);
+			default: return buscadorBinario(m+1, f, precio);  
+			}
+			
+			
+			
+		}
+		
+	}
+	
+	
+	
 	
 	
 }
