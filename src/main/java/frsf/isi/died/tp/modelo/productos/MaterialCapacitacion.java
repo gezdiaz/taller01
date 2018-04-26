@@ -20,7 +20,7 @@ import frsf.isi.died.tp.util.Ordenable;
  * Proyecto GitHub:
  * https://github.com/gezdiaz/taller01.git
  */
-public abstract class MaterialCapacitacion implements Ordenable{
+public abstract class MaterialCapacitacion implements Ordenable, Comparable<MaterialCapacitacion>{
 	protected Integer id;
 	public Integer getId() {
 		return id;
@@ -134,9 +134,20 @@ public abstract class MaterialCapacitacion implements Ordenable{
 	@Override
 	public boolean equals(Object otroMaterial) {
 		if(otroMaterial.getClass() == this.getClass() ) {
-			return ((MaterialCapacitacion) otroMaterial).getTitulo() == this.titulo;
+			return ((MaterialCapacitacion) otroMaterial).getTitulo().equalsIgnoreCase(this.titulo);
 		}
 		return false;
 	}
+
+	@Override
+	public int compareTo(MaterialCapacitacion otroMaterial) {
+		// TODO Auto-generated method stub
+		if(this.equals(otroMaterial)) {
+			return this.precio().compareTo(otroMaterial.precio());
+		}else {
+			return this.titulo.compareTo(otroMaterial.getTitulo());
+		}
+	}
+	
 
 }
