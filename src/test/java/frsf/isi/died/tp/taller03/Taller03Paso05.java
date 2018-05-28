@@ -57,13 +57,13 @@ public class Taller03Paso05 {
 		arbol.add(v3); // Precio = 51.75
 		arbol.add(v4); // Precio = 50.7
 		arbol.add(v5); // Precio = 21
-		List<MaterialCapacitacion> lista = arbol.rango(40.00, 60.00);
-		System.out.println(lista);
+		List<MaterialCapacitacion> lista = arbol.rango(45.7328, 59.488);
+//		System.out.println(lista);
 		for(MaterialCapacitacion m : lista) {
-			System.out.println("PRECIO: "+ m.precio());
-			assertTrue(m.precio()>=40.00 && m.precio()<=60.00);
+//			System.out.println("PRECIO: "+ m.precio());
+			assertTrue(m.precio()>=45.7328 && m.precio()<=59.488);
 		}
-		System.out.println("TAMAÑO LISTA: "+lista.size());
+//		System.out.println("TAMAÑO LISTA: "+lista.size());
 		assertTrue(lista.size()==5);
 	}
 }
