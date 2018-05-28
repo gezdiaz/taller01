@@ -1,9 +1,14 @@
 package frsf.isi.died.tp.taller03;
 
+import static org.junit.Assert.*;
+
+import java.util.List;
+
 import org.junit.Before;
+import org.junit.Test;
 
 import frsf.isi.died.tp.estructuras.ArbolBinarioBusqueda;
-import frsf.isi.died.tp.modelo.BibliotecaABB;
+import frsf.isi.died.tp.modelo.productos.MaterialCapacitacion;
 import frsf.isi.died.tp.modelo.productos.Libro;
 import frsf.isi.died.tp.modelo.productos.Video;
 
@@ -41,8 +46,24 @@ public class Taller03Paso05 {
 	
 	@Test
 	public void testRango() {
-		
-		
-		
+		arbol.add(l1); // Precio = 30.616
+		arbol.add(l2); // Precio = 45.7328
+		arbol.add(l3); // Precio = 33.3888
+		arbol.add(l4); // Precio = 46.80
+		arbol.add(l5); // Precio = 59.488
+		arbol.add(l6); // Precio = 85.2616
+		arbol.add(v1); // Precio = 82.00
+		arbol.add(v2); // Precio = 108.75
+		arbol.add(v3); // Precio = 51.75
+		arbol.add(v4); // Precio = 50.7
+		arbol.add(v5); // Precio = 21
+		List<MaterialCapacitacion> lista = arbol.rango(40.00, 60.00);
+		System.out.println(lista);
+		for(MaterialCapacitacion m : lista) {
+			System.out.println("PRECIO: "+ m.precio());
+			assertTrue(m.precio()>=40.00 && m.precio()<=60.00);
+		}
+		System.out.println("TAMAÑO LISTA: "+lista.size());
+		assertTrue(lista.size()==5);
 	}
 }
