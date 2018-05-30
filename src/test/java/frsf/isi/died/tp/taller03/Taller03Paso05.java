@@ -2,6 +2,7 @@ package frsf.isi.died.tp.taller03;
 
 import static org.junit.Assert.*;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.Before;
@@ -9,12 +10,13 @@ import org.junit.Test;
 
 import frsf.isi.died.tp.estructuras.ArbolBinarioBusqueda;
 import frsf.isi.died.tp.modelo.productos.MaterialCapacitacion;
+import frsf.isi.died.tp.modelo.BibliotecaABB;
 import frsf.isi.died.tp.modelo.productos.Libro;
 import frsf.isi.died.tp.modelo.productos.Video;
 
 public class Taller03Paso05 {
 	
-	private ArbolBinarioBusqueda arbol;
+	private BibliotecaABB biblioteca;
 	private Libro l1;
 	private Libro l2;
 	private Libro l3;
@@ -28,8 +30,8 @@ public class Taller03Paso05 {
 	private Video v5;
 	
 	@Before
-	public void init() {	
-		arbol = new ArbolBinarioBusqueda((m1,m2) -> m1.precio().compareTo(m2.precio()));
+	public void init() 	{
+		biblioteca = new BibliotecaABB();
 		l1= new Libro(1, "Libro1", 10.0, 20.0, 154);
 		l2= new Libro(2, "Libro2", 20.0, 24.0, 361);
 		l3= new Libro(3, "Libro3", 15.0, 18.0, 108);
@@ -40,30 +42,41 @@ public class Taller03Paso05 {
 		v2= new Video(8, "Video8", 15.0, 625);
 		v3= new Video(9, "Video9", 30.0, 145);
 		v4= new Video(10, "Video10", 45.0, 38);
-		v5= new Video(11, "Video11", 12.0, 60);
 	}
 	
 	
 	@Test
 	public void testRango() {
-		arbol.add(l1); // Precio = 30.616
-		arbol.add(l2); // Precio = 45.7328
-		arbol.add(l3); // Precio = 33.3888
-		arbol.add(l4); // Precio = 46.80
-		arbol.add(l5); // Precio = 59.488
-		arbol.add(l6); // Precio = 85.2616
-		arbol.add(v1); // Precio = 82.00
-		arbol.add(v2); // Precio = 108.75
-		arbol.add(v3); // Precio = 51.75
-		arbol.add(v4); // Precio = 50.7
-		arbol.add(v5); // Precio = 21
-		List<MaterialCapacitacion> lista = arbol.rango(45.7328, 59.488);
+		biblioteca.agregar(l1); // Precio = 30.616
+		biblioteca.agregar(l2); // Precio = 45.7328
+		biblioteca.agregar(l3); // Precio = 33.3888
+		biblioteca.agregar(l4); // Precio = 46.80
+		biblioteca.agregar(l5); // Precio = 59.488
+		biblioteca.agregar(l6); // Precio = 85.2616
+		biblioteca.agregar(v1); // Precio = 82.00
+		biblioteca.agregar(v2); // Precio = 108.75
+		biblioteca.agregar(v3); // Precio = 51.75
+		biblioteca.agregar(v4); // Precio = 50.7
+		List<MaterialCapacitacion> lista = (List<MaterialCapacitacion>) biblioteca.rango(45.7328, 59.488);
 //		System.out.println(lista);
 		for(MaterialCapacitacion m : lista) {
 //			System.out.println("PRECIO: "+ m.precio());
 			assertTrue(m.precio()>=45.7328 && m.precio()<=59.488);
 		}
 //		System.out.println("TAMAÑO LISTA: "+lista.size());
-		assertTrue(lista.size()==5);
+		assertEquals(5, lista.size());
+		
+		lista = (List<MaterialCapacitacion>) biblioteca.rango(0.0, 20.0);
+		assertTrue(lista.isEmpty());
+		
+		lista = (List<MaterialCapacitacion>) biblioteca.rango(120.0, 130.0);
+		assertTrue(lista.isEmpty());
+		
+		lista = (List<MaterialCapacitacion>) biblioteca.rango(0.0, 120.0);
+		
+		assertEquals(10, lista.size());
+		
+		
+		
 	}
 }
