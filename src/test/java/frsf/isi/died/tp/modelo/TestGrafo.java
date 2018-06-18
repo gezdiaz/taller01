@@ -96,7 +96,7 @@ public class TestGrafo {
 		assertTrue(grafo.primerVerticeGradoK(matA,1).getTitulo().equalsIgnoreCase("D"));
 	}
 	
-	@Ignore
+	@Test
 	public void testCaminoEntreAyElongitud3() {
 		List<MaterialCapacitacion> mat = grafo.buscarCaminoNSaltos(matA, matE, 3);
 		assertTrue(mat.get(0).getTitulo().equalsIgnoreCase("A"));
@@ -106,7 +106,7 @@ public class TestGrafo {
 	}
 
 
-	@Ignore
+	@Test
 	public void testCaminoEntreAyElongitud4() {
 		List<MaterialCapacitacion> mat = grafo.buscarCaminoNSaltos(matA, matE, 4);
 		assertTrue(mat.get(0).getTitulo().equalsIgnoreCase("A"));
@@ -116,7 +116,7 @@ public class TestGrafo {
 		assertTrue(mat.get(4).getTitulo().equalsIgnoreCase("E"));
 	}
 	
-	@Ignore
+	@Test
 	public void testCaminoEntreAyElongitud5() {
 		List<MaterialCapacitacion> mat = grafo.buscarCaminoNSaltos(matA, matE, 5);
 		assertTrue(mat.isEmpty());

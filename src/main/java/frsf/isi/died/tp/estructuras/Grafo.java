@@ -227,15 +227,44 @@ public class Grafo<T> {
 		Vertice<T> origen = this.getNodo(n1);
 		Vertice<T> destino= this.getNodo(n2);
 		HashSet<Vertice<T>> visitados = new HashSet<Vertice<T>>();
-		visitados.add(origen);
+//		visitados.add(origen);
 		return this.buscarCaminoNSaltos(origen, destino, saltos, visitados);
          
     }
     private List<T> buscarCaminoNSaltos(Vertice<T> n1,Vertice<T> n2,Integer saltos,HashSet<Vertice<T>> visitados){
         ArrayList<T> resultado = new ArrayList<>();
-        Stack<Vertice<T>> porVisitar = new Stack<Vertice<T>>();
-        
-                
+//        Stack<Vertice<T>> porVisitar = new Stack<Vertice<T>>();
+//        Vertice<T> vertice;
+//        while(!porVisitar.isEmpty()) {
+//        	vertice = porVisitar.pop();
+//        	resultado.add(vertice.getValor());
+//        	for(Vertice<T> ady: this.getAdyacentes(vertice)){
+//        		if(!visitados.contains(ady)) {
+//        			visitados.add(ady);
+//        			porVisitar.push(ady);
+//        		}
+//        	}
+//        }
+        if(!visitados.contains(n1)) {
+        	
+        	if(n1.equals(n2)) {
+        		if(saltos.equals(0)) {
+        			visitados.add(n2);
+        			resultado.add(n2.getValor());
+        		}
+        	}else {
+        		if(!saltos.equals(0)) {
+        			for(Vertice<T> ady: this.getAdyacentes(n1)) {
+        				ArrayList<T> aux = (ArrayList<T>) buscarCaminoNSaltos(ady, n2, saltos-1, visitados);
+        				if(!aux.isEmpty()) {
+        					visitados.add(n1);
+        					resultado.add(n1.getValor());
+        					resultado.addAll(aux);
+        				}
+        			}
+        		}
+        	}
+        }
         
         return resultado;
     }
