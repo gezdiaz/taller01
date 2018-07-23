@@ -33,8 +33,8 @@ public class Libro extends MaterialCapacitacion {
 	 * @param id es el identificador del libro
 	 * @param titulo es el titulo del libro
 	 */
-	public Libro(Integer id, String titulo) {
-		this(id, titulo,0.0,0.0,0);
+	public Libro(Integer id, String titulo, Date fechaPublicacion) {
+		this(id, titulo,0.0,0.0,0, fechaPublicacion);
 	}
 
 	/**
@@ -45,8 +45,8 @@ public class Libro extends MaterialCapacitacion {
 	 * @param precioCompra es el precio al que se adquirió el libro a la editorial
 	 * @param paginas cantidad de paginas del libro
 	 */
-	public Libro(Integer id, String titulo, Double costo, Double precioCompra, Integer paginas) {
-		super(id, titulo, costo);
+	public Libro(Integer id, String titulo, Double costo, Double precioCompra, Integer paginas, Date fechaPublicacion) {
+		super(id, titulo, costo, fechaPublicacion);
 		this.precioCompra = precioCompra;
 		this.paginas = paginas;
 	}

@@ -6,6 +6,8 @@
 package frsf.isi.died.tp.modelo.productos;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import frsf.isi.died.tp.util.Ordenable;
 
@@ -22,6 +24,35 @@ import frsf.isi.died.tp.util.Ordenable;
  */
 public abstract class MaterialCapacitacion implements Ordenable, Comparable<MaterialCapacitacion>{
 	protected Integer id;
+	private Integer calificacion;
+	private Integer votantes;
+	private Date fechaPublicacion;
+	private Relevancia relevancia;
+	
+	public Date getFechaPublicacion() {
+		return fechaPublicacion;
+	}
+
+	public void setFechaPublicacion(Date fechaPublicacion) {
+		this.fechaPublicacion = fechaPublicacion;
+	}
+
+	public Relevancia getRelevancia() {
+		return relevancia;
+	}
+
+	public void setRelevancia(Relevancia relevancia) {
+		this.relevancia = relevancia;
+	}
+
+	public Integer getCalificacion() {
+		return calificacion;
+	}
+	
+	public void agregarCalificacion(Integer cal) {
+		calificacion = ((calificacion * votantes) + cal) / (votantes + 1);
+		votantes ++;
+	}
 	
 	public Integer getId() {
 		return id;
@@ -63,7 +94,7 @@ public abstract class MaterialCapacitacion implements Ordenable, Comparable<Mate
 	 * Constructor por defecto
 	 */
 	public MaterialCapacitacion() {
-		this(0,"en desarrollo",0.0);
+		this(0,"en desarrollo",0.0, Calendar.getInstance().getTime());
 	}
 
 	/**
@@ -72,8 +103,8 @@ public abstract class MaterialCapacitacion implements Ordenable, Comparable<Mate
 	 * @param id
 	 * @param titulo
 	 */
-	public MaterialCapacitacion(Integer id, String titulo) {
-		this(id,titulo,0.0);
+	public MaterialCapacitacion(Integer id, String titulo, Date fechaPublicacion) {
+		this(id,titulo,0.0, fechaPublicacion);
 	}
 
 	/**
@@ -82,10 +113,11 @@ public abstract class MaterialCapacitacion implements Ordenable, Comparable<Mate
 	 * @param id
 	 * @param titulo
 	 */
-	public MaterialCapacitacion(Integer id,String titulo, Double costo) {
+	public MaterialCapacitacion(Integer id,String titulo, Double costo, Date fechaPublicacion) {
 		this.id =id;
 		this.titulo = titulo;
 		this.costo = costo;
+		this.fechaPublicacion = fechaPublicacion;
 	}
 
 
@@ -126,7 +158,7 @@ public abstract class MaterialCapacitacion implements Ordenable, Comparable<Mate
 	// TODO 10: implementar Ordenable
 	public final int valor() {
 		return (this.precio()).intValue(); 
-		/*ESto funciona porque, la clase MaterialCapaciatcion es abstracta,
+		/*Esto funciona porque, la clase MaterialCapaciatcion es abstracta,
 		*entonces no puede tener instacias y nunca se va a llamar al método abtracto precio(),
 		*sino al implementado en las calses hijas que son concretas
 		*/

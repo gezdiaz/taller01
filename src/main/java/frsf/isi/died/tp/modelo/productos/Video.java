@@ -1,5 +1,7 @@
 package frsf.isi.died.tp.modelo.productos;
 
+import java.util.Date;
+
 public class Video extends MaterialCapacitacion{
 	private static Double costoSegundo = 0.15;
 	private Integer duracion;
@@ -7,11 +9,11 @@ public class Video extends MaterialCapacitacion{
 	public Video() {
 		//constructor vacio
 	}
-	public Video(Integer id, String titulo) {
-		this(id,titulo,0.0,0);
+	public Video(Integer id, String titulo, Date fechaPublicacion) {
+		this(id,titulo,0.0,0, fechaPublicacion);
 	}
-	public Video(Integer id, String titulo, Double costo, Integer duracion) {
-		super(id,titulo,costo);
+	public Video(Integer id, String titulo, Double costo, Integer duracion, Date fechaPublicacion) {
+		super(id, titulo, costo, fechaPublicacion);
 		this.duracion = duracion;
 	}
 	public Boolean esVideo() {
