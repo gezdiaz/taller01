@@ -126,6 +126,10 @@ public abstract class MaterialCapacitacion implements Ordenable, Comparable<Mate
 	// elegir el menu "Source" --> "Generate getters y setters" y elegir alli que metodos generar.
 	
 
+	public MaterialCapacitacion(Integer id, String titulo, Double costo) {
+		this(id,titulo,costo,Calendar.getInstance().getTime());
+	}
+
 	/**
 	 * El precio de un material se define según el tipo del material y toma como
 	 * base el costo del mismo

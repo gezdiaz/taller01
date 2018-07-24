@@ -12,8 +12,15 @@ public class Video extends MaterialCapacitacion{
 	public Video(Integer id, String titulo, Date fechaPublicacion) {
 		this(id,titulo,0.0,0, fechaPublicacion);
 	}
+	public Video(Integer id, String titulo) {
+		this(id,titulo,0.0,0);
+	}
 	public Video(Integer id, String titulo, Double costo, Integer duracion, Date fechaPublicacion) {
 		super(id, titulo, costo, fechaPublicacion);
+		this.duracion = duracion;
+	}
+	public Video(Integer id, String titulo, Double costo, Integer duracion) {
+		super(id, titulo, costo);
 		this.duracion = duracion;
 	}
 	public Boolean esVideo() {

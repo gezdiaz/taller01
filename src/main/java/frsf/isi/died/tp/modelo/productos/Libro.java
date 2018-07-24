@@ -36,7 +36,10 @@ public class Libro extends MaterialCapacitacion {
 	public Libro(Integer id, String titulo, Date fechaPublicacion) {
 		this(id, titulo,0.0,0.0,0, fechaPublicacion);
 	}
-
+	
+	public Libro(Integer id, String titulo) {
+		this(id,titulo,0.0,0.0,0);
+	}
 	/**
 	 * permite crear un libro con todos sus parametros
 	 * @param id es el identificador del libro
@@ -47,6 +50,11 @@ public class Libro extends MaterialCapacitacion {
 	 */
 	public Libro(Integer id, String titulo, Double costo, Double precioCompra, Integer paginas, Date fechaPublicacion) {
 		super(id, titulo, costo, fechaPublicacion);
+		this.precioCompra = precioCompra;
+		this.paginas = paginas;
+	}
+	public Libro(Integer id, String titulo, Double costo, Double precioCompra, Integer paginas) {
+		super(id, titulo, costo);
 		this.precioCompra = precioCompra;
 		this.paginas = paginas;
 	}
