@@ -5,6 +5,9 @@ import java.awt.GridBagLayout;
 
 import javax.swing.*;
 
+import frsf.isi.died.tp.app.controller.MenuController;
+import frsf.isi.died.tp.app.controller.OpcionesMenu;
+
 
 
 public class Principal {
@@ -41,21 +44,27 @@ public class Principal {
         submenu = new JMenu("Libro..");
         menu.add(submenu);
         menuItem = new JMenuItem("Agregar");
+        menuItem.addActionListener(e -> MenuController.opcion(OpcionesMenu.AGREGAR_LIBRO, ventana));
         //menuItem.addActionListener(a -> );
         submenu.add(menuItem);
         menuItem = new JMenuItem("Editar");
+        menuItem.addActionListener(e -> MenuController.opcion(OpcionesMenu.EDITAR_LIBRO, ventana));
         submenu.add(menuItem);
         menuItem = new JMenuItem("Quitar");
+        menuItem.addActionListener(e -> MenuController.opcion(OpcionesMenu.ELIMINAR_LIBRO, ventana));
         submenu.add(menuItem);
         
         
         submenu = new JMenu("Video..");
         menu.add(submenu);
         menuItem = new JMenuItem("Agregar");
+        menuItem.addActionListener(e -> MenuController.opcion(OpcionesMenu.AGREGAR_VIDEO, ventana));
         submenu.add(menuItem);
         menuItem = new JMenuItem("Editar");
+        menuItem.addActionListener(e -> MenuController.opcion(OpcionesMenu.EDITAR_VIDEO, ventana));
         submenu.add(menuItem);
         menuItem = new JMenuItem("Quitar");
+        menuItem.addActionListener(e -> MenuController.opcion(OpcionesMenu.ELIMINAR_VIDEO, ventana));
         submenu.add(menuItem);
         menu.addSeparator();
         
@@ -66,14 +75,16 @@ public class Principal {
         menuItem = new JMenuItem("Salir");
         menuItem.addActionListener(e->System.exit(99));
         menu.add(menuItem);
-        
+                
         menu = new JMenu("Opciones");
         menuBar.add(menu);
         
         menuItem = new JMenuItem("Búsqueda");
+        menuItem.addActionListener(e -> MenuController.opcion(OpcionesMenu.BUSQUEDA, ventana));
         menu.add(menuItem);
         
         menuItem = new JMenuItem("Lista de deseos");
+        menuItem.addActionListener(e -> MenuController.opcion(OpcionesMenu.WHISLIST, ventana));
         menu.add(menuItem);
         
         
