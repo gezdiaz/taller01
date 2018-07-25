@@ -119,33 +119,8 @@ public class Principal {
 	}
 	
 	private static void acercaDe(JFrame ventana) {
-		JDialog dialogo = new JDialog(ventana, "Acerca De", true);
-		JButton boton = new JButton("Aceptar");
-		JLabel txt = new JLabel("TP de DIED, Gastón Díaz y Joquín Vacca");
-		boton.addActionListener(a -> dialogo.dispose());
-		dialogo.add(boton, BorderLayout.SOUTH);
-		dialogo.add(txt, BorderLayout.CENTER);
-		dialogo.setSize(270, 150);
-		dialogo.setLocationRelativeTo(ventana);
-		dialogo.pack();
-		dialogo.setVisible(true);
+		JOptionPane.showConfirmDialog(ventana, "TP de DIED, Gastón Díaz y Joquín Vacca", "Acerca de", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
 	}
 
-	public static void mostrarDialogo(String texto, JFrame ventana) {
-		JDialog dialogo = new JDialog(ventana, "Error", true);
-		JButton boton = new JButton("Aceptar");
-		JLabel txt = new JLabel(texto);
-		
-		dialogo.add(txt, BorderLayout.CENTER);
-		boton.addActionListener(a -> dialogo.dispose());
-		dialogo.add(boton, BorderLayout.SOUTH);
-		dialogo.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-		
-		dialogo.pack();		
-		dialogo.setSize(450, 150);
-		dialogo.setLocationRelativeTo(ventana);
-		
-		dialogo.setVisible(true);
-	}
 
 }

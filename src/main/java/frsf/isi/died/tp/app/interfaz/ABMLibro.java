@@ -21,6 +21,8 @@ import frsf.isi.died.tp.modelo.productos.Libro;
 
 public class ABMLibro {
 	
+	private static Boolean confirmo;
+	
 	public static void agregarLibro(JFrame ventana) {
 		JPanel panel = new JPanel(new GridBagLayout());
 		GridBagConstraints constraints = new GridBagConstraints();
@@ -169,19 +171,24 @@ public class ABMLibro {
 					fechaPublicacion = (new SimpleDateFormat("dd/MM/yyyy")).parse(tFecha.getText());
 					if((fechaPublicacion.getTime() - Calendar.getInstance().getTime().getTime()) > 0) {
 						System.out.println("Puso una fecha futura");
-						Principal.mostrarDialogo("La fecha ingresada es futura", ventana);
+						JOptionPane.showConfirmDialog(ventana, "La fecha ingresada es futura", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 						return;
 					}
 				}
-				confrimacion(ventana);
+				
+				if(JOptionPane.showConfirmDialog(ventana, "¿Está seguro que desea guardar el nuevo libro con los datos ingresados?","Confirmacion",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE)==0) {
+					Libro nuevo = LibroController.agregarLibro(id, titulo, costo, precioCompra, paginas, fechaPublicacion);
+				}
+				
+								
 				
 			}catch(NumberFormatException nfex) {
 				System.out.println("Puso otra cosa en un campo numérico");
-				Principal.mostrarDialogo("Los Campos ID, Costo, Precio Compra y N° Páginas solo permiten números", ventana);
+				JOptionPane.showConfirmDialog(ventana, "Los campos ID, Costo, Precio Compra y Páginas deben ser numéricos.", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);	
 				//nfex.printStackTrace();
 			}catch(ParseException pex) {
 				System.out.println("La fecha está mal escrita");
-				Principal.mostrarDialogo("La fecha debe ser escrita con formato dd/mm/aaaa", ventana);
+				JOptionPane.showConfirmDialog(ventana, "La fecha debe ser escrita con formato dd/mm/aaaa", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 			}
 			
 		});
@@ -223,25 +230,6 @@ public class ABMLibro {
 		ventana.setSize(800, 600);
 		
         ventana.setVisible(true);
-	}
-	
-	private static void confrimacion(JFrame ventana) {
-		JDialog confirmacion = new JDialog();
-//		Boolean respuesta;
-		JLabel texto = new JLabel("¿Está seguro que desea agregar un nuevo libro con los datos ingresados?");
-		JButton si = new JButton("Sí"), no = new JButton("No");
-		
-		confirmacion.setLayout(new BorderLayout(5,5));
-		confirmacion.add(texto,BorderLayout.NORTH);
-		confirmacion.setTitle("Confirmar cambios");
-		confirmacion.add(si,BorderLayout.EAST);
-		confirmacion.add(no,BorderLayout.WEST);
-		
-		
-		confirmacion.pack();
-		confirmacion.setLocationRelativeTo(ventana);
-		confirmacion.setVisible(true);
-//		return respuesta;
 	}
 
 	public static void editarLibro(JFrame ventana) {
@@ -310,6 +298,7 @@ public class ABMLibro {
 		ventana.setVisible(true);
 	}
 
+	
 	private static void edicionLibro(Libro libro, JFrame ventana) {
 		JPanel panel = new JPanel();
 		JLabel encabezado = new JLabel("Editar Libro"), errorID = new JLabel(), errorTitulo = new JLabel(),
@@ -342,6 +331,7 @@ public class ABMLibro {
 		constraints.gridy=1;
 		constraints.gridwidth=1;
 		constraints.gridwidth=1;
+		tID.setEditable(false);
 		panel.add(tID, constraints);
 		
 		constraints.gridx=0;

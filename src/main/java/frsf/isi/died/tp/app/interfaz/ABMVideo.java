@@ -151,7 +151,7 @@ public class ABMVideo {
 					fechaPublicacion = (new SimpleDateFormat("dd/MM/yyyy")).parse(tFecha.getText());
 					if((fechaPublicacion.getTime() - Calendar.getInstance().getTime().getTime()) > 0) {
 						System.out.println("Puso una fecha futura");
-						Principal.mostrarDialogo("La fecha ingresada es futura", ventana);
+						JOptionPane.showConfirmDialog(ventana, "La fecha ingresada es futura", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 						return;
 					}
 				}
@@ -160,11 +160,11 @@ public class ABMVideo {
 				
 			}catch(NumberFormatException nfex) {
 				System.out.println("Puso otra cosa en un campo numérico");
-				Principal.mostrarDialogo("Los Campos ID, Costo y Duracion solo permiten números", ventana);
+				JOptionPane.showConfirmDialog(ventana, "Los campos ID, Costo, Precio Compra y Páginas deben ser numéricos.", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);	
 				//nfex.printStackTrace();
 			}catch(ParseException pex) {
 				System.out.println("La fecha está mal escrita");
-				Principal.mostrarDialogo("La fecha debe ser escrita con formato dd/mm/aaaa", ventana);
+				JOptionPane.showConfirmDialog(ventana, "La fecha debe ser escrita con formato dd/mm/aaaa", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 			}
 			
 		});
@@ -237,7 +237,7 @@ public class ABMVideo {
 		
 		constraints.gridx=0;
 		constraints.gridy=2;
-		cancelar.addActionListener(a -> {ventana.dispose(); Principal.main(null);});
+		cancelar.addActionListener(a -> Principal.mostrarInterfaz(ventana));
 		panel.add(cancelar,constraints);
 		
 		constraints.gridx=3;
@@ -301,6 +301,7 @@ public class ABMVideo {
 		constraints.gridy=1;
 		constraints.gridwidth=1;
 		constraints.gridwidth=1;
+		tID.setEditable(false);
 		panel.add(tID, constraints);
 		
 		constraints.gridx=0;
@@ -345,10 +346,7 @@ public class ABMVideo {
 		
 		constraints.gridx=0;
 		constraints.gridy=6;
-		cancelar.addActionListener(a -> {
-			ventana.dispose();
-			Principal.main(null);
-		});
+		cancelar.addActionListener(a -> Principal.mostrarInterfaz(ventana));
 		panel.add(cancelar, constraints);
 		
 		constraints.gridx=3;
