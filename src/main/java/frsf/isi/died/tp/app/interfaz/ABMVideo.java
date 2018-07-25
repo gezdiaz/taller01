@@ -15,6 +15,8 @@ import javax.swing.*;
 
 import frsf.isi.died.tp.app.controller.LibroController;
 import frsf.isi.died.tp.app.controller.VideoController;
+import frsf.isi.died.tp.modelo.productos.Libro;
+import frsf.isi.died.tp.modelo.productos.Video;
 
 public class ABMVideo {
 	
@@ -203,6 +205,203 @@ public class ABMVideo {
 		
         ventana.setVisible(true);
 		
+	}
+	
+	public static void editarVideo(JFrame ventana) {
+		
+		JPanel panel = new JPanel();
+		JLabel encabezado = new JLabel("Editar Video"), errorID = new JLabel();
+		JTextField tID = new JTextField(20);
+		JButton buscar = new JButton("Buscar"), cancelar = new JButton("Cancelar");
+		GridBagConstraints constraints = new GridBagConstraints();
+		
+		panel.setLayout(new GridBagLayout());
+		constraints.insets=new Insets(5, 5, 5, 5);
+		
+		constraints.anchor=GridBagConstraints.NORTH;
+		constraints.gridx=0;
+		constraints.gridy=0;
+		constraints.gridheight=1;
+		constraints.gridwidth=3;
+		encabezado.setFont(new Font(encabezado.getFont().getFontName(), encabezado.getFont().getStyle(), 40));
+		panel.add(encabezado, constraints);
+		
+		constraints.anchor=GridBagConstraints.CENTER;
+		constraints.gridx=0;
+		constraints.gridy=1;
+		constraints.gridheight=1;
+		constraints.gridwidth=2;
+		panel.add(new JLabel("Ingrese el ID de video a editar: "), constraints);
+		
+		constraints.gridwidth=1;
+		constraints.gridx=2;
+		constraints.gridy=1;
+		panel.add(tID,constraints);
+		
+		constraints.gridx=0;
+		constraints.gridy=2;
+		cancelar.addActionListener(a -> {ventana.dispose(); Principal.main(null);});
+		panel.add(cancelar,constraints);
+		
+		constraints.gridx=3;
+		buscar.addActionListener(a -> {
+			try {
+				if(tID.getText().isEmpty()) {
+					errorID.setText("Debe ingresar un ID");
+				}else {
+					//buscar video con id Integer.parseInt(tID.getText());
+					//creo un nuevo libro para simular la busqueda
+					Video nuevo = VideoController.buscarVideo(Integer.parseInt(tID.getText()));
+					System.out.println("Video a editar: "+nuevo);
+					edicionVideo(nuevo, ventana);
+				}
+			}catch(Exception e) {
+				
+			}
+		});
+		panel.add(buscar,constraints);
+		
+		constraints.gridx=3;
+		constraints.gridy=1;
+		errorID.setPreferredSize(new Dimension(230, 16));
+		errorID.setForeground(Color.red);
+		panel.add(errorID,constraints);
+		
+		ventana.setContentPane(panel);
+		ventana.pack();
+		ventana.setSize(800, 600);
+		ventana.setVisible(true);
+	}
+
+	private static void edicionVideo(Video video, JFrame ventana) {
+		JPanel panel = new JPanel();
+		JLabel encabezado = new JLabel("Editar video"), errorID = new JLabel(), errorTitulo = new JLabel(),
+				errorCosto = new JLabel(), errorSegundos = new JLabel(), errorFecha = new JLabel();
+		JTextField tID = new JTextField(20), tTitulo = new JTextField(20), tCosto = new JTextField(20),
+				tSegundos = new JTextField(20), tFecha = new JTextField(20);
+		JButton aceptar = new JButton("Aceptar"), cancelar = new JButton("Cancelar");
+		GridBagConstraints constraints = new GridBagConstraints();
+		
+		panel.setLayout(new GridBagLayout());
+		constraints.insets=new Insets(5, 5, 5, 5);
+		
+		constraints.anchor=GridBagConstraints.NORTH;
+		constraints.fill=GridBagConstraints.HORIZONTAL;
+		constraints.gridx=0;
+		constraints.gridy=0;
+		constraints.gridheight=1;
+		constraints.gridwidth=3;
+		encabezado.setFont(new Font(encabezado.getFont().getFontName(), encabezado.getFont().getStyle(), 40));
+		panel.add(encabezado, constraints);
+		
+		constraints.gridx=0;
+		constraints.gridy=1;
+		constraints.gridheight=1;
+		constraints.gridwidth=2;
+		panel.add(new JLabel("ID: "), constraints);
+		
+		constraints.gridx=2;
+		constraints.gridy=1;
+		constraints.gridwidth=1;
+		constraints.gridwidth=1;
+		panel.add(tID, constraints);
+		
+		constraints.gridx=0;
+		constraints.gridy=2;
+		constraints.gridwidth=2;
+		panel.add(new JLabel("Título: "), constraints);
+		
+		constraints.gridx=2;
+		constraints.gridy=2;
+		constraints.gridwidth=1;
+		panel.add(tTitulo, constraints);
+		
+		constraints.gridx=0;
+		constraints.gridy=3;
+		constraints.gridwidth=2;
+		panel.add(new JLabel("Costo: "), constraints);
+		
+		constraints.gridx=2;
+		constraints.gridy=3;
+		constraints.gridwidth=1;
+		panel.add(tCosto, constraints);
+		
+		constraints.gridx=0;
+		constraints.gridy=4;
+		constraints.gridwidth=2;
+		panel.add(new JLabel("Segundos: "), constraints);
+		
+		constraints.gridx=2;
+		constraints.gridy=4;
+		constraints.gridwidth=1;
+		panel.add(tSegundos, constraints);
+		
+		constraints.gridx=0;
+		constraints.gridy=5;
+		constraints.gridwidth=2;
+		panel.add(new JLabel("Fecha de Publicación: "), constraints);
+		
+		constraints.gridx=2;
+		constraints.gridy=5;
+		constraints.gridwidth=1;
+		panel.add(tFecha, constraints);
+		
+		constraints.gridx=0;
+		constraints.gridy=6;
+		cancelar.addActionListener(a -> {
+			ventana.dispose();
+			Principal.main(null);
+		});
+		panel.add(cancelar, constraints);
+		
+		constraints.gridx=3;
+		constraints.gridy=6;
+		constraints.fill=GridBagConstraints.NONE;
+		aceptar.addActionListener(a -> {
+			System.out.println("Pide confrimacion y guarda los cambios.");
+		});
+		panel.add(aceptar,constraints);
+		
+		constraints.gridx=3;
+		constraints.gridy=1;
+		errorID.setPreferredSize(new Dimension(230, 16));
+		errorID.setForeground(Color.red);
+		panel.add(errorID,constraints);
+
+		constraints.gridy=2;
+		errorTitulo.setPreferredSize(new Dimension(230, 16));
+		errorTitulo.setForeground(Color.red);
+		panel.add(errorTitulo,constraints);
+		
+		constraints.gridy=3;
+		errorCosto.setPreferredSize(new Dimension(230, 16));
+		errorCosto.setForeground(Color.red);
+		panel.add(errorCosto,constraints);
+		
+		constraints.gridy=4;
+		errorSegundos.setPreferredSize(new Dimension(230, 16));
+		errorSegundos.setForeground(Color.red);
+		panel.add(errorSegundos,constraints);
+		
+		
+		constraints.gridy=5;
+		errorFecha.setPreferredSize(new Dimension(230, 16));
+		errorFecha.setForeground(Color.red);
+		panel.add(errorFecha,constraints);
+		
+		//muestro en los campos de texto los datos anteriores
+		tID.setText(video.getId().toString());
+		tTitulo.setText(video.getTitulo());
+		tCosto.setText(video.getCosto().toString());
+		tSegundos.setText(video.getDuracion().toString());
+		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+		tFecha.setText(formato.format(video.getFechaPublicacion()));
+		
+		
+		ventana.setContentPane(panel);
+		ventana.pack();
+		ventana.setSize(800,600);
+		ventana.setVisible(true);
 	}
 	
 }

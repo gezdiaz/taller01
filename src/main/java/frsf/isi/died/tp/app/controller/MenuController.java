@@ -14,7 +14,7 @@ public class MenuController {
 		case EDITAR_LIBRO: ABMLibro.editarLibro(ventana); break;
 		case AGREGAR_VIDEO: ABMVideo.agregarVideo(ventana);; break;
 		case ELIMINAR_VIDEO: System.out.println("Abre interface de eliminar video"); break;
-		case EDITAR_VIDEO: System.out.println("Abre inerface para editar video"); break;
+		case EDITAR_VIDEO: ABMVideo.editarVideo(ventana); break;
 		case BUSQUEDA: System.out.println("Abre interfaz de busqueda"); break;
 		case WHISLIST: System.out.println("Abre lista de deseos");
 		}

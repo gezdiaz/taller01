@@ -32,5 +32,8 @@ public class Video extends MaterialCapacitacion{
 	public Double precio() {
 		return costo + (costoSegundo*duracion);
 	}
+	public Integer getDuracion() {
+		return duracion;
+	}
 	
 }
