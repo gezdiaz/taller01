@@ -98,10 +98,7 @@ public class ABMVideo {
 		
 		constraints.gridx=0;
 		constraints.gridy=7;
-		cancelar.addActionListener(a -> {
-			ventana.dispose();
-			Principal.main(null);
-		});
+		cancelar.addActionListener(a -> Principal.mostrarInterfaz(ventana));
 		panel.add(cancelar, constraints);
 				
 		constraints.gridx=3;
