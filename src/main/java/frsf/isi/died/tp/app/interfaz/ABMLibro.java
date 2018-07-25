@@ -109,10 +109,7 @@ public class ABMLibro {
 		
 		constraints.gridx=0;
 		constraints.gridy=7;
-		cancelar.addActionListener(a -> {
-			ventana.dispose();
-			Principal.main(null);
-		});
+		cancelar.addActionListener(a -> Principal.mostrarInterfaz(ventana));
 		panel.add(cancelar, constraints);
 				
 		constraints.gridx=3;
@@ -176,8 +173,7 @@ public class ABMLibro {
 						return;
 					}
 				}
-				
-				LibroController.agregarLibro(id, titulo, costo, precioCompra, paginas, fechaPublicacion);
+				confrimacion(ventana);
 				
 			}catch(NumberFormatException nfex) {
 				System.out.println("Puso otra cosa en un campo numérico");
@@ -229,6 +225,25 @@ public class ABMLibro {
         ventana.setVisible(true);
 	}
 	
+	private static void confrimacion(JFrame ventana) {
+		JDialog confirmacion = new JDialog();
+//		Boolean respuesta;
+		JLabel texto = new JLabel("¿Está seguro que desea agregar un nuevo libro con los datos ingresados?");
+		JButton si = new JButton("Sí"), no = new JButton("No");
+		
+		confirmacion.setLayout(new BorderLayout(5,5));
+		confirmacion.add(texto,BorderLayout.NORTH);
+		confirmacion.setTitle("Confirmar cambios");
+		confirmacion.add(si,BorderLayout.EAST);
+		confirmacion.add(no,BorderLayout.WEST);
+		
+		
+		confirmacion.pack();
+		confirmacion.setLocationRelativeTo(ventana);
+		confirmacion.setVisible(true);
+//		return respuesta;
+	}
+
 	public static void editarLibro(JFrame ventana) {
 		
 		JPanel panel = new JPanel();
@@ -262,7 +277,7 @@ public class ABMLibro {
 		
 		constraints.gridx=0;
 		constraints.gridy=2;
-		cancelar.addActionListener(a -> {ventana.dispose(); Principal.main(null);});
+		cancelar.addActionListener(a -> Principal.mostrarInterfaz(ventana));
 		panel.add(cancelar,constraints);
 		
 		constraints.gridx=3;
@@ -381,10 +396,7 @@ public class ABMLibro {
 		
 		constraints.gridx=0;
 		constraints.gridy=7;
-		cancelar.addActionListener(a -> {
-			ventana.dispose();
-			Principal.main(null);
-		});
+		cancelar.addActionListener(a -> Principal.mostrarInterfaz(ventana));
 		panel.add(cancelar, constraints);
 		
 		constraints.gridx=3;

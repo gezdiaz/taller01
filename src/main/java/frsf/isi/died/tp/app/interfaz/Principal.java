@@ -23,13 +23,12 @@ public class Principal {
 	public static void main(String[] args) {		
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
 	        public void run() {
-	          mostrarInterfaz();
+	          mostrarInterfaz(new JFrame());
 	        }
 	    });
 	}
 	
-	public static void mostrarInterfaz() {
-		JFrame ventana = new JFrame();
+	public static void mostrarInterfaz(JFrame ventana) {
 		
 		JPanel panel = new JPanel();
 		JLabel imagen = new JLabel(), vacio = new JLabel(), encabezado = new JLabel("    Sistema de suscripción a biblioteca.");
