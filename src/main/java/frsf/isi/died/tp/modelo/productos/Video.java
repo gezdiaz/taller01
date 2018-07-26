@@ -35,5 +35,8 @@ public class Video extends MaterialCapacitacion{
 	public Integer getDuracion() {
 		return duracion;
 	}
+	public void setDuracion(Integer duracion) {
+		this.duracion=duracion;
+	}
 	
 }
