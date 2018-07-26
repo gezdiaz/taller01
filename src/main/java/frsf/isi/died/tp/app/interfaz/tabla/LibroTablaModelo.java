@@ -1,5 +1,6 @@
 package frsf.isi.died.tp.app.interfaz.tabla;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
@@ -60,7 +61,7 @@ public class LibroTablaModelo extends AbstractTableModel {
 			valor = this.libros.get(rowIndex).precio();
 			break;
 		case 6:
-			valor = this.libros.get(rowIndex).getFechaPublicacion();
+			valor = (new SimpleDateFormat("dd/MM/yyyy")).format(this.libros.get(rowIndex).getFechaPublicacion());
 			break;
 		case 7:
 			valor = this.libros.get(rowIndex).getCalificacion();
