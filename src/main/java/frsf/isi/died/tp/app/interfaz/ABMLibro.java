@@ -18,6 +18,7 @@ import javax.swing.*;
 
 import frsf.isi.died.tp.app.controller.LibroController;
 import frsf.isi.died.tp.modelo.productos.Libro;
+import frsf.isi.died.tp.modelo.productos.Relevancia;
 
 public class ABMLibro {
 	
@@ -32,9 +33,9 @@ public class ABMLibro {
 		JTextField tID = new JTextField(20), tTitulo = new JTextField(20), tCosto = new JTextField(20),
 					tPrecioCompra = new JTextField(20), tPaginas = new JTextField(20), tFecha = new JTextField(20);
 		JButton aceptar = new JButton("Aceptar"), cancelar = new JButton("Cancelar");
+		JComboBox<Relevancia> lRelevancia = new JComboBox<Relevancia>();
 		
-		
-		
+			
 		constraints.insets=new Insets(5, 5, 5, 5);
 		
 		constraints.gridx=0;
@@ -111,11 +112,25 @@ public class ABMLibro {
 		
 		constraints.gridx=0;
 		constraints.gridy=7;
+		constraints.gridwidth=2;
+		panel.add(new JLabel("Relevancia: "), constraints);
+		
+		constraints.gridx=2;
+		constraints.gridy=7;
+		constraints.gridwidth=1;
+		lRelevancia.addItem(Relevancia.BAJA);
+		lRelevancia.addItem(Relevancia.MEDIA);
+		lRelevancia.addItem(Relevancia.ALTA);
+		lRelevancia.setSelectedItem(Relevancia.MEDIA);
+		panel.add(lRelevancia, constraints);
+		
+		constraints.gridx=0;
+		constraints.gridy=8;
 		cancelar.addActionListener(a -> Principal.mostrarInterfaz(ventana));
 		panel.add(cancelar, constraints);
 				
 		constraints.gridx=3;
-		constraints.gridy=7;
+		constraints.gridy=8;
 		constraints.fill=GridBagConstraints.NONE;
 		constraints.anchor=GridBagConstraints.WEST;
 		aceptar.addActionListener(e -> {
@@ -124,6 +139,7 @@ public class ABMLibro {
 			Double costo = 0.0, precioCompra = 0.0;
 			Integer paginas = 0;
 			Date fechaPublicacion = Calendar.getInstance().getTime();
+			Relevancia relev;
 			
 			errorID.setText("");
 			errorTitulo.setText("");
@@ -176,8 +192,10 @@ public class ABMLibro {
 					}
 				}
 				
+				relev = (Relevancia)lRelevancia.getSelectedItem();
+				
 				if(JOptionPane.showConfirmDialog(ventana, "¿Está seguro que desea guardar el nuevo libro con los datos ingresados?","Confirmacion",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE)==0) {
-					Libro nuevo = LibroController.agregarLibro(id, titulo, costo, precioCompra, paginas, fechaPublicacion);
+					Libro nuevo = LibroController.agregarLibro(id, titulo, costo, precioCompra, paginas, fechaPublicacion, relev);
 				}
 				
 								
@@ -308,6 +326,7 @@ public class ABMLibro {
 				tPrecio = new JTextField(20), tPaginas = new JTextField(20), tFecha = new JTextField(20);
 		JButton aceptar = new JButton("Aceptar"), cancelar = new JButton("Cancelar");
 		GridBagConstraints constraints = new GridBagConstraints();
+		JComboBox<Relevancia> lRelevancia = new JComboBox<Relevancia>();
 		
 		panel.setLayout(new GridBagLayout());
 		constraints.insets=new Insets(5, 5, 5, 5);
@@ -386,11 +405,24 @@ public class ABMLibro {
 		
 		constraints.gridx=0;
 		constraints.gridy=7;
+		constraints.gridwidth=2;
+		panel.add(new JLabel("Relevancia: "), constraints);
+		
+		constraints.gridx=2;
+		constraints.gridy=7;
+		constraints.gridwidth=1;
+		lRelevancia.addItem(Relevancia.BAJA);
+		lRelevancia.addItem(Relevancia.MEDIA);
+		lRelevancia.addItem(Relevancia.ALTA);
+		panel.add(lRelevancia, constraints);
+		
+		constraints.gridx=0;
+		constraints.gridy=8;
 		cancelar.addActionListener(a -> Principal.mostrarInterfaz(ventana));
 		panel.add(cancelar, constraints);
 		
 		constraints.gridx=3;
-		constraints.gridy=7;
+		constraints.gridy=8;
 		constraints.fill=GridBagConstraints.NONE;
 		aceptar.addActionListener(a -> {
 			System.out.println("Pide confrimacion y guarda los cambios.");
@@ -436,6 +468,7 @@ public class ABMLibro {
 		tPaginas.setText(libro.getPaginas().toString());
 		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
 		tFecha.setText(formato.format(libro.getFechaPublicacion()));
+		lRelevancia.setSelectedItem(libro.getRelevancia());
 		
 		
 		ventana.setContentPane(panel);
