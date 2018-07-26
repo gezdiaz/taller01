@@ -21,7 +21,6 @@ import frsf.isi.died.tp.modelo.productos.Libro;
 
 public class ABMLibro {
 	
-	private static Boolean confirmo;
 	
 	public static void agregarLibro(JFrame ventana) {
 		JPanel panel = new JPanel(new GridBagLayout());
@@ -178,6 +177,9 @@ public class ABMLibro {
 				
 				if(JOptionPane.showConfirmDialog(ventana, "¿Está seguro que desea guardar el nuevo libro con los datos ingresados?","Confirmacion",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE)==0) {
 					Libro nuevo = LibroController.agregarLibro(id, titulo, costo, precioCompra, paginas, fechaPublicacion);
+					tID.setText("");tTitulo.setText("");tCosto.setText("");
+					tPrecioCompra.setText("");tPaginas.setText("");
+					tFecha.setText("");
 				}
 				
 								
@@ -297,7 +299,6 @@ public class ABMLibro {
 		ventana.setSize(800, 600);
 		ventana.setVisible(true);
 	}
-
 	
 	private static void edicionLibro(Libro libro, JFrame ventana) {
 		JPanel panel = new JPanel();

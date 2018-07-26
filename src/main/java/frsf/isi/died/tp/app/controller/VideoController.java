@@ -7,13 +7,13 @@ import frsf.isi.died.tp.modelo.productos.Video;
 
 public class VideoController {
 
-	public static void agregarVideo(Integer id, String titulo, Double costo, Integer duracion, Date fechaPublicacion) {
+	public static Video agregarVideo(Integer id, String titulo, Double costo, Integer duracion, Date fechaPublicacion) {
 		Video nuevo = new Video(id, titulo, costo, duracion, fechaPublicacion);
 		System.out.println("Se creó el nuevo viedo: "+nuevo);
+		return nuevo;
 	}
 
 	public static Video buscarVideo(int id) {
-		// TODO Auto-generated method stub
 		Video existente = new Video(id,"La fuga del paralitico", 23.00, 234, Calendar.getInstance().getTime());
 		return existente;
 	}
