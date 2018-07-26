@@ -5,6 +5,7 @@
  */
 package frsf.isi.died.tp.modelo.productos;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
 
@@ -34,7 +35,7 @@ public class Libro extends MaterialCapacitacion {
 	 * @param titulo es el titulo del libro
 	 */
 	public Libro(Integer id, String titulo, Date fechaPublicacion) {
-		this(id, titulo,0.0,0.0,0, fechaPublicacion);
+		this(id, titulo,0.0,0.0,0, fechaPublicacion, Relevancia.MEDIA);
 	}
 	
 	public Libro(Integer id, String titulo) {
@@ -47,16 +48,15 @@ public class Libro extends MaterialCapacitacion {
 	 * @param costo es el costo de ofrecerlo online
 	 * @param precioCompra es el precio al que se adquirió el libro a la editorial
 	 * @param paginas cantidad de paginas del libro
+	 * @param relev 
 	 */
-	public Libro(Integer id, String titulo, Double costo, Double precioCompra, Integer paginas, Date fechaPublicacion) {
-		super(id, titulo, costo, fechaPublicacion);
+	public Libro(Integer id, String titulo, Double costo, Double precioCompra, Integer paginas, Date fechaPublicacion, Relevancia relev) {
+		super(id, titulo, costo, fechaPublicacion, relev);
 		this.precioCompra = precioCompra;
 		this.paginas = paginas;
 	}
 	public Libro(Integer id, String titulo, Double costo, Double precioCompra, Integer paginas) {
-		super(id, titulo, costo);
-		this.precioCompra = precioCompra;
-		this.paginas = paginas;
+		this(id, titulo, costo, precioCompra, paginas, Calendar.getInstance().getTime(), Relevancia.MEDIA);
 	}
 
 	/**

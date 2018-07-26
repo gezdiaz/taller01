@@ -16,6 +16,7 @@ import javax.swing.*;
 import frsf.isi.died.tp.app.controller.LibroController;
 import frsf.isi.died.tp.app.controller.VideoController;
 import frsf.isi.died.tp.modelo.productos.Libro;
+import frsf.isi.died.tp.modelo.productos.Relevancia;
 import frsf.isi.died.tp.modelo.productos.Video;
 
 public class ABMVideo {
@@ -29,8 +30,7 @@ public class ABMVideo {
 		JTextField tID = new JTextField(20), tTitulo = new JTextField(), tCosto = new JTextField(),
 				tDuracion = new JTextField(), tFecha = new JTextField();
 		JButton aceptar = new JButton("Aceptar"), cancelar = new JButton("Cancelar");
-		
-		
+		JComboBox<Relevancia> lRelevancia = new JComboBox<Relevancia>();		
 		
 		constraints.insets=new Insets(5, 5, 5, 5);
 		
@@ -97,6 +97,20 @@ public class ABMVideo {
 		panel.add(tFecha, constraints);
 		
 		constraints.gridx=0;
+		constraints.gridy=6;
+		constraints.gridwidth=2;
+		panel.add(new JLabel("Relevancia: "), constraints);
+		
+		constraints.gridx=2;
+		constraints.gridy=6;
+		constraints.gridwidth=1;
+		lRelevancia.addItem(Relevancia.BAJA);
+		lRelevancia.addItem(Relevancia.MEDIA);
+		lRelevancia.addItem(Relevancia.ALTA);
+		lRelevancia.setSelectedItem(Relevancia.MEDIA);
+		panel.add(lRelevancia, constraints);
+		
+		constraints.gridx=0;
 		constraints.gridy=7;
 		cancelar.addActionListener(a -> Principal.mostrarInterfaz(ventana));
 		panel.add(cancelar, constraints);
@@ -111,6 +125,7 @@ public class ABMVideo {
 			Double costo = 0.0;
 			Integer duracion = 0;
 			Date fechaPublicacion = Calendar.getInstance().getTime();
+			Relevancia relev;
 			
 			errorID.setText("");
 			errorTitulo.setText("");
@@ -156,7 +171,11 @@ public class ABMVideo {
 					}
 				}
 				
-				VideoController.agregarVideo(id, titulo, costo, duracion, fechaPublicacion);
+				relev = (Relevancia)lRelevancia.getSelectedItem();
+				
+				if(JOptionPane.showConfirmDialog(ventana, "¿Está seguro que desea guardar el nuevo viedo con los datos ingresados?","Confirmacion",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE)==0) {
+					VideoController.agregarVideo(id, titulo, costo, duracion, fechaPublicacion, relev);
+				}
 				
 			}catch(NumberFormatException nfex) {
 				System.out.println("Puso otra cosa en un campo numérico");
@@ -278,6 +297,7 @@ public class ABMVideo {
 				tSegundos = new JTextField(20), tFecha = new JTextField(20);
 		JButton aceptar = new JButton("Aceptar"), cancelar = new JButton("Cancelar");
 		GridBagConstraints constraints = new GridBagConstraints();
+		JComboBox<Relevancia> lRelevancia = new JComboBox<Relevancia>();
 		
 		panel.setLayout(new GridBagLayout());
 		constraints.insets=new Insets(5, 5, 5, 5);
@@ -346,11 +366,24 @@ public class ABMVideo {
 		
 		constraints.gridx=0;
 		constraints.gridy=6;
+		constraints.gridwidth=2;
+		panel.add(new JLabel("Relevancia: "), constraints);
+		
+		constraints.gridx=2;
+		constraints.gridy=6;
+		constraints.gridwidth=1;
+		lRelevancia.addItem(Relevancia.BAJA);
+		lRelevancia.addItem(Relevancia.MEDIA);
+		lRelevancia.addItem(Relevancia.ALTA);
+		panel.add(lRelevancia, constraints);
+		
+		constraints.gridx=0;
+		constraints.gridy=7;
 		cancelar.addActionListener(a -> Principal.mostrarInterfaz(ventana));
 		panel.add(cancelar, constraints);
 		
 		constraints.gridx=3;
-		constraints.gridy=6;
+		constraints.gridy=7;
 		constraints.fill=GridBagConstraints.NONE;
 		aceptar.addActionListener(a -> {
 			System.out.println("Pide confrimacion y guarda los cambios.");
@@ -391,6 +424,7 @@ public class ABMVideo {
 		tSegundos.setText(video.getDuracion().toString());
 		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
 		tFecha.setText(formato.format(video.getFechaPublicacion()));
+		lRelevancia.setSelectedItem(video.getRelevancia());
 		
 		
 		ventana.setContentPane(panel);
