@@ -6,17 +6,20 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.GridBagLayoutInfo;
 import java.awt.Insets;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
 import javax.swing.*;
 
 import frsf.isi.died.tp.app.controller.LibroController;
+import frsf.isi.died.tp.app.interfaz.tabla.LibroTablaModelo;
 import frsf.isi.died.tp.modelo.productos.Libro;
 import frsf.isi.died.tp.modelo.productos.Relevancia;
 
@@ -195,10 +198,13 @@ public class ABMLibro {
 				
 				if(JOptionPane.showConfirmDialog(ventana, "¿Está seguro que desea guardar el nuevo libro con los datos ingresados?","Confirmacion",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE)==0) {
 					Libro nuevo = LibroController.agregarLibro(id, titulo, costo, precioCompra, paginas, fechaPublicacion, relevancia);
-					tID.setText("");tTitulo.setText("");tCosto.setText("");
-					tPrecioCompra.setText("");tPaginas.setText("");
-					tFecha.setText("");		
-					lRelevancia.setSelectedItem(Relevancia.MEDIA);
+//					Antes quedaba en la misma pantalla y borraba todos los campos de texto
+//					tID.setText("");tTitulo.setText("");tCosto.setText("");
+//					tPrecioCompra.setText("");tPaginas.setText("");
+//					tFecha.setText("");		
+//					lRelevancia.setSelectedItem(Relevancia.MEDIA);
+//					Ahora muestra una tabla con todos los libros
+					mostrarTabla(ventana);
 				}
 				
 								
@@ -253,6 +259,91 @@ public class ABMLibro {
         ventana.setVisible(true);
 	}
 
+	private static void mostrarTabla(JFrame ventana) {
+		
+		JPanel panel = new JPanel(new GridBagLayout());
+		LibroTablaModelo tableModel = new LibroTablaModelo();
+		JTable tabla = new JTable(tableModel);
+		ArrayList<Libro> libros = new ArrayList<Libro>();
+		GridBagConstraints constraints = new GridBagConstraints();
+		JButton volver = new JButton("Volver al inicio"), agregar = new JButton("Agregar otro");
+		JScrollPane scroll = new JScrollPane(tabla);
+
+//		libros = DAO.getTodosLibros();
+		
+		try {
+			libros.add(new Libro(1, "Java", 5.4, 4.2, 100, (new SimpleDateFormat("dd/MM/yyyy")).parse("06/03/2009"), Relevancia.ALTA));
+			libros.add(new Libro(2, "Python", 10.4, 5.4, 200, (new SimpleDateFormat("dd/MM/yyyy")).parse("08/08/2008"), Relevancia.ALTA));
+			libros.add(new Libro(3, "C++", 45.5, 40.6, 500, (new SimpleDateFormat("dd/MM/yyyy")).parse("09/05/1997"), Relevancia.ALTA));
+			libros.add(new Libro(4, "Cobol", 5.0, 4.0, 50, (new SimpleDateFormat("dd/MM/yyyy")).parse("07/08/1977"), Relevancia.ALTA));
+			libros.add(new Libro(5, "Rubi", 140.89, 130.8, 1000, (new SimpleDateFormat("dd/MM/yyyy")).parse("15/10/2013"), Relevancia.ALTA));
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+				
+		tableModel.setLibros(libros);	
+		
+		constraints.gridx=0;
+		constraints.gridy=0;
+		constraints.fill=GridBagConstraints.BOTH;
+		constraints.gridheight=1;
+		constraints.gridwidth=5;
+		constraints.weightx=1;
+		tabla.setFillsViewportHeight(true);
+		panel.add(scroll, constraints);
+		
+		constraints.gridheight=1;
+		constraints.gridwidth=1;
+		constraints.gridx=0;
+		constraints.gridy=1;
+		constraints.fill=GridBagConstraints.HORIZONTAL;
+		constraints.weightx=0.5;
+		panel.add(new JLabel(""),constraints);
+		
+		constraints.gridx=1;
+		constraints.gridy=1;
+		constraints.fill=GridBagConstraints.NONE;
+		constraints.gridheight=1;
+		constraints.gridwidth=1;
+		constraints.weightx=0;
+		constraints.anchor=GridBagConstraints.CENTER;
+		volver.addActionListener(a -> Principal.mostrarInterfaz(ventana));
+		panel.add(volver,constraints);
+		
+		constraints.gridheight=1;
+		constraints.gridwidth=1;
+		constraints.gridx=2;
+		constraints.gridy=1;
+		constraints.fill=GridBagConstraints.HORIZONTAL;
+		constraints.weightx=0.5;
+		panel.add(new JLabel(""),constraints);
+		
+		constraints.gridx=3;
+		constraints.anchor=GridBagConstraints.CENTER;
+		constraints.gridy=1;
+		constraints.fill=GridBagConstraints.NONE;
+		constraints.gridheight=1;
+		constraints.gridwidth=1;
+		constraints.weightx=0;
+		constraints.anchor=GridBagConstraints.CENTER;
+		agregar.addActionListener(a -> agregarLibro(ventana));
+		panel.add(agregar,constraints);
+		
+		constraints.gridheight=1;
+		constraints.gridwidth=1;
+		constraints.gridx=4;
+		constraints.gridy=1;
+		constraints.fill=GridBagConstraints.HORIZONTAL;
+		constraints.weightx=0.5;
+		panel.add(new JLabel(""),constraints);
+		
+		ventana.setContentPane(panel);
+		ventana.pack();
+		ventana.setSize(800,600);
+		ventana.setVisible(true);
+		
+	}
+	
 	public static void editarLibro(JFrame ventana) {
 		
 		JPanel panel = new JPanel();
