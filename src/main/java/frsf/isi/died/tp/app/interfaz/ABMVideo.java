@@ -598,7 +598,7 @@ public class ABMVideo {
 	public static void eliminarVideo(JFrame ventana) {
 		
 		JPanel panel = new JPanel();
-		JLabel encabezado = new JLabel("ELiminar Video"), errorID = new JLabel();
+		JLabel encabezado = new JLabel("Eliminar Video"), errorID = new JLabel();
 		JTextField tID = new JTextField(20);
 		JButton buscar = new JButton("Buscar"), cancelar = new JButton("Cancelar");
 		GridBagConstraints constraints = new GridBagConstraints();

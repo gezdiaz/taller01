@@ -649,7 +649,7 @@ public class ABMLibro {
 	public static void eliminarLibro(JFrame ventana) {
 		
 		JPanel panel = new JPanel();
-		JLabel encabezado = new JLabel("ELiminar Libro"), errorID = new JLabel();
+		JLabel encabezado = new JLabel("Eliminar Libro"), errorID = new JLabel();
 		JTextField tID = new JTextField(20);
 		JButton buscar = new JButton("Buscar"), cancelar = new JButton("Cancelar");
 		GridBagConstraints constraints = new GridBagConstraints();
