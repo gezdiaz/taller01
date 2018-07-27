@@ -77,7 +77,7 @@ public class Principal {
         menuItem = new JMenuItem("Editar");
         menuItem.addActionListener(e -> MenuController.opcion(OpcionesMenu.EDITAR_LIBRO, ventana));
         submenu.add(menuItem);
-        menuItem = new JMenuItem("Quitar");
+        menuItem = new JMenuItem("Eliminar");
         menuItem.addActionListener(e -> MenuController.opcion(OpcionesMenu.ELIMINAR_LIBRO, ventana));
         submenu.add(menuItem);
         
@@ -89,7 +89,7 @@ public class Principal {
         menuItem = new JMenuItem("Editar");
         menuItem.addActionListener(e -> MenuController.opcion(OpcionesMenu.EDITAR_VIDEO, ventana));
         submenu.add(menuItem);
-        menuItem = new JMenuItem("Quitar");
+        menuItem = new JMenuItem("Eliminar");
         menuItem.addActionListener(e -> MenuController.opcion(OpcionesMenu.ELIMINAR_VIDEO, ventana));
         submenu.add(menuItem);
         
