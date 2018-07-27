@@ -86,7 +86,7 @@ public class BibliotecaABB implements Biblioteca {
 		return this.materiales.rango(costoMinimo, costoMax);
 	}
 	
-	private void ordenarPorPrecio() {
+	public void ordenarPorPrecio() {
 		// Creo un nuevo arbol que ordena comparando por PRECIO.
 		// Obtengo la lista del �rbol acutal.
 		// Paso cada elemento de la lista al nuevo �rbol.
@@ -103,7 +103,7 @@ public class BibliotecaABB implements Biblioteca {
 		
 	}
 	
-	private void ordenarPorTitulo() {
+	public void ordenarPorTitulo() {
 		// Creo un nuevo arbol que ordena comparando por titulo.
 		// Obtengo la lista del �rbol acutal.
 		// Paso cada elemento de la lista al nuevo �rbol.
@@ -113,6 +113,33 @@ public class BibliotecaABB implements Biblioteca {
 
 		List<MaterialCapacitacion> lista = materiales.inOrden();
 		Arbol nuevoArbol = new ArbolBinarioBusqueda((m1,m2)->m1.getTitulo().compareTo(m2.getTitulo()));
+		for(MaterialCapacitacion m: lista) {
+			nuevoArbol.add(m);
+		}
+		materiales = nuevoArbol;
+	}
+	
+	public void ordenarPorFecha() {
+		List<MaterialCapacitacion> lista = materiales.inOrden();
+		Arbol nuevoArbol = new ArbolBinarioBusqueda((m1,m2)->m1.getFechaPublicacion().compareTo(m2.getFechaPublicacion()));
+		for(MaterialCapacitacion m: lista) {
+			nuevoArbol.add(m);
+		}
+		materiales = nuevoArbol;
+	}
+	
+	public void ordenarPorCalificacion() {
+		List<MaterialCapacitacion> lista = materiales.inOrden();
+		Arbol nuevoArbol = new ArbolBinarioBusqueda((m1,m2)->m1.getCalificacion().compareTo(m2.getCalificacion()));
+		for(MaterialCapacitacion m: lista) {
+			nuevoArbol.add(m);
+		}
+		materiales = nuevoArbol;
+	}
+	
+	public void ordenarPorRelevancia() {
+		List<MaterialCapacitacion> lista = materiales.inOrden();
+		Arbol nuevoArbol = new ArbolBinarioBusqueda((m1,m2)->m1.getRelevancia().compareTo(m2.getRelevancia()));
 		for(MaterialCapacitacion m: lista) {
 			nuevoArbol.add(m);
 		}

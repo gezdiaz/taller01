@@ -27,6 +27,16 @@ public abstract class MaterialCapacitacion implements Ordenable, Comparable<Mate
 	private Integer calificacion;
 	private Integer votantes;
 	private Date fechaPublicacion;
+	private String tema;
+	
+	public String getTema() {
+		return tema;
+	}
+
+	public void setTema(String tema) {
+		this.tema = tema;
+	}
+
 	private Relevancia relevancia;
 	
 	public Date getFechaPublicacion() {
