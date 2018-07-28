@@ -1,5 +1,6 @@
 package frsf.isi.died.tp.app.interfaz;
 
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.text.ParseException;
@@ -29,9 +30,9 @@ public class BusquedaPanel {
 		GridBagConstraints constraints = new GridBagConstraints();
 		JLabel label;
 		JButton boton;
-		JTextField tTitulo = new JTextField(20), tCalificacion1 = new JTextField(10), 
-				tCalificacion2 = new JTextField(10), tTema = new JTextField(20), 
-				tFecha1 = new JTextField(10), tFecha2 = new JTextField(10);
+		JTextField tTitulo = new JTextField(23), tCalificacion1 = new JTextField(8), 
+				tCalificacion2 = new JTextField(8), tTema = new JTextField(23), 
+				tFecha1 = new JTextField(8), tFecha2 = new JTextField(8);
 		JComboBox<TipoOrdenamiento> combo;
 		ArrayList<MaterialCapacitacion> materiales = new ArrayList<MaterialCapacitacion>();
 		
@@ -47,53 +48,108 @@ public class BusquedaPanel {
 		materiales.add( new Video( 10, "Video10", 45.0, 38));
 		materiales.add( new Video( 11, "Video11", 12.0, 60));
 		
-		label = new JLabel("Búsqueda");
+		label = new JLabel("Búsqueda");	
 		constraints.gridx=0;
 		constraints.gridy=0;
-		panel.add(label, constraints);
-		
+		constraints.gridheight=1;
+		constraints.gridwidth=5;
+		constraints.anchor=GridBagConstraints.NORTH;
+		label.setFont(new Font(label.getFont().getName(), label.getFont().getStyle(), 40));
+		panel.add(label,constraints);
+
 		label = new JLabel("Criterio de búsqueda:");
+		constraints.gridx=0;
 		constraints.gridy=3;
+		constraints.gridwidth=1;
+		label.setFont(new Font(label.getFont().getName(), label.getFont().getStyle(), 15));
 		panel.add(label,constraints);
 		
 		label = new JLabel("Título:");
+		constraints.gridx=0;
 		constraints.gridy=5;
+		constraints.gridwidth=1;
+		constraints.anchor = GridBagConstraints.WEST;
 		panel.add(label,constraints);
 		
 		constraints.gridx=2;
+		constraints.gridy=5;
+		constraints.gridwidth=3;
+		constraints.anchor = GridBagConstraints.CENTER;
 		panel.add(tTitulo, constraints);
 		
-		label = new JLabel("Calificación:");
+		
+		label = new JLabel("Calificación desde:");
 		constraints.gridx=0;
 		constraints.gridy=7;
+		constraints.gridwidth=1;
+		constraints.anchor = GridBagConstraints.WEST;
 		panel.add(label, constraints);
 		
 		constraints.gridx=2;
+		constraints.gridy=7;
+		constraints.gridwidth=1;
+		constraints.anchor = GridBagConstraints.CENTER;
 		panel.add(tCalificacion1, constraints);
+		
+		label = new JLabel(" hasta: ");
 		constraints.gridx=3;
+		constraints.gridy=7;
+		constraints.gridwidth=1;
+		constraints.anchor = GridBagConstraints.CENTER;
+		panel.add(label, constraints);
+		
+		constraints.gridx=4;
+		constraints.gridy=7;
+		constraints.gridwidth=1;
+		constraints.anchor = GridBagConstraints.CENTER;
 		panel.add(tCalificacion2, constraints);
+		
 		
 		label = new JLabel("Tema:");
 		constraints.gridx=0;
 		constraints.gridy=9;
+		constraints.gridwidth=1;
+		constraints.anchor = GridBagConstraints.WEST;
 		panel.add(label,constraints);
 		
 		constraints.gridx=2;
+		constraints.gridy=9;
+		constraints.gridwidth=3;
+		constraints.anchor = GridBagConstraints.CENTER;
 		panel.add(tTema, constraints);
+		
 		
 		label = new JLabel("Rangos de fecha de publicación:");
 		constraints.gridx=0;
 		constraints.gridy=11;
+		constraints.gridwidth=1;
+		constraints.anchor = GridBagConstraints.WEST;
 		panel.add(label, constraints);
 		
 		constraints.gridx=2;
+		constraints.gridy=11;
+		constraints.gridwidth=1;
+		constraints.anchor = GridBagConstraints.CENTER;
 		panel.add(tFecha1, constraints);
+		
+		label = new JLabel(" hasta: ");
 		constraints.gridx=3;
+		constraints.gridy=11;
+		constraints.gridwidth=1;
+		constraints.anchor = GridBagConstraints.CENTER;
+		panel.add(label, constraints);
+		
+		constraints.gridx=4;
+		constraints.gridy=11;
+		constraints.gridwidth=1;
+		constraints.anchor = GridBagConstraints.CENTER;
 		panel.add(tFecha2, constraints);
 		
 		label = new JLabel("Criterio de ordenamiento:");
 		constraints.gridx=0;
 		constraints.gridy=13;
+		constraints.gridwidth=1;
+		constraints.anchor = GridBagConstraints.WEST;
 		panel.add(label, constraints);
 		
 		combo = new JComboBox<TipoOrdenamiento>();
@@ -103,11 +159,14 @@ public class BusquedaPanel {
 		combo.addItem(TipoOrdenamiento.CALIFICACION);
 		combo.addItem(TipoOrdenamiento.RELEVANCIA);
 		constraints.gridx=2;
+		constraints.gridwidth=3;
+		constraints.anchor = GridBagConstraints.CENTER;
 		panel.add(combo, constraints);
 		
 		boton = new JButton("Cancelar");
 		constraints.gridx=0;
 		constraints.gridy=15;
+		constraints.gridwidth=1;
 		boton.addActionListener( a -> Principal.mostrarInterfaz(ventana));
 		panel.add(boton, constraints);
 		
@@ -132,26 +191,6 @@ public class BusquedaPanel {
 						filtrados.removeIf(material -> material.getFechaPublicacion().getTime()<fecha1.getTime()	
 														|| material.getFechaPublicacion().getTime()>fecha2.getTime());
 					}
-					
-//					for(MaterialCapacitacion mat: filtrados) {
-//						if(!tTitulo.getText().isEmpty()) {
-//							if(!mat.getTitulo().contains(tTitulo.getText())) {
-//								filtrados.remove(mat);
-//							}
-//						}else if(!tCalificacion1.getText().isEmpty() && !tCalificacion2.getText().isEmpty()) {
-//							if(mat.getCalificacion()<c1 || mat.getCalificacion()>c2) {
-//								filtrados.remove(mat);
-//							}
-//						}else if(!tTema.getText().isEmpty()) {
-//							if(!mat.getTema().equals(tTema.getText())) {
-//								filtrados.remove(mat);
-//							}
-//						}else if(!tFecha1.getText().isEmpty() && !tFecha2.getText().isEmpty()) {
-//							if(mat.getFechaPublicacion().getTime()<fecha1.getTime()	|| mat.getFechaPublicacion().getTime()>fecha2.getTime()) { 
-//								filtrados.remove(mat);
-//							}
-//						}
-//					}
 					TipoOrdenamiento tipo = (TipoOrdenamiento) combo.getSelectedItem();
 					BibliotecaABB ordenados = new BibliotecaABB();
 					for(MaterialCapacitacion mat: filtrados)	ordenados.agregar(mat);
@@ -172,9 +211,7 @@ public class BusquedaPanel {
 						ordenados.ordenarPorRelevancia();
 						break;
 					}
-					filtrados.removeAll(filtrados);
-					filtrados.addAll(ordenados.materiales());
-					BusquedaPanel.mostrarMaterialesTablaReLoca(ventana, filtrados);
+					mostrarMaterialesTabla(ventana, (ArrayList<MaterialCapacitacion>) ordenados.materiales());
 				}catch(NumberFormatException nfex) {
 					System.out.println("Puso otra cosa en un campo numérico");
 					JOptionPane.showConfirmDialog(ventana, "El campo calificación debe llevar un número entre 1 y 100.", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);	
@@ -196,42 +233,57 @@ public class BusquedaPanel {
         ventana.setVisible(true);
 	}
 
-	public static void mostrarMaterialesTablaReLoca(JFrame ventana, ArrayList<MaterialCapacitacion> materiales) {
+	public static void mostrarMaterialesTabla(JFrame ventana, ArrayList<MaterialCapacitacion> materiales) {
 		JPanel panel = new JPanel(new GridBagLayout());
 		GridBagConstraints gridConst = new GridBagConstraints();
 		GridBagConstraints constraints = new GridBagConstraints();
 		tableModel = new BusquedaTablaModelo();
-		JButton btnAceptar = new JButton("Agregar otro");
-//		LISTA DEMO DE LIBROS
-		
-		
-//		ACA SE FILTRA
-		
+		JButton boton;
 		
 		
 //		TITULO VENTANA
 		JLabel lblTitulo = new JLabel("Lista de materiales");
-		constraints.gridx = 0;
+		constraints.gridx = 1;
 		constraints.gridy = 0;
 		constraints.gridwidth = 7;
 		constraints.gridheight = 2;
-		constraints.weighty = 0.3;
+		constraints.weighty = 0.25;
+		constraints.anchor=GridBagConstraints.NORTH;
+		lblTitulo.setFont(new Font(lblTitulo.getFont().getName(), lblTitulo.getFont().getStyle(), 20));
 		panel.add(lblTitulo,constraints);
 		
 		
-		
-		
+//		TABLA
 		tableModel.setMateriales(materiales);
 		tabla = new JTable(tableModel);
 		tabla.setFillsViewportHeight(true);
 		scrollPane= new JScrollPane(tabla);
 		
 		gridConst.gridx=0;
-		gridConst.gridwidth=7;	
+		gridConst.gridwidth=2;	
 		gridConst.gridy=2;
-		gridConst.weighty=0.7;
-		gridConst.weightx=1.0;		
+		gridConst.weighty=0.5;
+		gridConst.anchor = GridBagConstraints.CENTER;
 		panel.add(scrollPane, gridConst);
+		
+		
+//		BOTONES
+		boton = new JButton("Inicio");
+		constraints.gridx = 0;
+		constraints.gridy = 3;
+		constraints.weighty = 0.25;
+		constraints.anchor = GridBagConstraints.WEST;
+		boton.addActionListener( a -> Principal.mostrarInterfaz(ventana));
+		panel.add(boton,constraints);
+		
+		boton = new JButton("Atrás");
+		constraints.gridx = 1;
+		constraints.gridy = 3;
+		constraints.weighty = 0.25;
+		constraints.anchor = GridBagConstraints.EAST;
+		boton.addActionListener( a -> busqueda(ventana));
+		panel.add(boton,constraints);
+		
 		
 		ventana.setContentPane(panel);
 		ventana.pack();
