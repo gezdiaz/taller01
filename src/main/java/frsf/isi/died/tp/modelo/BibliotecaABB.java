@@ -3,6 +3,7 @@ package frsf.isi.died.tp.modelo;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 import frsf.isi.died.tp.estructuras.Arbol;
@@ -144,6 +145,28 @@ public class BibliotecaABB implements Biblioteca {
 			nuevoArbol.add(m);
 		}
 		materiales = nuevoArbol;
+	}
+
+	public void agregar(ArrayList<MaterialCapacitacion> materiales) {
+		for(MaterialCapacitacion material: materiales) {
+			this.agregar(material);
+		}		
+	}
+	
+	public ArrayList<MaterialCapacitacion> buscar(String titulo, Integer califMenor, Integer califMayor, Date fechaMenor, Date fechaMayor){
+		ArrayList<MaterialCapacitacion> lista = (ArrayList<MaterialCapacitacion>) this.materiales.inOrden();
+		
+		if(titulo != null) {
+			lista.removeIf(mat -> !mat.getTitulo().contains(titulo));
+		}
+		if(califMenor != null && califMayor != null) {
+			lista.removeIf(mat -> mat.getCalificacion() < califMenor || mat.getCalificacion() > califMayor);
+		}
+		if(fechaMenor != null && fechaMayor != null) {
+			lista.removeIf(mat -> mat.getFechaPublicacion().getTime() < fechaMenor.getTime() || mat.getFechaPublicacion().getTime() > fechaMayor.getTime());
+		}
+		
+		return lista;
 	}
 
 }

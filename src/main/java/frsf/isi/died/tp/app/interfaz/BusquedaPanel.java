@@ -33,19 +33,20 @@ public class BusquedaPanel {
 				tCalificacion2 = new JTextField(10), tTema = new JTextField(20), 
 				tFecha1 = new JTextField(10), tFecha2 = new JTextField(10);
 		JComboBox<TipoOrdenamiento> combo;
+//		variable temporal para simular la busqueda
 		ArrayList<MaterialCapacitacion> materiales = new ArrayList<MaterialCapacitacion>();
-		
 		materiales.add( new Libro( 1, "Libro1", 10.0, 20.0, 154));
-		materiales.add( new Libro( 2, "Libro2", 20.0, 24.0, 361));
-		materiales.add( new Libro( 3, "Libro3", 15.0, 18.0, 108));
-		materiales.add( new Libro( 4, "Libro4", 30.0, 16.0, 250));
-		materiales.add( new Libro( 5, "Libro5", 24.0, 32.0, 545));
+		materiales.add( new Libro( 2, "Java", 20.0, 24.0, 361));
+		materiales.add( new Libro( 3, "Python", 15.0, 18.0, 108));
+		materiales.add( new Libro( 4, "C", 30.0, 16.0, 250));
+		materiales.add( new Libro( 5, "hola", 24.0, 32.0, 545));
 		materiales.add( new Libro( 6, "Libro6", 28.0, 54.0, 302));
-		materiales.add( new Video( 7, "Video7", 28.0, 360));
-		materiales.add( new Video( 8, "Video8", 15.0, 625));
-		materiales.add( new Video( 9, "Video9", 30.0, 145));
-		materiales.add( new Video( 10, "Video10", 45.0, 38));
+		materiales.add( new Video( 7, "El escape del paralítico", 28.0, 360));
+		materiales.add( new Video( 8, "El regreso", 15.0, 625));
+		materiales.add( new Video( 9, "Java", 30.0, 145));
+		materiales.add( new Video( 10, "Eclipse", 45.0, 38));
 		materiales.add( new Video( 11, "Video11", 12.0, 60));
+//		TODO deberia agregar todos los materiales que hay en el almacenamiento
 		
 		label = new JLabel("Búsqueda");
 		constraints.gridx=0;
@@ -115,46 +116,27 @@ public class BusquedaPanel {
 		constraints.gridx=3;
 		boton.addActionListener( a -> {
 			ArrayList<MaterialCapacitacion> filtrados = new ArrayList<MaterialCapacitacion>();
-			filtrados = materiales;
-			Integer c1, c2;
-			Date fecha1, fecha2;
+			String titulo = null;
+			Integer califMenor = null, califMayor = null;
+			Date fechaMenor = null, fechaMayor = null;
+			BibliotecaABB biblioteca = new BibliotecaABB();
+			biblioteca.agregar(materiales);
+
 				try {
 					if(!tTitulo.getText().isEmpty()) 
-						filtrados.removeIf(material -> !material.getTitulo().contains(tTitulo.getText()) );
+						titulo=tTitulo.getText();
 					if(!tCalificacion1.getText().isEmpty() && !tCalificacion2.getText().isEmpty()) {
-						c1 = Integer.parseInt(tCalificacion1.getText());
-						c2 = Integer.parseInt(tCalificacion2.getText());
-						filtrados.removeIf(material -> material.getCalificacion()<c1 || material.getCalificacion()>c2);
+						califMenor = Integer.parseInt(tCalificacion1.getText());
+						califMayor = Integer.parseInt(tCalificacion2.getText());
 					}
 					if(!tFecha1.getText().isEmpty() && !tFecha2.getText().isEmpty()) {
-						fecha1 = (new SimpleDateFormat("dd/MM/yyyy")).parse(tFecha1.getText());
-						fecha2 = (new SimpleDateFormat("dd/MM/yyyy")).parse(tFecha2.getText());
-						filtrados.removeIf(material -> material.getFechaPublicacion().getTime()<fecha1.getTime()	
-														|| material.getFechaPublicacion().getTime()>fecha2.getTime());
+						fechaMenor = (new SimpleDateFormat("dd/MM/yyyy")).parse(tFecha1.getText());
+						fechaMayor = (new SimpleDateFormat("dd/MM/yyyy")).parse(tFecha2.getText());
 					}
-					
-//					for(MaterialCapacitacion mat: filtrados) {
-//						if(!tTitulo.getText().isEmpty()) {
-//							if(!mat.getTitulo().contains(tTitulo.getText())) {
-//								filtrados.remove(mat);
-//							}
-//						}else if(!tCalificacion1.getText().isEmpty() && !tCalificacion2.getText().isEmpty()) {
-//							if(mat.getCalificacion()<c1 || mat.getCalificacion()>c2) {
-//								filtrados.remove(mat);
-//							}
-//						}else if(!tTema.getText().isEmpty()) {
-//							if(!mat.getTema().equals(tTema.getText())) {
-//								filtrados.remove(mat);
-//							}
-//						}else if(!tFecha1.getText().isEmpty() && !tFecha2.getText().isEmpty()) {
-//							if(mat.getFechaPublicacion().getTime()<fecha1.getTime()	|| mat.getFechaPublicacion().getTime()>fecha2.getTime()) { 
-//								filtrados.remove(mat);
-//							}
-//						}
-//					}
+					filtrados = biblioteca.buscar(titulo, califMenor, califMayor, fechaMenor, fechaMayor);
 					TipoOrdenamiento tipo = (TipoOrdenamiento) combo.getSelectedItem();
 					BibliotecaABB ordenados = new BibliotecaABB();
-					for(MaterialCapacitacion mat: filtrados)	ordenados.agregar(mat);
+					ordenados.agregar(filtrados);
 					switch(tipo) {
 					case TITULO:
 						ordenados.ordenarPorTitulo();
@@ -172,9 +154,7 @@ public class BusquedaPanel {
 						ordenados.ordenarPorRelevancia();
 						break;
 					}
-					filtrados.removeAll(filtrados);
-					filtrados.addAll(ordenados.materiales());
-					BusquedaPanel.mostrarMaterialesTablaReLoca(ventana, filtrados);
+					BusquedaPanel.mostrarMaterialesTabla(ventana, (ArrayList<MaterialCapacitacion>)ordenados.materiales());
 				}catch(NumberFormatException nfex) {
 					System.out.println("Puso otra cosa en un campo numérico");
 					JOptionPane.showConfirmDialog(ventana, "El campo calificación debe llevar un número entre 1 y 100.", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);	
@@ -196,7 +176,7 @@ public class BusquedaPanel {
         ventana.setVisible(true);
 	}
 
-	public static void mostrarMaterialesTablaReLoca(JFrame ventana, ArrayList<MaterialCapacitacion> materiales) {
+	public static void mostrarMaterialesTabla(JFrame ventana, ArrayList<MaterialCapacitacion> materiales) {
 		JPanel panel = new JPanel(new GridBagLayout());
 		GridBagConstraints gridConst = new GridBagConstraints();
 		GridBagConstraints constraints = new GridBagConstraints();
