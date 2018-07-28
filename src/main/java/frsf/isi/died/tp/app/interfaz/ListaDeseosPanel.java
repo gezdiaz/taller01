@@ -12,14 +12,30 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 import frsf.isi.died.tp.app.controller.ListaDeseosController;
+import frsf.isi.died.tp.app.dao.MaterialCapacitacionDao;
 import frsf.isi.died.tp.app.interfaz.tabla.MaterialesTablaModelo;
 
 public class ListaDeseosPanel {
+	
+	private ListaDeseosController controller;
+	private BusquedaPanel busquedaPanel;
+	private JFrame ventana;
+	
+	public ListaDeseosPanel(MaterialCapacitacionDao dao, JFrame ventana) {
+		this.controller = new ListaDeseosController(dao);
+		this.ventana = ventana;
+	}
+	
+	public void setBusquedaPanel(BusquedaPanel busquedaPanel) {
+		this.busquedaPanel = busquedaPanel;
+	}
 
-	public static void mostrarLista(JFrame ventana, ListaDeseosController listaController) {
-		
-		if(listaController == null) listaController = new ListaDeseosController();
-		
+	public ListaDeseosController getController() {
+		return controller;
+	}
+	
+	public void mostrarLista() {
+				
 		JPanel panel = new JPanel(new GridBagLayout());
 		MaterialesTablaModelo tableModel = new MaterialesTablaModelo();
 		JTable tabla = new JTable(tableModel);
@@ -36,7 +52,7 @@ public class ListaDeseosPanel {
 		lblTitulo.setFont(new Font(lblTitulo.getFont().getName(), lblTitulo.getFont().getStyle(), 20));
 		panel.add(lblTitulo,constraints);
 		
-		tableModel.setMateriales(listaController.getLista());
+		tableModel.setMateriales(controller.getLista());
 		tabla = new JTable(tableModel);
 		tabla.setFillsViewportHeight(true);
 		JScrollPane scrollPane= new JScrollPane(tabla);
@@ -65,7 +81,7 @@ public class ListaDeseosPanel {
 		constraints.gridy = 3;
 		constraints.weighty = 0.25;
 		constraints.anchor = GridBagConstraints.EAST;
-		boton.addActionListener( a -> BusquedaPanel.busqueda(ventana));
+		boton.addActionListener( a -> busquedaPanel.busqueda());
 		panel.add(boton,constraints);
 		
 		
@@ -76,5 +92,6 @@ public class ListaDeseosPanel {
         ventana.setVisible(true);
 		
 	}
+
 
 }

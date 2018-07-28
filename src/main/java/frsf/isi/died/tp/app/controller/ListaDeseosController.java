@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.PriorityQueue;
 
+import frsf.isi.died.tp.app.dao.MaterialCapacitacionDao;
 import frsf.isi.died.tp.modelo.productos.Libro;
 import frsf.isi.died.tp.modelo.productos.MaterialCapacitacion;
 import frsf.isi.died.tp.modelo.productos.Relevancia;
@@ -13,7 +14,7 @@ public class ListaDeseosController {
 
 	PriorityQueue<MaterialCapacitacion> listaDeseos;
 	
-	public ListaDeseosController() {
+	public ListaDeseosController(MaterialCapacitacionDao dao) {
 		//TODO debería buscar la lista de deseos en el almacenamiento
 		listaDeseos = new PriorityQueue<MaterialCapacitacion>(10,((m1,m2) -> comparador(m1,m2)));
 //		listaDeseos.addAll(DAO.getListaDeseos());

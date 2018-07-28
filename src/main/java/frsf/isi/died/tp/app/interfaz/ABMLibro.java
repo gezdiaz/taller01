@@ -5,7 +5,6 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridBagLayoutInfo;
 import java.awt.Insets;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -16,14 +15,24 @@ import java.util.Date;
 import javax.swing.*;
 
 import frsf.isi.died.tp.app.controller.LibroController;
+import frsf.isi.died.tp.app.dao.MaterialCapacitacionDao;
 import frsf.isi.died.tp.app.interfaz.tabla.LibroTablaModelo;
 import frsf.isi.died.tp.modelo.productos.Libro;
 import frsf.isi.died.tp.modelo.productos.Relevancia;
 
 public class ABMLibro {
 	
+	private LibroController controller;
+	private JFrame ventana;
 	
-	public static void agregarLibro(JFrame ventana) {
+	public ABMLibro(MaterialCapacitacionDao dao, JFrame ventana){
+		this.controller = new LibroController(dao);
+		this.ventana = ventana;
+	}
+	
+	
+	
+	public void agregarLibro() {
 		JPanel panel = new JPanel(new GridBagLayout());
 		GridBagConstraints constraints = new GridBagConstraints();
 		JLabel errorID = new JLabel(), errorTitulo = new JLabel(), errorCosto = new JLabel(),
@@ -194,14 +203,14 @@ public class ABMLibro {
 				relevancia = (Relevancia)lRelevancia.getSelectedItem();
 				
 				if(JOptionPane.showConfirmDialog(ventana, "¿Está seguro que desea guardar el nuevo libro con los datos ingresados?","Confirmacion",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE)==0) {
-					Libro nuevo = LibroController.agregarLibro(id, titulo, costo, precioCompra, paginas, fechaPublicacion, relevancia);
+					controller.agregarLibro(id, titulo, costo, precioCompra, paginas, fechaPublicacion, relevancia);
 //					Antes quedaba en la misma pantalla y borraba todos los campos de texto
 //					tID.setText("");tTitulo.setText("");tCosto.setText("");
 //					tPrecioCompra.setText("");tPaginas.setText("");
 //					tFecha.setText("");		
 //					lRelevancia.setSelectedItem(Relevancia.MEDIA);
 //					Ahora muestra una tabla con todos los libros
-					mostrarTabla(ventana);
+					mostrarTabla();
 				}
 				
 								
@@ -256,7 +265,7 @@ public class ABMLibro {
         ventana.setVisible(true);
 	}
 
-	private static void mostrarTabla(JFrame ventana) {
+	private void mostrarTabla() {
 		
 		JPanel panel = new JPanel(new GridBagLayout());
 		LibroTablaModelo tableModel = new LibroTablaModelo();
@@ -323,7 +332,7 @@ public class ABMLibro {
 		constraints.gridwidth=1;
 		constraints.weightx=0;
 		constraints.anchor=GridBagConstraints.CENTER;
-		agregar.addActionListener(a -> agregarLibro(ventana));
+		agregar.addActionListener(a -> agregarLibro());
 		panel.add(agregar,constraints);
 		
 		constraints.gridheight=1;
@@ -341,7 +350,7 @@ public class ABMLibro {
 		
 	}
 	
-	public static void editarLibro(JFrame ventana) {
+	public void editarLibro() {
 		
 		JPanel panel = new JPanel();
 		JLabel encabezado = new JLabel("Editar Libro"), errorID = new JLabel();
@@ -385,9 +394,9 @@ public class ABMLibro {
 				}else {
 					//buscar libro con id Integer.parseInt(tID.getText());
 					//creo un nuevo libro para simular la busqueda
-					Libro encontrado = LibroController.buscarLibro(Integer.parseInt(tID.getText()));
+					Libro encontrado = controller.buscarLibro(Integer.parseInt(tID.getText()));
 					System.out.println("Libro a editar: "+encontrado);
-					edicionLibro(encontrado, ventana);
+					edicionLibro(encontrado);
 				}
 			}catch(Exception e) {
 				
@@ -407,9 +416,9 @@ public class ABMLibro {
 		ventana.setVisible(true);
 	}
 	
-	private static void edicionLibro(Libro libro, JFrame ventana) {
+	private void edicionLibro(Libro libro) {
 		JPanel panel = new JPanel();
-		JLabel encabezado = new JLabel("Editar Libro"), errorID = new JLabel(), errorTitulo = new JLabel(),
+		JLabel encabezado = new JLabel("Editar Libro"), errorTitulo = new JLabel(),
 				errorCosto = new JLabel(), errorPrecio = new JLabel(), errorPaginas = new JLabel(), 
 				errorFecha = new JLabel();
 		JTextField tID = new JTextField(20), tTitulo = new JTextField(20), tCosto = new JTextField(20),
@@ -517,27 +526,18 @@ public class ABMLibro {
 		aceptar.addActionListener(a -> {
 			System.out.println("Pide confrimacion y guarda los cambios.");
 			
-			Integer id;
 			String titulo;
 			Double costo = 0.0, precioCompra = 0.0;
 			Integer paginas = 0;
 			Date fechaPublicacion = Calendar.getInstance().getTime();
 			Relevancia relevancia;
 			
-			errorID.setText("");
 			errorTitulo.setText("");
 			errorCosto.setText("");
 			errorPrecio.setText("");
 			errorPaginas.setText("");
 			errorFecha.setText("");
 			try {
-				if(tID.getText().isEmpty()){
-					System.out.println("El ID no puede ser vacio");
-					errorID.setText("Debe ingresar un ID");
-					return;
-				}else {
-					id = Integer.parseInt(tID.getText());
-				}
 				if(tTitulo.getText().isEmpty()) {
 					System.out.println("El título no puede ser vacío");
 					errorTitulo.setText("Debe ingresar un título");
@@ -578,8 +578,8 @@ public class ABMLibro {
 				relevancia = (Relevancia)lRelevancia.getSelectedItem();
 			
 				if(JOptionPane.showConfirmDialog(ventana, "¿Está seguro que desea modificar el libro con los datos ingresados?", "Confirmar edición", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE)==0){
-					LibroController.editarLibro(libro, titulo, costo, precioCompra, paginas, fechaPublicacion, relevancia);
-					editarLibro(ventana);
+					controller.editarLibro(libro, titulo, costo, precioCompra, paginas, fechaPublicacion, relevancia);
+					editarLibro();
 				}
 				
 			}catch(NumberFormatException nfex) {
@@ -596,11 +596,6 @@ public class ABMLibro {
 		panel.add(aceptar,constraints);
 		
 		constraints.gridx=3;
-		constraints.gridy=1;
-		errorID.setPreferredSize(new Dimension(230, 16));
-		errorID.setForeground(Color.red);
-		panel.add(errorID,constraints);
-
 		constraints.gridy=2;
 		errorTitulo.setPreferredSize(new Dimension(230, 16));
 		errorTitulo.setForeground(Color.red);
@@ -643,7 +638,7 @@ public class ABMLibro {
 		ventana.setVisible(true);
 	}
 
-	public static void eliminarLibro(JFrame ventana) {
+	public void eliminarLibro() {
 		
 		JPanel panel = new JPanel();
 		JLabel encabezado = new JLabel("Eliminar Libro"), errorID = new JLabel();
@@ -687,9 +682,9 @@ public class ABMLibro {
 				}else {
 					//buscar libro con id Integer.parseInt(tID.getText());
 					//creo un nuevo libro para simular la busqueda
-					Libro encontrado = LibroController.buscarLibro(Integer.parseInt(tID.getText()));
+					Libro encontrado = controller.buscarLibro(Integer.parseInt(tID.getText()));
 					System.out.println("Libro a eliminar: "+encontrado);
-					eliminacionLibro(encontrado,ventana);
+					eliminacionLibro(encontrado);
 				}
 			}catch(Exception e) {
 				
@@ -710,7 +705,7 @@ public class ABMLibro {
 		
 	}
 
-	private static void eliminacionLibro(Libro libro, JFrame ventana) {
+	private void eliminacionLibro(Libro libro) {
 		
 		JPanel panel = new JPanel();
 		JLabel encabezado = new JLabel("Eliminar Libro"), errorID = new JLabel(), errorTitulo = new JLabel(),
@@ -830,7 +825,7 @@ public class ABMLibro {
 		
 		constraints.gridx=0;
 		constraints.gridy=9;
-		cancelar.addActionListener(a -> ABMLibro.eliminarLibro(ventana));
+		cancelar.addActionListener(a -> this.eliminarLibro());
 		panel.add(cancelar, constraints);
 		
 		constraints.gridx=3;
@@ -839,9 +834,9 @@ public class ABMLibro {
 		eliminar.addActionListener(a -> {
 			System.out.println("Pide confrimacion y elimina el libro.");
 			
-			if(JOptionPane.showConfirmDialog(ventana, "¿Está seguro que desea eliminar el libro con los datos ingresados?", "Confirmar edición", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE)==0){
-				LibroController.eliminarLibro(libro);
-				eliminarLibro(ventana);
+			if(JOptionPane.showConfirmDialog(ventana, "¿Está seguro que desea eliminar el libro con los datos ingresados?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE)==0){
+				controller.eliminarLibro(libro);
+				eliminarLibro();
 			}				
 				
 		});

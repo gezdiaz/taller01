@@ -7,27 +7,29 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import javax.swing.*;
-
-import org.junit.experimental.theories.Theories;
-
-import frsf.isi.died.tp.app.controller.ListaDeseosController;
+import frsf.isi.died.tp.app.dao.MaterialCapacitacionDao;
 import frsf.isi.died.tp.app.interfaz.tabla.*;
 import frsf.isi.died.tp.modelo.BibliotecaABB;
-import frsf.isi.died.tp.modelo.productos.Libro;
 import frsf.isi.died.tp.modelo.productos.MaterialCapacitacion;
-import frsf.isi.died.tp.modelo.productos.Relevancia;
-import frsf.isi.died.tp.modelo.productos.Video;
 
 public class BusquedaPanel {
 	
-	private static JScrollPane scrollPane;
-	private static JTable tabla;
-	private static MaterialesTablaModelo tableModel;
+	private MaterialCapacitacionDao dao;
+	private JFrame ventana;
+	private ListaDeseosPanel listaPanel;
 	
-	public static void busqueda(JFrame ventana) {
+	public BusquedaPanel(MaterialCapacitacionDao dao, JFrame ventana) {
+		this.dao = dao;
+		this.ventana = ventana;
+	}
+	
+	public void setListaPanel(ListaDeseosPanel listaPanel) {
+		this.listaPanel= listaPanel;
+	}
+	
+	public void busqueda() {
 		JPanel panel = new JPanel(new GridBagLayout());
 		GridBagConstraints constraints = new GridBagConstraints();
 		JLabel label;
@@ -37,24 +39,24 @@ public class BusquedaPanel {
 				tFecha1 = new JTextField(8), tFecha2 = new JTextField(8);
 		JComboBox<TipoOrdenamiento> combo;
 //		variable temporal para simular la busqueda
-		ArrayList<MaterialCapacitacion> materiales = new ArrayList<MaterialCapacitacion>();
-		try {
-			SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
-			materiales.add( new Libro( 1, "Libro1", 10.0, 20.0, 154, formatoFecha.parse("05/02/2010"), Relevancia.MEDIA));
-			materiales.add( new Libro( 2, "Java", 20.0, 24.0, 361, formatoFecha.parse("05/02/2005"), Relevancia.ALTA));
-			materiales.add( new Libro( 3, "Python", 15.0, 18.0, 108, formatoFecha.parse("05/04/2010"), Relevancia.BAJA));
-			materiales.add( new Libro( 4, "C", 30.0, 16.0, 250, formatoFecha.parse("10/02/2010"), Relevancia.ALTA));
-			materiales.add( new Libro( 5, "hola", 24.0, 32.0, 545, formatoFecha.parse("05/02/2018"), Relevancia.BAJA));
-			materiales.add( new Libro( 6, "Libro6", 28.0, 54.0, 302, formatoFecha.parse("05/12/2010"), Relevancia.MEDIA));
-			materiales.add( new Video( 7, "El escape del paralítico", 28.0, 360, formatoFecha.parse("15/12/2000"), Relevancia.MEDIA));
-			materiales.add( new Video( 8, "El regreso", 15.0, 625, formatoFecha.parse("25/12/2010"), Relevancia.BAJA));
-			materiales.add( new Video( 9, "Java", 30.0, 145, formatoFecha.parse("23/02/2014"), Relevancia.ALTA));
-			materiales.add( new Video( 10, "Eclipse", 45.0, 38, formatoFecha.parse("27/03/2017"), Relevancia.BAJA));
-			materiales.add( new Video( 11, "Video11", 12.0, 60, formatoFecha.parse("14/01/2016"), Relevancia.MEDIA));
-		} catch (ParseException e) {
-			
-			e.printStackTrace();
-		}
+		ArrayList<MaterialCapacitacion> materiales = (ArrayList<MaterialCapacitacion>)dao.listaMateriales(); // new ArrayList<MaterialCapacitacion>();
+//		try {
+//			SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
+//			materiales.add( new Libro( 1, "Libro1", 10.0, 20.0, 154, formatoFecha.parse("05/02/2010"), Relevancia.MEDIA));
+//			materiales.add( new Libro( 2, "Java", 20.0, 24.0, 361, formatoFecha.parse("05/02/2005"), Relevancia.ALTA));
+//			materiales.add( new Libro( 3, "Python", 15.0, 18.0, 108, formatoFecha.parse("05/04/2010"), Relevancia.BAJA));
+//			materiales.add( new Libro( 4, "C", 30.0, 16.0, 250, formatoFecha.parse("10/02/2010"), Relevancia.ALTA));
+//			materiales.add( new Libro( 5, "hola", 24.0, 32.0, 545, formatoFecha.parse("05/02/2018"), Relevancia.BAJA));
+//			materiales.add( new Libro( 6, "Libro6", 28.0, 54.0, 302, formatoFecha.parse("05/12/2010"), Relevancia.MEDIA));
+//			materiales.add( new Video( 7, "El escape del paralítico", 28.0, 360, formatoFecha.parse("15/12/2000"), Relevancia.MEDIA));
+//			materiales.add( new Video( 8, "El regreso", 15.0, 625, formatoFecha.parse("25/12/2010"), Relevancia.BAJA));
+//			materiales.add( new Video( 9, "Java", 30.0, 145, formatoFecha.parse("23/02/2014"), Relevancia.ALTA));
+//			materiales.add( new Video( 10, "Eclipse", 45.0, 38, formatoFecha.parse("27/03/2017"), Relevancia.BAJA));
+//			materiales.add( new Video( 11, "Video11", 12.0, 60, formatoFecha.parse("14/01/2016"), Relevancia.MEDIA));
+//		} catch (ParseException e) {
+//			
+//			e.printStackTrace();
+//		}
 		
 //		TODO deberia agregar todos los materiales que hay en el almacenamiento
 		
@@ -227,7 +229,7 @@ public class BusquedaPanel {
 					if(ordenados.materiales().isEmpty()) {
 						JOptionPane.showConfirmDialog(ventana, "No se ha encontrado ninún material que coincida con los criterios de búsqueda.","No se encontró material", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
 					}else {
-						mostrarMaterialesTabla(ventana, (ArrayList<MaterialCapacitacion>) ordenados.materiales());
+						mostrarMaterialesTabla((ArrayList<MaterialCapacitacion>) ordenados.materiales());
 					}
 				}catch(NumberFormatException nfex) {
 					System.out.println("Puso otra cosa en un campo numérico");
@@ -250,11 +252,13 @@ public class BusquedaPanel {
         ventana.setVisible(true);
 	}
 
-	public static void mostrarMaterialesTabla(JFrame ventana, ArrayList<MaterialCapacitacion> materiales) {
+	private void mostrarMaterialesTabla(ArrayList<MaterialCapacitacion> materiales) {
 		JPanel panel = new JPanel(new GridBagLayout());
 		GridBagConstraints gridConst = new GridBagConstraints();
 		GridBagConstraints constraints = new GridBagConstraints();
-		tableModel = new MaterialesTablaModelo();
+		MaterialesTablaModelo tableModel = new MaterialesTablaModelo();
+		JScrollPane scrollPane;
+		JTable tabla;
 		JButton boton;
 		
 		
@@ -300,7 +304,7 @@ public class BusquedaPanel {
 		constraints.gridy = 3;
 		constraints.weighty = 0.25;
 		constraints.anchor = GridBagConstraints.EAST;
-		boton.addActionListener( a -> busqueda(ventana));
+		boton.addActionListener( a -> busqueda());
 		panel.add(boton,constraints);
 		
 		boton = new JButton("Agregar a la lista de deseos");
@@ -311,11 +315,10 @@ public class BusquedaPanel {
 				JOptionPane.showConfirmDialog(ventana, "Por favor seleccione un material de la tabla.", "Seleccione un material", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 			}else {
 				MaterialCapacitacion material = tableModel.getMateriales().get(tabla.getSelectedRow());
-				ListaDeseosController listaController = new ListaDeseosController();
-				listaController.agregar(material);
+				listaPanel.getController().agregar(material);
 				if(JOptionPane.showConfirmDialog(ventana, "Se agregó el "+(material.esLibro()? "Libro": "Video")+": "+material.getTitulo()+" a la lista de deseos. \n ¿Desea ver la lista de deseados?",
 						"Agregado a lista de deseados", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE) ==0) {
-					ListaDeseosPanel.mostrarLista(ventana, listaController);
+					listaPanel.mostrarLista();
 				}
 			}
 			

@@ -11,21 +11,27 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale.LanguageRange;
 
 import javax.swing.*;
 
-import frsf.isi.died.tp.app.controller.LibroController;
 import frsf.isi.died.tp.app.controller.VideoController;
-import frsf.isi.died.tp.app.interfaz.tabla.LibroTablaModelo;
+import frsf.isi.died.tp.app.dao.MaterialCapacitacionDao;
 import frsf.isi.died.tp.app.interfaz.tabla.VideoTablaModelo;
-import frsf.isi.died.tp.modelo.productos.Libro;
 import frsf.isi.died.tp.modelo.productos.Relevancia;
 import frsf.isi.died.tp.modelo.productos.Video;
 
 public class ABMVideo {
 	
-	public static void agregarVideo(JFrame ventana) {
+	private VideoController controller;
+	private JFrame ventana;
+	
+	public ABMVideo(MaterialCapacitacionDao dao, JFrame ventana) {
+		this.controller = new VideoController(dao);
+		this.ventana = ventana;
+	}
+	
+	
+	public void agregarVideo() {
 		
 		JPanel panel = new JPanel(new GridBagLayout());
 		GridBagConstraints constraints = new GridBagConstraints();
@@ -177,15 +183,15 @@ public class ABMVideo {
 				
 				relev = (Relevancia)lRelevancia.getSelectedItem();
 				
-				if(JOptionPane.showConfirmDialog(ventana, "¿Está seguro que desea guardar el nuevo viedo con los datos ingresados?","Confirmacion",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE)==0) {
-					VideoController.agregarVideo(id, titulo, costo, duracion, fechaPublicacion, relev);
+				if(JOptionPane.showConfirmDialog(ventana, "¿Está seguro que desea guardar el nuevo video con los datos ingresados?","Confirmacion",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE)==0) {
+					controller.agregarVideo(id, titulo, costo, duracion, fechaPublicacion, relev);
 //					Antes quedaba en la misma pantalla y vaciaba todo.
 //					tID.setText("");tTitulo.setText("");tCosto.setText("");
 //					tDuracion.setText("");
 //					tFecha.setText("");	
 //					lRelevancia.setSelectedItem(Relevancia.MEDIA);
 //					Ahora muestra la tabla con todos los libros
-					mostrarTabla(ventana);
+					mostrarTabla();
 				}
 				
 			}catch(NumberFormatException nfex) {
@@ -234,7 +240,7 @@ public class ABMVideo {
 		
 	}
 	
-	private static void mostrarTabla(JFrame ventana) {
+	private void mostrarTabla() {
 		
 		JPanel panel = new JPanel(new GridBagLayout());
 		VideoTablaModelo tableModel = new VideoTablaModelo();
@@ -301,7 +307,7 @@ public class ABMVideo {
 		constraints.gridwidth=1;
 		constraints.weightx=0;
 		constraints.anchor=GridBagConstraints.CENTER;
-		agregar.addActionListener(a -> agregarVideo(ventana));
+		agregar.addActionListener(a -> agregarVideo());
 		panel.add(agregar,constraints);
 		
 		constraints.gridheight=1;
@@ -318,7 +324,7 @@ public class ABMVideo {
 		ventana.setVisible(true);
 	}
 	
-	public static void editarVideo(JFrame ventana) {
+	public void editarVideo() {
 		
 		JPanel panel = new JPanel();
 		JLabel encabezado = new JLabel("Editar Video"), errorID = new JLabel();
@@ -361,10 +367,9 @@ public class ABMVideo {
 					errorID.setText("Debe ingresar un ID");
 				}else {
 					//buscar video con id Integer.parseInt(tID.getText());
-					//creo un nuevo video para simular la busqueda
-					Video nuevo = VideoController.buscarVideo(Integer.parseInt(tID.getText()));
+					Video nuevo = controller.buscarVideo(Integer.parseInt(tID.getText()));
 					System.out.println("Video a editar: "+nuevo);
-					edicionVideo(nuevo, ventana);
+					edicionVideo(nuevo);
 				}
 			}catch(Exception e) {
 				
@@ -384,9 +389,9 @@ public class ABMVideo {
 		ventana.setVisible(true);
 	}
 
-	private static void edicionVideo(Video video, JFrame ventana) {
+	private void edicionVideo(Video video) {
 		JPanel panel = new JPanel();
-		JLabel encabezado = new JLabel("Editar video"), errorID = new JLabel(), errorTitulo = new JLabel(),
+		JLabel encabezado = new JLabel("Editar video"), errorTitulo = new JLabel(),
 				errorCosto = new JLabel(), errorDuracion = new JLabel(), errorFecha = new JLabel();
 		JTextField tID = new JTextField(20), tTitulo = new JTextField(20), tCosto = new JTextField(20),
 				tDuracion = new JTextField(20), tFecha = new JTextField(20);
@@ -474,7 +479,7 @@ public class ABMVideo {
 		
 		constraints.gridx=0;
 		constraints.gridy=7;
-		cancelar.addActionListener(a -> Principal.mostrarInterfaz(ventana));
+		cancelar.addActionListener(a -> this.editarVideo());
 		panel.add(cancelar, constraints);
 		
 		constraints.gridx=3;
@@ -483,26 +488,18 @@ public class ABMVideo {
 		aceptar.addActionListener(a -> {
 			System.out.println("Pide confrimacion y guarda los cambios.");
 
-			Integer id;
 			String titulo;
 			Double costo = 0.0;
 			Integer duracion = 0;
 			Date fechaPublicacion = Calendar.getInstance().getTime();
 			Relevancia relevancia;
 			
-			errorID.setText("");
 			errorTitulo.setText("");
 			errorCosto.setText("");
 			errorDuracion.setText("");
 			errorFecha.setText("");
 			try {
-				if(tID.getText().isEmpty()){
-					System.out.println("El ID no puede ser vacio");
-					errorID.setText("Debe ingresar un ID");
-					return;
-				}else {
-					id = Integer.parseInt(tID.getText());
-				}
+				
 				if(tTitulo.getText().isEmpty()) {
 					System.out.println("El título no puede ser vacío");
 					errorTitulo.setText("Debe ingresar un título");
@@ -537,8 +534,8 @@ public class ABMVideo {
 				relevancia = (Relevancia)lRelevancia.getSelectedItem();
 			
 				if(JOptionPane.showConfirmDialog(ventana, "¿Está seguro que desea modificar el video con los datos ingresados?", "Confirmar edición", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE)==0){
-					VideoController.editarVideo(video, titulo, costo, duracion, fechaPublicacion, relevancia);
-					editarVideo(ventana);
+					controller.editarVideo(video, titulo, costo, duracion, fechaPublicacion, relevancia);
+					editarVideo();
 				}
 				
 			}catch(NumberFormatException nfex) {
@@ -553,11 +550,6 @@ public class ABMVideo {
 		panel.add(aceptar,constraints);
 		
 		constraints.gridx=3;
-		constraints.gridy=1;
-		errorID.setPreferredSize(new Dimension(230, 16));
-		errorID.setForeground(Color.red);
-		panel.add(errorID,constraints);
-
 		constraints.gridy=2;
 		errorTitulo.setPreferredSize(new Dimension(230, 16));
 		errorTitulo.setForeground(Color.red);
@@ -595,7 +587,7 @@ public class ABMVideo {
 		ventana.setVisible(true);
 	}
 
-	public static void eliminarVideo(JFrame ventana) {
+	public void eliminarVideo() {
 		
 		JPanel panel = new JPanel();
 		JLabel encabezado = new JLabel("Eliminar Video"), errorID = new JLabel();
@@ -639,9 +631,9 @@ public class ABMVideo {
 				}else {
 					//buscar video con id Integer.parseInt(tID.getText());
 					//creo un nuevo video para simular la busqueda
-					Video encontrado = VideoController.buscarVideo(Integer.parseInt(tID.getText()));
+					Video encontrado = controller.buscarVideo(Integer.parseInt(tID.getText()));
 					System.out.println("Video a eliminar: "+encontrado);
-					eliminacionVideo(encontrado,ventana);
+					eliminacionVideo(encontrado);
 				}
 			}catch(Exception e) {
 				
@@ -662,14 +654,14 @@ public class ABMVideo {
 		
 	}
 
-	private static void eliminacionVideo(Video video, JFrame ventana) {
+	private void eliminacionVideo(Video video) {
 		
 		JPanel panel = new JPanel();
 		JLabel encabezado = new JLabel("Eliminar video"), errorID = new JLabel(), errorTitulo = new JLabel(),
 				errorCosto = new JLabel(), errorPrecio = new JLabel(), errorPaginas = new JLabel(), 
 				errorFecha = new JLabel();
 		JTextField tID = new JTextField(20), tTitulo = new JTextField(20), tCosto = new JTextField(20),
-					tPrecio = new JTextField(20), tPaginas = new JTextField(20), tFecha = new JTextField(20),
+					tDuracion = new JTextField(20), tFecha = new JTextField(20),
 					lRelevancia = new JTextField(20);
 		JButton eliminar = new JButton("Eliminar"), cancelar = new JButton("Cancelar");
 		GridBagConstraints constraints = new GridBagConstraints();
@@ -740,9 +732,9 @@ public class ABMVideo {
 		constraints.gridx=2;
 		constraints.gridy=5;
 		constraints.gridwidth=1;
-		tPaginas.setText(video.getDuracion().toString());
-		tPaginas.setEditable(false);
-		panel.add(tPaginas, constraints);
+		tDuracion.setText(video.getDuracion().toString());
+		tDuracion.setEditable(false);
+		panel.add(tDuracion, constraints);
 		
 		constraints.gridx=0;
 		constraints.gridy=6;
@@ -771,7 +763,7 @@ public class ABMVideo {
 		
 		constraints.gridx=0;
 		constraints.gridy=9;
-		cancelar.addActionListener(a -> ABMVideo.eliminarVideo(ventana));
+		cancelar.addActionListener(a -> this.eliminarVideo());
 		panel.add(cancelar, constraints);
 		
 		constraints.gridx=3;
@@ -781,8 +773,8 @@ public class ABMVideo {
 			System.out.println("Pide confrimacion y elimina el video.");
 			
 			if(JOptionPane.showConfirmDialog(ventana, "¿Está seguro que desea eliminar el video con los datos ingresados?", "Confirmar edición", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE)==0){
-				VideoController.eliminarVideo(video);
-				eliminarVideo(ventana);
+				controller.eliminarVideo(video);
+				eliminarVideo();
 			}				
 				
 		});

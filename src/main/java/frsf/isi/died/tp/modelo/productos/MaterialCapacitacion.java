@@ -5,7 +5,6 @@
  */
 package frsf.isi.died.tp.modelo.productos;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 

@@ -3,18 +3,14 @@ package frsf.isi.died.tp.app.interfaz;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Image;
-import java.awt.Insets;
-import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
 
 import javax.swing.*;
-import javax.swing.text.html.ImageView;
 
 import frsf.isi.died.tp.app.controller.MenuController;
 import frsf.isi.died.tp.app.controller.OpcionesMenu;
+import frsf.isi.died.tp.app.dao.MaterialCapacitacionDao;
+import frsf.isi.died.tp.app.dao.MaterialCapacitacionDaoDefault;
 
 
 
@@ -36,6 +32,8 @@ public class Principal {
         JMenu menu;
         JMenuItem menuItem;
         JMenu submenu;
+        MaterialCapacitacionDao dao = new MaterialCapacitacionDaoDefault();
+        MenuController controller = new MenuController(dao, ventana);
         
 //        configuracion del panel (imagen central)
         ventana.setContentPane(panel);
@@ -71,26 +69,26 @@ public class Principal {
         submenu = new JMenu("Libro..");
         menu.add(submenu);
         menuItem = new JMenuItem("Agregar");
-        menuItem.addActionListener(e -> MenuController.opcion(OpcionesMenu.AGREGAR_LIBRO, ventana));
+        menuItem.addActionListener(e -> controller.opcion(OpcionesMenu.AGREGAR_LIBRO, ventana));
         //menuItem.addActionListener(a -> );
         submenu.add(menuItem);
         menuItem = new JMenuItem("Editar");
-        menuItem.addActionListener(e -> MenuController.opcion(OpcionesMenu.EDITAR_LIBRO, ventana));
+        menuItem.addActionListener(e -> controller.opcion(OpcionesMenu.EDITAR_LIBRO, ventana));
         submenu.add(menuItem);
         menuItem = new JMenuItem("Eliminar");
-        menuItem.addActionListener(e -> MenuController.opcion(OpcionesMenu.ELIMINAR_LIBRO, ventana));
+        menuItem.addActionListener(e -> controller.opcion(OpcionesMenu.ELIMINAR_LIBRO, ventana));
         submenu.add(menuItem);
         
         submenu = new JMenu("Video..");
         menu.add(submenu);
         menuItem = new JMenuItem("Agregar");
-        menuItem.addActionListener(e -> MenuController.opcion(OpcionesMenu.AGREGAR_VIDEO, ventana));
+        menuItem.addActionListener(e -> controller.opcion(OpcionesMenu.AGREGAR_VIDEO, ventana));
         submenu.add(menuItem);
         menuItem = new JMenuItem("Editar");
-        menuItem.addActionListener(e -> MenuController.opcion(OpcionesMenu.EDITAR_VIDEO, ventana));
+        menuItem.addActionListener(e -> controller.opcion(OpcionesMenu.EDITAR_VIDEO, ventana));
         submenu.add(menuItem);
         menuItem = new JMenuItem("Eliminar");
-        menuItem.addActionListener(e -> MenuController.opcion(OpcionesMenu.ELIMINAR_VIDEO, ventana));
+        menuItem.addActionListener(e -> controller.opcion(OpcionesMenu.ELIMINAR_VIDEO, ventana));
         submenu.add(menuItem);
         
         
@@ -98,11 +96,11 @@ public class Principal {
         menuBar.add(menu);
         
         menuItem = new JMenuItem("Búsqueda");
-        menuItem.addActionListener(e -> MenuController.opcion(OpcionesMenu.BUSQUEDA, ventana));
+        menuItem.addActionListener(e -> controller.opcion(OpcionesMenu.BUSQUEDA, ventana));
         menu.add(menuItem);
         
         menuItem = new JMenuItem("Lista de deseos");
-        menuItem.addActionListener(e -> MenuController.opcion(OpcionesMenu.WHISLIST, ventana));
+        menuItem.addActionListener(e -> controller.opcion(OpcionesMenu.WHISLIST, ventana));
         menu.add(menuItem);
         
         ventana.setJMenuBar(menuBar);
