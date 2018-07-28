@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import frsf.isi.died.tp.app.dao.util.CsvRecord;
 import frsf.isi.died.tp.util.Ordenable;
 
 /**
@@ -22,12 +23,12 @@ import frsf.isi.died.tp.util.Ordenable;
  * Proyecto GitHub:
  * https://github.com/gezdiaz/taller01.git
  */
-public abstract class MaterialCapacitacion implements Ordenable, Comparable<MaterialCapacitacion>{
+public abstract class MaterialCapacitacion implements Ordenable, Comparable<MaterialCapacitacion>, CsvRecord{
 	protected Integer id;
-	private Integer calificacion;
-	private Integer votantes;
-	private Date fechaPublicacion;
-	private String tema;
+	protected Integer calificacion;
+	protected Integer votantes;
+	protected Date fechaPublicacion;
+	protected String tema;
 	
 	public String getTema() {
 		return tema;
@@ -37,7 +38,7 @@ public abstract class MaterialCapacitacion implements Ordenable, Comparable<Mate
 		this.tema = tema;
 	}
 
-	private Relevancia relevancia;
+	protected Relevancia relevancia;
 	
 	public Date getFechaPublicacion() {
 		return fechaPublicacion;
@@ -199,5 +200,14 @@ public abstract class MaterialCapacitacion implements Ordenable, Comparable<Mate
 		}
 	}
 	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((titulo == null) ? 0 : titulo.hashCode());
+		return result;
+	}
+
+
 
 }

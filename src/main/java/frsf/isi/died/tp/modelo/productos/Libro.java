@@ -5,8 +5,11 @@
  */
 package frsf.isi.died.tp.modelo.productos;
 
+
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -120,6 +123,38 @@ public class Libro extends MaterialCapacitacion {
 		return costo + (precioCompra * (1.0 +(0.03 * paginas/150)));
 	}
 
-	
+	@Override
+	public boolean equals(Object obj) {
+		return obj instanceof Libro && super.equals(obj) ;
+	}
+
+	@Override
+	public List<String> asCsvRow() {
+		List<String> lista = new ArrayList<String>();
+		lista.add(this.id+"");
+		lista.add("\""+this.titulo.toString()+"\"");
+		lista.add(this.costo.toString());
+		lista.add(this.paginas.toString());
+		lista.add(this.precioCompra.toString());
+		lista.add(this.fechaPublicacion.toString());
+		lista.add(this.calificacion.toString());
+		lista.add(this.relevancia.toString());
+		lista.add(this.votantes.toString());
+		return lista;
+	}
+
+	@Override
+	public void loadFromStringRow(List<String> datos) {
+		this.id =Integer.valueOf(datos.get(0));
+		this.titulo = datos.get(1);
+		this.costo =Double.valueOf(datos.get(2));
+		this.paginas =Integer.valueOf(datos.get(3));
+		this.precioCompra =Double.valueOf(datos.get(4));
+		this.fechaPublicacion=new Date();
+		this.calificacion=Integer.valueOf(datos.get(6));
+		this.relevancia=Relevancia.valueOf(datos.get(7));
+		this.votantes=Integer.valueOf(datos.get(8));
+	}
+
 
 }
