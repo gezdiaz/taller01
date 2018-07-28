@@ -3,6 +3,7 @@ package frsf.isi.died.tp.modelo;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 import frsf.isi.died.tp.estructuras.Arbol;
@@ -86,14 +87,14 @@ public class BibliotecaABB implements Biblioteca {
 		return this.materiales.rango(costoMinimo, costoMax);
 	}
 	
-	private void ordenarPorPrecio() {
+	public void ordenarPorPrecio() {
 		// Creo un nuevo arbol que ordena comparando por PRECIO.
 		// Obtengo la lista del �rbol acutal.
 		// Paso cada elemento de la lista al nuevo �rbol.
 		// ahora el nuevo �rbol cuando lo recorra ordenado, mostrar� los 
 		// datos ordenados por PRECIO la pr�xima vez que se invoque en 
 		// BibliotecaABB el m�todo imprimir() o materiales()
-		
+		if(materiales.esVacio()) return; //Si no hay materiales no tengo que ordenar nada
 		List<MaterialCapacitacion> lista = materiales.inOrden();
 		Arbol nuevoArbol = new ArbolBinarioBusqueda((m1,m2)->m1.precio().compareTo(m2.precio()));
 		for(MaterialCapacitacion m: lista) {
@@ -103,20 +104,72 @@ public class BibliotecaABB implements Biblioteca {
 		
 	}
 	
-	private void ordenarPorTitulo() {
+	public void ordenarPorTitulo() {
 		// Creo un nuevo arbol que ordena comparando por titulo.
 		// Obtengo la lista del �rbol acutal.
 		// Paso cada elemento de la lista al nuevo �rbol.
 		// ahora el nuevo �rbol cuando lo recorra ordenado, mostrar� los 
 		// datos ordenados por titulo la pr�xima vez que se invoque en 
 		// BibliotecaABB el m�todo imprimir() o materiales()
-
+		if(materiales.esVacio()) return; //Si no hay materiales no tengo que ordenar nada
 		List<MaterialCapacitacion> lista = materiales.inOrden();
 		Arbol nuevoArbol = new ArbolBinarioBusqueda((m1,m2)->m1.getTitulo().compareTo(m2.getTitulo()));
 		for(MaterialCapacitacion m: lista) {
 			nuevoArbol.add(m);
 		}
 		materiales = nuevoArbol;
+	}
+	
+	public void ordenarPorFecha() {
+		if(materiales.esVacio()) return; //Si no hay materiales no tengo que ordenar nada
+		List<MaterialCapacitacion> lista = materiales.inOrden();
+		Arbol nuevoArbol = new ArbolBinarioBusqueda((m1,m2)->m1.getFechaPublicacion().compareTo(m2.getFechaPublicacion()));
+		for(MaterialCapacitacion m: lista) {
+			nuevoArbol.add(m);
+		}
+		materiales = nuevoArbol;
+	}
+	
+	public void ordenarPorCalificacion() {	
+		if(materiales.esVacio()) return; //Si no hay materiales no tengo que ordenar nada
+		List<MaterialCapacitacion> lista = materiales.inOrden();
+		Arbol nuevoArbol = new ArbolBinarioBusqueda((m1,m2)->m1.getCalificacion().compareTo(m2.getCalificacion()));
+		for(MaterialCapacitacion m: lista) {
+			nuevoArbol.add(m);
+		}
+		materiales = nuevoArbol;
+	}
+	
+	public void ordenarPorRelevancia() {
+		if(materiales.esVacio()) return; //Si no hay materiales no tengo que ordenar nada
+		List<MaterialCapacitacion> lista = materiales.inOrden();
+		Arbol nuevoArbol = new ArbolBinarioBusqueda((m1,m2)->m1.getRelevancia().compareTo(m2.getRelevancia()));
+		for(MaterialCapacitacion m: lista) {
+			nuevoArbol.add(m);
+		}
+		materiales = nuevoArbol;
+	}
+
+	public void agregar(ArrayList<MaterialCapacitacion> materiales) {
+		for(MaterialCapacitacion material: materiales) {
+			this.agregar(material);
+		}		
+	}
+	
+	public ArrayList<MaterialCapacitacion> buscar(String titulo, Integer califMenor, Integer califMayor, Date fechaMenor, Date fechaMayor){
+		ArrayList<MaterialCapacitacion> lista = (ArrayList<MaterialCapacitacion>) this.materiales.inOrden();
+		
+		if(titulo != null) {
+			lista.removeIf(mat -> !mat.getTitulo().toLowerCase().contains(titulo.toLowerCase()));
+		}
+		if(califMenor != null && califMayor != null) {
+			lista.removeIf(mat -> mat.getCalificacion() < califMenor || mat.getCalificacion() > califMayor);
+		}
+		if(fechaMenor != null && fechaMayor != null) {
+			lista.removeIf(mat -> mat.getFechaPublicacion().getTime() < fechaMenor.getTime() || mat.getFechaPublicacion().getTime() > fechaMayor.getTime());
+		}
+		
+		return lista;
 	}
 
 }

@@ -23,7 +23,7 @@ public class VideoTablaModelo extends AbstractTableModel {
 		return videos;
 	}
 
-	public void setVideos(List<Video> Videos) {
+	public void setVideos(List<Video> videos) {
 		this.videos = videos;
 	}
 

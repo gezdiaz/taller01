@@ -5,6 +5,7 @@ import javax.swing.JFrame;
 import frsf.isi.died.tp.app.interfaz.ABMLibro;
 import frsf.isi.died.tp.app.interfaz.ABMVideo;
 import frsf.isi.died.tp.app.interfaz.BusquedaPanel;
+import frsf.isi.died.tp.app.interfaz.ListaDeseosPanel;
 
 public class MenuController {
 
@@ -17,7 +18,7 @@ public class MenuController {
 		case ELIMINAR_VIDEO: ABMVideo.eliminarVideo(ventana); break;
 		case EDITAR_VIDEO: ABMVideo.editarVideo(ventana); break;
 		case BUSQUEDA: BusquedaPanel.busqueda(ventana); break;
-		case WHISLIST: System.out.println("Abre lista de deseos");
+		case WHISLIST: ListaDeseosPanel.mostrarLista(ventana, null); break;
 		}
 	}
 	
