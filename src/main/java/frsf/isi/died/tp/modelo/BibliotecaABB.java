@@ -160,7 +160,7 @@ public class BibliotecaABB implements Biblioteca {
 		ArrayList<MaterialCapacitacion> lista = (ArrayList<MaterialCapacitacion>) this.materiales.inOrden();
 		
 		if(titulo != null) {
-			lista.removeIf(mat -> !mat.getTitulo().contains(titulo));
+			lista.removeIf(mat -> !mat.getTitulo().toLowerCase().contains(titulo.toLowerCase()));
 		}
 		if(califMenor != null && califMayor != null) {
 			lista.removeIf(mat -> mat.getCalificacion() < califMenor || mat.getCalificacion() > califMayor);

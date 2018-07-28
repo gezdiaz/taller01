@@ -7,7 +7,7 @@ import javax.swing.table.AbstractTableModel;
 
 import frsf.isi.died.tp.modelo.productos.*;
 
-public class BusquedaTablaModelo extends AbstractTableModel {
+public class MaterialesTablaModelo extends AbstractTableModel {
 
 	private List<MaterialCapacitacion> materiales;
 	private String[] columnas = {"ID","Tipo","Título","Costo publicación","Precio suscripción",
@@ -24,6 +24,10 @@ public class BusquedaTablaModelo extends AbstractTableModel {
 
 	public void setMateriales(List<MaterialCapacitacion> materiales) {
 		this.materiales = materiales;
+	}
+	
+	public List<MaterialCapacitacion> getMateriales(){
+		return this.materiales;
 	}
 
 	@Override

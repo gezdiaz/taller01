@@ -13,17 +13,19 @@ import javax.swing.*;
 
 import org.junit.experimental.theories.Theories;
 
+import frsf.isi.died.tp.app.controller.ListaDeseosController;
 import frsf.isi.died.tp.app.interfaz.tabla.*;
 import frsf.isi.died.tp.modelo.BibliotecaABB;
 import frsf.isi.died.tp.modelo.productos.Libro;
 import frsf.isi.died.tp.modelo.productos.MaterialCapacitacion;
+import frsf.isi.died.tp.modelo.productos.Relevancia;
 import frsf.isi.died.tp.modelo.productos.Video;
 
 public class BusquedaPanel {
 	
 	private static JScrollPane scrollPane;
 	private static JTable tabla;
-	private static BusquedaTablaModelo tableModel;
+	private static MaterialesTablaModelo tableModel;
 	
 	public static void busqueda(JFrame ventana) {
 		JPanel panel = new JPanel(new GridBagLayout());
@@ -36,17 +38,24 @@ public class BusquedaPanel {
 		JComboBox<TipoOrdenamiento> combo;
 //		variable temporal para simular la busqueda
 		ArrayList<MaterialCapacitacion> materiales = new ArrayList<MaterialCapacitacion>();
-		materiales.add( new Libro( 1, "Libro1", 10.0, 20.0, 154));
-		materiales.add( new Libro( 2, "Java", 20.0, 24.0, 361));
-		materiales.add( new Libro( 3, "Python", 15.0, 18.0, 108));
-		materiales.add( new Libro( 4, "C", 30.0, 16.0, 250));
-		materiales.add( new Libro( 5, "hola", 24.0, 32.0, 545));
-		materiales.add( new Libro( 6, "Libro6", 28.0, 54.0, 302));
-		materiales.add( new Video( 7, "El escape del paralítico", 28.0, 360));
-		materiales.add( new Video( 8, "El regreso", 15.0, 625));
-		materiales.add( new Video( 9, "Java", 30.0, 145));
-		materiales.add( new Video( 10, "Eclipse", 45.0, 38));
-		materiales.add( new Video( 11, "Video11", 12.0, 60));
+		try {
+			SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
+			materiales.add( new Libro( 1, "Libro1", 10.0, 20.0, 154, formatoFecha.parse("05/02/2010"), Relevancia.MEDIA));
+			materiales.add( new Libro( 2, "Java", 20.0, 24.0, 361, formatoFecha.parse("05/02/2005"), Relevancia.ALTA));
+			materiales.add( new Libro( 3, "Python", 15.0, 18.0, 108, formatoFecha.parse("05/04/2010"), Relevancia.BAJA));
+			materiales.add( new Libro( 4, "C", 30.0, 16.0, 250, formatoFecha.parse("10/02/2010"), Relevancia.ALTA));
+			materiales.add( new Libro( 5, "hola", 24.0, 32.0, 545, formatoFecha.parse("05/02/2018"), Relevancia.BAJA));
+			materiales.add( new Libro( 6, "Libro6", 28.0, 54.0, 302, formatoFecha.parse("05/12/2010"), Relevancia.MEDIA));
+			materiales.add( new Video( 7, "El escape del paralítico", 28.0, 360, formatoFecha.parse("15/12/2000"), Relevancia.MEDIA));
+			materiales.add( new Video( 8, "El regreso", 15.0, 625, formatoFecha.parse("25/12/2010"), Relevancia.BAJA));
+			materiales.add( new Video( 9, "Java", 30.0, 145, formatoFecha.parse("23/02/2014"), Relevancia.ALTA));
+			materiales.add( new Video( 10, "Eclipse", 45.0, 38, formatoFecha.parse("27/03/2017"), Relevancia.BAJA));
+			materiales.add( new Video( 11, "Video11", 12.0, 60, formatoFecha.parse("14/01/2016"), Relevancia.MEDIA));
+		} catch (ParseException e) {
+			
+			e.printStackTrace();
+		}
+		
 //		TODO deberia agregar todos los materiales que hay en el almacenamiento
 		
 		label = new JLabel("Búsqueda");	
@@ -58,7 +67,7 @@ public class BusquedaPanel {
 		label.setFont(new Font(label.getFont().getName(), label.getFont().getStyle(), 40));
 		panel.add(label,constraints);
 
-		label = new JLabel("Criterio de búsqueda:");
+		label = new JLabel("Criterios de búsqueda:");
 		constraints.gridx=0;
 		constraints.gridy=3;
 		constraints.gridwidth=1;
@@ -245,12 +254,12 @@ public class BusquedaPanel {
 		JPanel panel = new JPanel(new GridBagLayout());
 		GridBagConstraints gridConst = new GridBagConstraints();
 		GridBagConstraints constraints = new GridBagConstraints();
-		tableModel = new BusquedaTablaModelo();
+		tableModel = new MaterialesTablaModelo();
 		JButton boton;
 		
 		
 //		TITULO VENTANA
-		JLabel lblTitulo = new JLabel("Lista de materiales");
+		JLabel lblTitulo = new JLabel("Resultado de la búsqueda: ");
 		constraints.gridx = 1;
 		constraints.gridy = 0;
 		constraints.gridwidth = 7;
@@ -268,7 +277,7 @@ public class BusquedaPanel {
 		scrollPane= new JScrollPane(tabla);
 		
 		gridConst.gridx=0;
-		gridConst.gridwidth=2;	
+		gridConst.gridwidth=3;	
 		gridConst.gridy=2;
 		gridConst.weighty=0.5;
 		gridConst.weightx=1;
@@ -287,13 +296,31 @@ public class BusquedaPanel {
 		panel.add(boton,constraints);
 		
 		boton = new JButton("Atrás");
-		constraints.gridx = 1;
+		constraints.gridx = 2;
 		constraints.gridy = 3;
 		constraints.weighty = 0.25;
 		constraints.anchor = GridBagConstraints.EAST;
 		boton.addActionListener( a -> busqueda(ventana));
 		panel.add(boton,constraints);
 		
+		boton = new JButton("Agregar a la lista de deseos");
+		constraints.gridx=1;
+		constraints.anchor=GridBagConstraints.CENTER;
+		boton.addActionListener(a -> {
+			if(tabla.getSelectedRow()==-1) {
+				JOptionPane.showConfirmDialog(ventana, "Por favor seleccione un material de la tabla.", "Seleccione un material", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+			}else {
+				MaterialCapacitacion material = tableModel.getMateriales().get(tabla.getSelectedRow());
+				ListaDeseosController listaController = new ListaDeseosController();
+				listaController.agregar(material);
+				if(JOptionPane.showConfirmDialog(ventana, "Se agregó el "+(material.esLibro()? "Libro": "Video")+": "+material.getTitulo()+" a la lista de deseos. \n ¿Desea ver la lista de deseados?",
+						"Agregado a lista de deseados", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE) ==0) {
+					ListaDeseosPanel.mostrarLista(ventana, listaController);
+				}
+			}
+			
+		});
+		panel.add(boton, constraints);
 		
 		ventana.setContentPane(panel);
 		ventana.pack();
