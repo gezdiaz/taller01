@@ -31,7 +31,6 @@ public class ABMLibro {
 	}
 	
 	
-	
 	public void agregarLibro() {
 		JPanel panel = new JPanel(new GridBagLayout());
 		GridBagConstraints constraints = new GridBagConstraints();
