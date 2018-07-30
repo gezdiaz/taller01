@@ -57,7 +57,6 @@ public class MaterialCapacitacionDaoDefault implements MaterialCapacitacionDao{
 		try {
 			dataSource.agregarFilaAlFinal("libros.csv", mat);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -70,7 +69,6 @@ public class MaterialCapacitacionDaoDefault implements MaterialCapacitacionDao{
 		try {
 			dataSource.agregarFilaAlFinal("videos.csv", mat);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -95,13 +93,11 @@ public class MaterialCapacitacionDaoDefault implements MaterialCapacitacionDao{
 
 	@Override
 	public List<MaterialCapacitacion> listaMateriales() {
-		// TODO Auto-generated method stub
 		return GRAFO_MATERIAL.listaVertices();
 	}
 
 	@Override
 	public MaterialCapacitacion findById(Integer id) {
-		// TODO Auto-generated method stub
 		for(MaterialCapacitacion mat : GRAFO_MATERIAL.listaVertices()) {
 			if(mat.getId().equals(id)) return mat;
 		}
@@ -128,7 +124,6 @@ public class MaterialCapacitacionDaoDefault implements MaterialCapacitacionDao{
 		try {
 			dataSource.agregarFilaAlFinal("aristas.csv", fila);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

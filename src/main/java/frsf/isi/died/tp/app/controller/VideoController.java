@@ -1,5 +1,6 @@
 package frsf.isi.died.tp.app.controller;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -15,6 +16,9 @@ public class VideoController {
 		this.dao = dao;
 	}
 	
+	public ArrayList<Video> listaVideos(){
+		return (ArrayList<Video>) dao.listaVideos();
+	}
 	
 	public Video agregarVideo(Integer id, String titulo, Double costo, Integer duracion, Date fechaPublicacion, Relevancia relev) {
 		Video nuevo = new Video(id, titulo, costo, duracion, fechaPublicacion, relev);
