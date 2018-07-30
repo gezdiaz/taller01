@@ -63,7 +63,7 @@ public class Principal {
         menu.add(menuItem);
         
         
-		menu = new JMenu("Materiales Capacaiatcion");
+		menu = new JMenu("Materiales Capacitación");
 		menuBar.add(menu);
 		
         submenu = new JMenu("Libro..");
@@ -107,7 +107,7 @@ public class Principal {
         
         //configuracion final de la ventana
         ventana.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-		ventana.setTitle("Sistema de suscripcion a biblioteca");
+		ventana.setTitle("Sistema de suscripción a biblioteca");
 //		Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
 //      ventana.setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
         ventana.pack();
@@ -117,7 +117,7 @@ public class Principal {
 	}
 	
 	private static void acercaDe(JFrame ventana) {
-		JOptionPane.showConfirmDialog(ventana, "TP de DIED, Gastón Díaz y Joquín Vacca", "Acerca de", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+		JOptionPane.showConfirmDialog(ventana, "Trabajo práctico - DIED 2018\n                  Grupo N° 7\nGastón Díaz y Joaquín Vacca", "Acerca de", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
 	}
 
 

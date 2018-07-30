@@ -3,6 +3,7 @@ package frsf.isi.died.tp.app.interfaz;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -60,6 +61,7 @@ public class BusquedaPanel {
 		
 //		TODO deberia agregar todos los materiales que hay en el almacenamiento
 		
+		constraints.insets=new Insets(5, 5, 5, 5);
 		label = new JLabel("Búsqueda");	
 		constraints.gridx=0;
 		constraints.gridy=0;
@@ -70,6 +72,8 @@ public class BusquedaPanel {
 		panel.add(label,constraints);
 
 		label = new JLabel("Criterios de búsqueda:");
+		constraints.fill=GridBagConstraints.HORIZONTAL;
+		constraints.anchor=GridBagConstraints.CENTER;
 		constraints.gridx=0;
 		constraints.gridy=3;
 		constraints.gridwidth=1;
@@ -227,17 +231,17 @@ public class BusquedaPanel {
 						break;
 					}
 					if(ordenados.materiales().isEmpty()) {
-						JOptionPane.showConfirmDialog(ventana, "No se ha encontrado ninún material que coincida con los criterios de búsqueda.","No se encontró material", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+						JOptionPane.showConfirmDialog(ventana, "No se ha encontrado ningún material que coincida con los criterios de búsqueda.","No se encontró material", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
 					}else {
 						mostrarMaterialesTabla((ArrayList<MaterialCapacitacion>) ordenados.materiales());
 					}
 				}catch(NumberFormatException nfex) {
 					System.out.println("Puso otra cosa en un campo numérico");
-					JOptionPane.showConfirmDialog(ventana, "El campo calificación debe llevar un número entre 1 y 100.", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);	
+					JOptionPane.showConfirmDialog(ventana, "El campo CALIFICACIÓN debe llevar un número entre 1 y 100.", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);	
 					//nfex.printStackTrace();
 				}catch(ParseException pex) {
 					System.out.println("La fecha está mal escrita");
-					JOptionPane.showConfirmDialog(ventana, "La fecha debe ser escrita con formato dd/mm/aaaa", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showConfirmDialog(ventana, "La fecha debe ser escrita con formato dd/MM/aaaa", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 				}
 			
 			

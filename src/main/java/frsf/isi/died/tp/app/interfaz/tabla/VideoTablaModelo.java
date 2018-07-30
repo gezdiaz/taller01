@@ -1,5 +1,6 @@
 package frsf.isi.died.tp.app.interfaz.tabla;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
@@ -54,7 +55,7 @@ public class VideoTablaModelo extends AbstractTableModel {
 			valor = this.videos.get(rowIndex).getDuracion();
 			break;
 		case 4:
-			valor = this.videos.get(rowIndex).getFechaPublicacion();
+			valor = (new SimpleDateFormat("dd/MM/yyyy")).format(this.videos.get(rowIndex).getFechaPublicacion());
 			break;
 		case 5:
 			valor = this.videos.get(rowIndex).getCalificacion();
