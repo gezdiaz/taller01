@@ -1,5 +1,6 @@
 package frsf.isi.died.tp.app.interfaz;
 
+import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -10,6 +11,10 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import javax.swing.*;
+
+import frsf.isi.died.tp.app.controller.GrafoController;
+import frsf.isi.died.tp.app.interfaz.grafo.ControlPanel;
+import frsf.isi.died.tp.app.interfaz.grafo.GrafoPanel;
 import frsf.isi.died.tp.app.dao.MaterialCapacitacionDao;
 import frsf.isi.died.tp.app.interfaz.tabla.*;
 import frsf.isi.died.tp.modelo.BibliotecaABB;
@@ -20,6 +25,10 @@ public class BusquedaPanel {
 	private MaterialCapacitacionDao dao;
 	private JFrame ventana;
 	private ListaDeseosPanel listaPanel;
+	ControlPanel controlPanel = new ControlPanel();
+	GrafoPanel grafoPanel = new GrafoPanel();
+	GrafoController grfController = new GrafoController(grafoPanel,controlPanel);
+	
 	
 	public BusquedaPanel(MaterialCapacitacionDao dao, JFrame ventana) {
 		this.dao = dao;
@@ -286,7 +295,7 @@ public class BusquedaPanel {
 		scrollPane= new JScrollPane(tabla);
 		
 		gridConst.gridx=0;
-		gridConst.gridwidth=3;	
+		gridConst.gridwidth=4;	
 		gridConst.gridy=2;
 		gridConst.weighty=0.5;
 		gridConst.weightx=1;
@@ -297,23 +306,29 @@ public class BusquedaPanel {
 		
 //		BOTONES
 		boton = new JButton("Inicio");
+		constraints.gridwidth = 1;
 		constraints.gridx = 0;
 		constraints.gridy = 3;
+		constraints.weightx = 0.25;
 		constraints.weighty = 0.25;
-		constraints.anchor = GridBagConstraints.WEST;
+		constraints.anchor = GridBagConstraints.CENTER;
 		boton.addActionListener( a -> Principal.mostrarInterfaz(ventana));
 		panel.add(boton,constraints);
 		
 		boton = new JButton("Atrás");
-		constraints.gridx = 2;
+		constraints.gridwidth = 1;
+		constraints.gridx = 3;
 		constraints.gridy = 3;
+		constraints.weightx = 0.25;
 		constraints.weighty = 0.25;
-		constraints.anchor = GridBagConstraints.EAST;
+		constraints.anchor = GridBagConstraints.CENTER;
 		boton.addActionListener( a -> busqueda());
 		panel.add(boton,constraints);
 		
 		boton = new JButton("Agregar a la lista de deseos");
+		constraints.gridwidth = 1;
 		constraints.gridx=1;
+		constraints.weightx = 0.25;
 		constraints.anchor=GridBagConstraints.CENTER;
 		boton.addActionListener(a -> {
 			if(tabla.getSelectedRow()==-1) {
@@ -327,6 +342,26 @@ public class BusquedaPanel {
 				}
 			}
 			
+		});
+		panel.add(boton, constraints);
+		
+		boton = new JButton("Agregar relación");
+		constraints.gridwidth = 1;
+		constraints.gridx=2;
+		constraints.weightx = 0.25;
+		constraints.anchor=GridBagConstraints.CENTER;
+		boton.addActionListener(a -> {
+			if(tabla.getSelectedRow()==-1) {
+				JOptionPane.showConfirmDialog(ventana, "Por favor seleccione un material de la tabla.", "Seleccione un material",  JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+			}else {
+				MaterialCapacitacion material = tableModel.getMateriales().get(tabla.getSelectedRow());
+//				JPanel panel = new JPanel(new BorderLayout());
+				ControlPanel controlPanel = new ControlPanel();
+				GrafoPanel grafoPanel = new GrafoPanel();
+				GrafoController grfController = new GrafoController(grafoPanel,controlPanel);
+				panel.add(controlPanel , BorderLayout.PAGE_START);
+				panel.add(grafoPanel , BorderLayout.CENTER);
+			}
 		});
 		panel.add(boton, constraints);
 		
