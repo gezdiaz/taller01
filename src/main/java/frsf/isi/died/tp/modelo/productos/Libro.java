@@ -6,6 +6,7 @@
 package frsf.isi.died.tp.modelo.productos;
 
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -136,7 +137,7 @@ public class Libro extends MaterialCapacitacion {
 		lista.add(this.costo.toString());
 		lista.add(this.paginas.toString());
 		lista.add(this.precioCompra.toString());
-		lista.add(this.fechaPublicacion.toString());
+		lista.add((new SimpleDateFormat("dd/MM/yyyy")).format(this.fechaPublicacion));
 		lista.add(this.calificacion.toString());
 		lista.add(this.relevancia.toString());
 		lista.add(this.votantes.toString());
@@ -145,15 +146,19 @@ public class Libro extends MaterialCapacitacion {
 
 	@Override
 	public void loadFromStringRow(List<String> datos) {
-		this.id =Integer.valueOf(datos.get(0));
-		this.titulo = datos.get(1).substring(1, datos.get(1).length()-1);
-		this.costo =Double.valueOf(datos.get(2));
-		this.paginas =Integer.valueOf(datos.get(3));
-		this.precioCompra =Double.valueOf(datos.get(4));
-		this.fechaPublicacion=new Date();
-		this.calificacion=Integer.valueOf(datos.get(6));
-		this.relevancia=Relevancia.valueOf(datos.get(7));
-		this.votantes=Integer.valueOf(datos.get(8));
+		try {
+			this.id = Integer.valueOf(datos.get(0));
+			this.titulo = datos.get(1).substring(1, datos.get(1).length() - 1);
+			this.costo = Double.valueOf(datos.get(2));
+			this.paginas = Integer.valueOf(datos.get(3));
+			this.precioCompra = Double.valueOf(datos.get(4));
+			this.fechaPublicacion = (new SimpleDateFormat("dd/MM/yyyy")).parse(datos.get(5)); 
+			this.calificacion = Integer.valueOf(datos.get(6));
+			this.relevancia = Relevancia.valueOf(datos.get(7));
+			this.votantes = Integer.valueOf(datos.get(8));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 

@@ -165,8 +165,11 @@ public class BibliotecaABB implements Biblioteca {
 		if(califMenor != null && califMayor != null) {
 			lista.removeIf(mat -> mat.getCalificacion() < califMenor || mat.getCalificacion() > califMayor);
 		}
-		if(fechaMenor != null && fechaMayor != null) {
-			lista.removeIf(mat -> mat.getFechaPublicacion().getTime() < fechaMenor.getTime() || mat.getFechaPublicacion().getTime() > fechaMayor.getTime());
+		if(fechaMenor != null) {
+			lista.removeIf(mat -> mat.getFechaPublicacion().compareTo(fechaMenor) < 0);
+		}
+		if(fechaMayor != null) {
+			lista.removeIf(mat -> mat.getFechaPublicacion().compareTo(fechaMayor) > 0);
 		}
 		
 		return lista;

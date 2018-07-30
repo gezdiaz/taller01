@@ -35,9 +35,9 @@ public class ABMVideo {
 		
 		JPanel panel = new JPanel(new GridBagLayout());
 		GridBagConstraints constraints = new GridBagConstraints();
-		JLabel errorID = new JLabel(), errorTitulo = new JLabel(), errorCosto = new JLabel(), errorDuracion = new JLabel(), 
+		JLabel errorTitulo = new JLabel(), errorCosto = new JLabel(), errorDuracion = new JLabel(), 
 				errorFecha = new JLabel(), encabezado = new JLabel("Agregar Nuevo Video");
-		JTextField tID = new JTextField(20), tTitulo = new JTextField(), tCosto = new JTextField(),
+		JTextField tTitulo = new JTextField(), tCosto = new JTextField(),
 				tDuracion = new JTextField(), tFecha = new JTextField();
 		JButton aceptar = new JButton("Aceptar"), cancelar = new JButton("Cancelar");
 		JComboBox<Relevancia> lRelevancia = new JComboBox<Relevancia>();		
@@ -54,65 +54,54 @@ public class ABMVideo {
 		constraints.fill=GridBagConstraints.HORIZONTAL;
 		constraints.anchor=GridBagConstraints.CENTER;
 		
+				
 		constraints.gridx=0;
 		constraints.gridy=1;
-		constraints.gridheight=1;
-		constraints.gridwidth=2;
-		panel.add(new JLabel("ID: "), constraints);
-		
-		constraints.gridx=2;
-		constraints.gridy=1;
-		constraints.gridwidth=1;
-		constraints.gridwidth=1;
-		panel.add(tID, constraints);
-		
-		constraints.gridx=0;
-		constraints.gridy=2;
 		constraints.gridwidth=2;
 		panel.add(new JLabel("Título: "), constraints);
 		
 		constraints.gridx=2;
-		constraints.gridy=2;
+		constraints.gridy=1;
 		constraints.gridwidth=1;
 		panel.add(tTitulo, constraints);
 		
 		constraints.gridx=0;
-		constraints.gridy=3;
+		constraints.gridy=2;
 		constraints.gridwidth=2;
 		panel.add(new JLabel("Costo: "), constraints);
 		
 		constraints.gridx=2;
-		constraints.gridy=3;
+		constraints.gridy=2;
 		constraints.gridwidth=1;
 		panel.add(tCosto, constraints);
 		
 		constraints.gridx=0;
-		constraints.gridy=4;
+		constraints.gridy=3;
 		constraints.gridwidth=2;
 		panel.add(new JLabel("Duracion: "), constraints);
 		
 		constraints.gridx=2;
-		constraints.gridy=4;
+		constraints.gridy=3;
 		constraints.gridwidth=1;
 		panel.add(tDuracion, constraints);
 		
 		constraints.gridx=0;
-		constraints.gridy=5;
+		constraints.gridy=4;
 		constraints.gridwidth=2;
 		panel.add(new JLabel("Fecha de Publicación: "), constraints);
 		
 		constraints.gridx=2;
-		constraints.gridy=5;
+		constraints.gridy=4;
 		constraints.gridwidth=1;
 		panel.add(tFecha, constraints);
 		
 		constraints.gridx=0;
-		constraints.gridy=6;
+		constraints.gridy=5;
 		constraints.gridwidth=2;
 		panel.add(new JLabel("Relevancia: "), constraints);
 		
 		constraints.gridx=2;
-		constraints.gridy=6;
+		constraints.gridy=5;
 		constraints.gridwidth=1;
 		lRelevancia.addItem(Relevancia.BAJA);
 		lRelevancia.addItem(Relevancia.MEDIA);
@@ -121,12 +110,12 @@ public class ABMVideo {
 		panel.add(lRelevancia, constraints);
 		
 		constraints.gridx=0;
-		constraints.gridy=7;
+		constraints.gridy=6;
 		cancelar.addActionListener(a -> Principal.mostrarInterfaz(ventana));
 		panel.add(cancelar, constraints);
 				
 		constraints.gridx=3;
-		constraints.gridy=7;
+		constraints.gridy=6;
 		constraints.fill=GridBagConstraints.NONE;
 		constraints.anchor=GridBagConstraints.WEST;
 		aceptar.addActionListener(e -> {
@@ -136,20 +125,12 @@ public class ABMVideo {
 			Integer duracion = 0;
 			Date fechaPublicacion = Calendar.getInstance().getTime();
 			Relevancia relev;
-			
-			errorID.setText("");
+
 			errorTitulo.setText("");
 			errorCosto.setText("");
 			errorDuracion.setText("");
 			errorFecha.setText("");
 			try {
-				if(tID.getText().isEmpty()){
-					System.out.println("El ID no puede ser vacio");
-					errorID.setText("Debe ingresar un ID");
-					return;
-				}else {
-					id = Integer.parseInt(tID.getText());
-				}
 				if(tTitulo.getText().isEmpty()) {
 					System.out.println("El título no puede ser vacío");
 					errorTitulo.setText("Debe ingresar un título");
@@ -184,7 +165,7 @@ public class ABMVideo {
 				relev = (Relevancia)lRelevancia.getSelectedItem();
 				
 				if(JOptionPane.showConfirmDialog(ventana, "¿Está seguro que desea guardar el nuevo video con los datos ingresados?","Confirmacion",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE)==0) {
-					controller.agregarVideo(id, titulo, costo, duracion, fechaPublicacion, relev);
+					controller.agregarVideo(titulo, costo, duracion, fechaPublicacion, relev);
 //					Antes quedaba en la misma pantalla y vaciaba todo.
 //					tID.setText("");tTitulo.setText("");tCosto.setText("");
 //					tDuracion.setText("");
@@ -206,28 +187,22 @@ public class ABMVideo {
 		});
 		panel.add(aceptar, constraints);
 		
-		constraints.gridx=3;
-		constraints.gridy=1;
-		errorID.setPreferredSize(new Dimension(230, 16));
-		errorID.setForeground(Color.red);
-		panel.add(errorID,constraints);
-
-		constraints.gridy=2;
+		constraints.gridy=3;
 		errorTitulo.setPreferredSize(new Dimension(230, 16));
 		errorTitulo.setForeground(Color.red);
 		panel.add(errorTitulo,constraints);
 		
-		constraints.gridy=3;
+		constraints.gridy=4;
 		errorCosto.setPreferredSize(new Dimension(230, 16));
 		errorCosto.setForeground(Color.red);
 		panel.add(errorCosto,constraints);
 		
-		constraints.gridy=4;
+		constraints.gridy=5;
 		errorDuracion.setPreferredSize(new Dimension(230, 16));
 		errorDuracion.setForeground(Color.red);
 		panel.add(errorDuracion,constraints);
 		
-		constraints.gridy=5;
+		constraints.gridy=6;
 		errorFecha.setPreferredSize(new Dimension(230, 16));
 		errorFecha.setForeground(Color.red);
 		panel.add(errorFecha,constraints);
