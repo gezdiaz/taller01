@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
+
 
 /**
  * Representa un libro en el sistema de biblioteca digital
@@ -146,7 +146,7 @@ public class Libro extends MaterialCapacitacion {
 	@Override
 	public void loadFromStringRow(List<String> datos) {
 		this.id =Integer.valueOf(datos.get(0));
-		this.titulo = datos.get(1);
+		this.titulo = datos.get(1).substring(1, datos.get(1).length()-1);
 		this.costo =Double.valueOf(datos.get(2));
 		this.paginas =Integer.valueOf(datos.get(3));
 		this.precioCompra =Double.valueOf(datos.get(4));

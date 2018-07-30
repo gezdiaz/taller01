@@ -1,5 +1,6 @@
 package frsf.isi.died.tp.app.controller;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -16,6 +17,9 @@ public class LibroController {
 		this.dao = dao;
 	}
 	
+	public ArrayList<Libro> listaLibros(){
+		return (ArrayList<Libro>) dao.listaLibros();
+	}
 	
 	public Libro agregarLibro(Integer id, String titulo, Double costo, Double precioCompra, Integer paginas, Date fechaPublicacion, Relevancia relevancia) {
 		Libro nuevo = new Libro(id, titulo, costo, precioCompra, paginas, fechaPublicacion, relevancia);
