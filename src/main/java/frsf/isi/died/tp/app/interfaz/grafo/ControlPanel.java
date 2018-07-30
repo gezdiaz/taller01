@@ -1,6 +1,7 @@
 package frsf.isi.died.tp.app.interfaz.grafo;
 
 import java.util.List;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -9,6 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import frsf.isi.died.tp.app.controller.GrafoController;
+import frsf.isi.died.tp.modelo.BibliotecaABB;
 import frsf.isi.died.tp.modelo.productos.MaterialCapacitacion;
 
 /**
@@ -24,7 +26,18 @@ public class ControlPanel extends JPanel {
     private GrafoController controller;
     private List<MaterialCapacitacion> listaVertices;
         
-    public void armarPanel( List<MaterialCapacitacion> listaVertices){
+    public void armarPanelRelaciones(MaterialCapacitacion material) {
+    	
+//    	BUSCO LOS QUE TIENEN EL MISMO TEMA
+    	this.listaVertices = controller.listaVertices();
+    	BibliotecaABB aFiltrar = new BibliotecaABB();
+    	aFiltrar.agregar((ArrayList<MaterialCapacitacion>)listaVertices);
+    	ArrayList<MaterialCapacitacion> filtrados = aFiltrar.buscar(null, null, null, material.getTema(), null, null);
+//    	
+    	
+    }
+    
+    public void armarPanelBuscarCaminos( List<MaterialCapacitacion> listaVertices){
     	this.listaVertices = listaVertices;
     	this.cmbVertice1 = new JComboBox(listaVertices.toArray()); 
         this.cmbVertice2 = new JComboBox(listaVertices.toArray()); 

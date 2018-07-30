@@ -156,7 +156,7 @@ public class BibliotecaABB implements Biblioteca {
 		}		
 	}
 	
-	public ArrayList<MaterialCapacitacion> buscar(String titulo, Integer califMenor, Integer califMayor, Date fechaMenor, Date fechaMayor){
+	public ArrayList<MaterialCapacitacion> buscar(String titulo, Integer califMenor, Integer califMayor,String tema, Date fechaMenor, Date fechaMayor){
 		ArrayList<MaterialCapacitacion> lista = (ArrayList<MaterialCapacitacion>) this.materiales.inOrden();
 		
 		if(titulo != null) {
@@ -164,6 +164,9 @@ public class BibliotecaABB implements Biblioteca {
 		}
 		if(califMenor != null && califMayor != null) {
 			lista.removeIf(mat -> mat.getCalificacion() < califMenor || mat.getCalificacion() > califMayor);
+		}
+		if(tema != null) {
+			lista.removeIf(mat -> !mat.getTema().equalsIgnoreCase(tema.toLowerCase()));
 		}
 		if(fechaMenor != null) {
 			lista.removeIf(mat -> mat.getFechaPublicacion().compareTo(fechaMenor) < 0);
