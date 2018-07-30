@@ -16,13 +16,13 @@ public class GrafoController {
 	private ControlPanel vistaControl;
 	private MaterialCapacitacionDao dao;
 
-	public GrafoController(GrafoPanel panelGrf, ControlPanel panelCtrl) {
+	public GrafoController(GrafoPanel panelGrf, ControlPanel panelCtrl, MaterialCapacitacionDao dao) {
 		this.vistaGrafo = panelGrf;
+		this.dao = dao;
 		this.vistaGrafo.setController(this);
 		this.vistaControl = panelCtrl;
 		this.vistaControl.setController(this);
-		this.dao = new MaterialCapacitacionDaoDefault();
-		this.vistaControl.armarPanel(dao.listaMateriales());
+		this.vistaControl.armarPanelBuscarCaminos(dao.listaMateriales());
 	}
 
 	public void crearVertice(Integer coordenadaX, Integer coordenadaY, Color color, MaterialCapacitacion mc) {
@@ -38,6 +38,8 @@ public class GrafoController {
 		this.vistaGrafo.agregar(arista);
 		this.vistaGrafo.repaint();
 	}
+	
+	
 
 	public void buscarCamino(Integer nodo1, Integer nodo2, Integer saltos) {
 		List<MaterialCapacitacion> camino = this.dao.buscarCamino(nodo1, nodo2, saltos);

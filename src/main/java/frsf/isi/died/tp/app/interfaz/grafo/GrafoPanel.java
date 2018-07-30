@@ -38,8 +38,8 @@ public class GrafoPanel extends JPanel {
 
     private AristaView auxiliar;
 
-    public GrafoPanel() {
-        this.framePadre = (JFrame) this.getParent();
+    public GrafoPanel(JFrame ventana) {
+        this.framePadre = ventana;
         
         this.vertices = new ArrayList<>();
         this.aristas = new ArrayList<>();

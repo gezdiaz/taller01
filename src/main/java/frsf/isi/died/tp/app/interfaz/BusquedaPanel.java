@@ -26,8 +26,8 @@ public class BusquedaPanel {
 	private JFrame ventana;
 	private ListaDeseosPanel listaPanel;
 	ControlPanel controlPanel = new ControlPanel();
-	GrafoPanel grafoPanel = new GrafoPanel();
-	GrafoController grfController = new GrafoController(grafoPanel,controlPanel);
+	GrafoPanel grafoPanel = new GrafoPanel( ventana);
+	GrafoController grfController = new GrafoController(grafoPanel,controlPanel,dao);
 	
 	
 	public BusquedaPanel(MaterialCapacitacionDao dao, JFrame ventana) {
@@ -199,7 +199,7 @@ public class BusquedaPanel {
 		constraints.gridx=3;
 		boton.addActionListener( a -> {
 			ArrayList<MaterialCapacitacion> filtrados = new ArrayList<MaterialCapacitacion>();
-			String titulo = null;
+			String titulo = null, tema = null;
 			Integer califMenor = null, califMayor = null;
 			Date fechaMenor = null, fechaMayor = null;
 			BibliotecaABB biblioteca = new BibliotecaABB();
@@ -212,12 +212,14 @@ public class BusquedaPanel {
 						califMenor = Integer.parseInt(tCalificacion1.getText());
 						califMayor = Integer.parseInt(tCalificacion2.getText());
 					}
+					if(!tTema.getText().isEmpty())
+						tema=tTema.getText();
 					if(!tFecha1.getText().isEmpty() && !tFecha2.getText().isEmpty()) {
 						fechaMenor = (new SimpleDateFormat("dd/MM/yyyy")).parse(tFecha1.getText());
 						fechaMayor = (new SimpleDateFormat("dd/MM/yyyy")).parse(tFecha2.getText());
 					}
 
-					filtrados = biblioteca.buscar(titulo, califMenor, califMayor, fechaMenor, fechaMayor);
+					filtrados = biblioteca.buscar(titulo, califMenor, califMayor, tema, fechaMenor, fechaMayor);
 					
 					TipoOrdenamiento tipo = (TipoOrdenamiento) combo.getSelectedItem();
 					BibliotecaABB ordenados = new BibliotecaABB();
@@ -354,11 +356,11 @@ public class BusquedaPanel {
 				JOptionPane.showConfirmDialog(ventana, "Por favor seleccione un material de la tabla.", "Seleccione un material",  JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 			}else {
 				MaterialCapacitacion material = tableModel.getMateriales().get(tabla.getSelectedRow());
-//				JPanel panel = new JPanel(new BorderLayout());
-				ControlPanel controlPanel = new ControlPanel();
-				GrafoPanel grafoPanel = new GrafoPanel();
-				GrafoController grfController = new GrafoController(grafoPanel,controlPanel);
-				panel.add(controlPanel , BorderLayout.PAGE_START);
+//				ControlPanel controlPanel = new ControlPanel();
+				GrafoPanel grafoPanel = new GrafoPanel(ventana);
+				GrafoController grfController = new GrafoController(grafoPanel,controlPanel,dao);
+				controlPanel.armarPanelRelaciones(material);
+//				panel.add(controlPanel , BorderLayout.PAGE_START);
 				panel.add(grafoPanel , BorderLayout.CENTER);
 			}
 		});
