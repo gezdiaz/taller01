@@ -265,7 +265,6 @@ public class ABMLibro {
 	}
 
 	private void mostrarTabla() {
-		
 		JPanel panel = new JPanel(new GridBagLayout());
 		LibroTablaModelo tableModel = new LibroTablaModelo();
 		JTable tabla = new JTable(tableModel);
@@ -276,17 +275,18 @@ public class ABMLibro {
 
 //		libros = DAO.getTodosLibros();
 		
-		try {
-			libros.add(new Libro(1, "Java", 5.4, 4.2, 100, (new SimpleDateFormat("dd/MM/yyyy")).parse("06/03/2009"), Relevancia.ALTA));
-			libros.add(new Libro(2, "Python", 10.4, 5.4, 200, (new SimpleDateFormat("dd/MM/yyyy")).parse("08/08/2008"), Relevancia.ALTA));
-			libros.add(new Libro(3, "C++", 45.5, 40.6, 500, (new SimpleDateFormat("dd/MM/yyyy")).parse("09/05/1997"), Relevancia.ALTA));
-			libros.add(new Libro(4, "Cobol", 5.0, 4.0, 50, (new SimpleDateFormat("dd/MM/yyyy")).parse("07/08/1977"), Relevancia.ALTA));
-			libros.add(new Libro(5, "Rubi", 140.89, 130.8, 1000, (new SimpleDateFormat("dd/MM/yyyy")).parse("15/10/2013"), Relevancia.ALTA));
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
+//		try {
+//			libros.add(new Libro(1, "Java", 5.4, 4.2, 100, (new SimpleDateFormat("dd/MM/yyyy")).parse("06/03/2009"), Relevancia.ALTA));
+//			libros.add(new Libro(2, "Python", 10.4, 5.4, 200, (new SimpleDateFormat("dd/MM/yyyy")).parse("08/08/2008"), Relevancia.ALTA));
+//			libros.add(new Libro(3, "C++", 45.5, 40.6, 500, (new SimpleDateFormat("dd/MM/yyyy")).parse("09/05/1997"), Relevancia.ALTA));
+//			libros.add(new Libro(4, "Cobol", 5.0, 4.0, 50, (new SimpleDateFormat("dd/MM/yyyy")).parse("07/08/1977"), Relevancia.ALTA));
+//			libros.add(new Libro(5, "Rubi", 140.89, 130.8, 1000, (new SimpleDateFormat("dd/MM/yyyy")).parse("15/10/2013"), Relevancia.ALTA));
+//		}catch(Exception e) {
+//			e.printStackTrace();
+//		}
+		libros.addAll(controller.listaLibros());
 				
-		tableModel.setLibros(libros);	
+		tableModel.setLibros(libros);
 		
 		constraints.gridx=0;
 		constraints.gridy=0;
