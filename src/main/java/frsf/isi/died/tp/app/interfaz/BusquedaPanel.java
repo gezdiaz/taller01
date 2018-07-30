@@ -49,7 +49,7 @@ public class BusquedaPanel {
 				tFecha1 = new JTextField(8), tFecha2 = new JTextField(8);
 		JComboBox<TipoOrdenamiento> combo;
 //		variable temporal para simular la busqueda
-		ArrayList<MaterialCapacitacion> materiales = (ArrayList<MaterialCapacitacion>)dao.listaMateriales(); // new ArrayList<MaterialCapacitacion>();
+//		ArrayList<MaterialCapacitacion> materiales = (ArrayList<MaterialCapacitacion>)dao.listaMateriales(); // new ArrayList<MaterialCapacitacion>();
 //		try {
 //			SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
 //			materiales.add( new Libro( 1, "Libro1", 10.0, 20.0, 154, formatoFecha.parse("05/02/2010"), Relevancia.MEDIA));
@@ -203,6 +203,7 @@ public class BusquedaPanel {
 			Integer califMenor = null, califMayor = null;
 			Date fechaMenor = null, fechaMayor = null;
 			BibliotecaABB biblioteca = new BibliotecaABB();
+			ArrayList<MaterialCapacitacion> materiales = (ArrayList<MaterialCapacitacion>)dao.listaMateriales();
 			biblioteca.agregar(materiales);
 
 				try {

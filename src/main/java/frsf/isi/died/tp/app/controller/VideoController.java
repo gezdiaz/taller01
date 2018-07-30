@@ -20,12 +20,11 @@ public class VideoController {
 		return (ArrayList<Video>) dao.listaVideos();
 	}
 	
-	public Video agregarVideo(Integer id, String titulo, Double costo, Integer duracion, Date fechaPublicacion, Relevancia relev) {
-		Video nuevo = new Video(id, titulo, costo, duracion, fechaPublicacion, relev);
+	public void agregarVideo(String titulo, Double costo, Integer duracion, Date fechaPublicacion, Relevancia relev) {
+		Video nuevo = new Video(0, titulo, costo, duracion, fechaPublicacion, relev);
 		System.out.println("Se creó el nuevo viedo: "+nuevo);
 		//TODO guardar video en almacenamiento
 		dao.agregarVideo(nuevo);
-		return nuevo;
 	}
 
 	public Video buscarVideo(int id) {
