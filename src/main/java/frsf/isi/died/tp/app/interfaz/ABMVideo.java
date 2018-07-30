@@ -250,17 +250,17 @@ public class ABMVideo {
 		JButton volver = new JButton("Volver al inicio."), agregar = new JButton("Agregar otro.");
 		JScrollPane scroll = new JScrollPane(tabla);
 		
-//		libros = DAO.getTodosLibros();
+		videos = controller.listaVideos();
 		
-		try {
-			videos.add(new Video(1, "Java", 5.4, 100, (new SimpleDateFormat("dd/MM/yyyy")).parse("06/03/2009"), Relevancia.ALTA));
-			videos.add(new Video(2, "Python", 10.4, 200, (new SimpleDateFormat("dd/MM/yyyy")).parse("08/08/2008"), Relevancia.ALTA));
-			videos.add(new Video(3, "C++", 45.5, 500, (new SimpleDateFormat("dd/MM/yyyy")).parse("09/05/1997"), Relevancia.ALTA));
-			videos.add(new Video(4, "Cobol", 5.0, 50, (new SimpleDateFormat("dd/MM/yyyy")).parse("07/08/1977"), Relevancia.ALTA));
-			videos.add(new Video(5, "Rubi", 140.89, 1000, (new SimpleDateFormat("dd/MM/yyyy")).parse("15/10/2013"), Relevancia.ALTA));
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
+//		try {
+//			videos.add(new Video(1, "Java", 5.4, 100, (new SimpleDateFormat("dd/MM/yyyy")).parse("06/03/2009"), Relevancia.ALTA));
+//			videos.add(new Video(2, "Python", 10.4, 200, (new SimpleDateFormat("dd/MM/yyyy")).parse("08/08/2008"), Relevancia.ALTA));
+//			videos.add(new Video(3, "C++", 45.5, 500, (new SimpleDateFormat("dd/MM/yyyy")).parse("09/05/1997"), Relevancia.ALTA));
+//			videos.add(new Video(4, "Cobol", 5.0, 50, (new SimpleDateFormat("dd/MM/yyyy")).parse("07/08/1977"), Relevancia.ALTA));
+//			videos.add(new Video(5, "Rubi", 140.89, 1000, (new SimpleDateFormat("dd/MM/yyyy")).parse("15/10/2013"), Relevancia.ALTA));
+//		}catch(Exception e) {
+//			e.printStackTrace();
+//		}
 				
 		tableModel.setVideos(videos);	
 		
