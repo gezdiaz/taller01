@@ -104,7 +104,7 @@ public abstract class MaterialCapacitacion implements Ordenable, Comparable<Mate
 	 * Constructor por defecto
 	 */
 	public MaterialCapacitacion() {
-		this(0,"en desarrollo",0.0, Calendar.getInstance().getTime(), Relevancia.MEDIA);
+		this(0,"en desarrollo",0.0, Calendar.getInstance().getTime(), Relevancia.MEDIA, "Otros");
 	}
 
 	/**
@@ -114,7 +114,7 @@ public abstract class MaterialCapacitacion implements Ordenable, Comparable<Mate
 	 * @param titulo
 	 */
 	public MaterialCapacitacion(Integer id, String titulo, Date fechaPublicacion) {
-		this(id,titulo,0.0, fechaPublicacion, Relevancia.MEDIA);
+		this(id,titulo,0.0, fechaPublicacion, Relevancia.MEDIA, "Otros");
 	}
 
 	/**
@@ -123,7 +123,7 @@ public abstract class MaterialCapacitacion implements Ordenable, Comparable<Mate
 	 * @param id
 	 * @param titulo
 	 */
-	public MaterialCapacitacion(Integer id,String titulo, Double costo, Date fechaPublicacion, Relevancia relev) {
+	public MaterialCapacitacion(Integer id,String titulo, Double costo, Date fechaPublicacion, Relevancia relev, String tema) {
 		this.id =id;
 		this.titulo = titulo;
 		this.costo = costo;
@@ -131,6 +131,7 @@ public abstract class MaterialCapacitacion implements Ordenable, Comparable<Mate
 		this.relevancia = relev;
 		this.calificacion = 0;
 		this.votantes = 0;
+		this.tema = tema;
 	}
 
 
@@ -140,7 +141,7 @@ public abstract class MaterialCapacitacion implements Ordenable, Comparable<Mate
 	
 
 	public MaterialCapacitacion(Integer id, String titulo, Double costo) {
-		this(id,titulo,costo,Calendar.getInstance().getTime(), Relevancia.MEDIA);
+		this(id,titulo,costo,Calendar.getInstance().getTime(), Relevancia.MEDIA, "Otros");
 	}
 
 	/**

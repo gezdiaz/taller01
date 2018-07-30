@@ -15,20 +15,20 @@ public class Video extends MaterialCapacitacion{
 	}
 	
 	public Video(Integer id, String titulo, Date fechaPublicacion) {
-		this(id,titulo,0.0,0, fechaPublicacion, Relevancia.MEDIA);
+		this(id,titulo,0.0,0, fechaPublicacion, Relevancia.MEDIA, "Otros");
 	}
 	
 	public Video(Integer id, String titulo) {
 		this(id,titulo,0.0,0);
 	}
 	
-	public Video(Integer id, String titulo, Double costo, Integer duracion, Date fechaPublicacion, Relevancia relev) {
-		super(id, titulo, costo, fechaPublicacion, relev);
+	public Video(Integer id, String titulo, Double costo, Integer duracion, Date fechaPublicacion, Relevancia relev, String tema) {
+		super(id, titulo, costo, fechaPublicacion, relev, tema);
 		this.duracion = duracion;
 	}
 	
 	public Video(Integer id, String titulo, Double costo, Integer duracion) {
-		this(id, titulo, costo, duracion, Calendar.getInstance().getTime(), Relevancia.MEDIA);
+		this(id, titulo, costo, duracion, Calendar.getInstance().getTime(), Relevancia.MEDIA, "Otros");
 	}
 	
 	public Boolean esVideo() {
@@ -67,6 +67,7 @@ public class Video extends MaterialCapacitacion{
 		lista.add(this.calificacion.toString());
 		lista.add(this.relevancia.toString());
 		lista.add(this.votantes.toString());
+		lista.add("\""+this.tema+"\"");
 		return lista;
 	}
 
@@ -82,6 +83,7 @@ public class Video extends MaterialCapacitacion{
 			this.calificacion = Integer.valueOf(datos.get(5));
 			this.relevancia = Relevancia.valueOf(datos.get(6));
 			this.votantes = Integer.valueOf(datos.get(7));
+			this.tema = datos.get(8).substring(1, datos.get(8).length() - 1);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

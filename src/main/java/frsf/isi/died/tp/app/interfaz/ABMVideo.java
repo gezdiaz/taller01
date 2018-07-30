@@ -37,8 +37,8 @@ public class ABMVideo {
 		GridBagConstraints constraints = new GridBagConstraints();
 		JLabel errorTitulo = new JLabel(), errorCosto = new JLabel(), errorDuracion = new JLabel(), 
 				errorFecha = new JLabel(), encabezado = new JLabel("Agregar Nuevo Video");
-		JTextField tTitulo = new JTextField(), tCosto = new JTextField(),
-				tDuracion = new JTextField(), tFecha = new JTextField();
+		JTextField tTitulo = new JTextField(20), tCosto = new JTextField(20),
+				tDuracion = new JTextField(20), tFecha = new JTextField(20), tTema = new JTextField(20);
 		JButton aceptar = new JButton("Aceptar"), cancelar = new JButton("Cancelar");
 		JComboBox<Relevancia> lRelevancia = new JComboBox<Relevancia>();		
 		
@@ -111,16 +111,26 @@ public class ABMVideo {
 		
 		constraints.gridx=0;
 		constraints.gridy=6;
+		constraints.gridwidth=2;
+		panel.add(new JLabel("Tema: "), constraints);
+		
+		constraints.gridx=2;
+		constraints.gridy=6;
+		constraints.gridwidth=1;
+		tTema.setText("Otros");
+		panel.add(tTema, constraints);
+		
+		constraints.gridx=0;
+		constraints.gridy=7;
 		cancelar.addActionListener(a -> Principal.mostrarInterfaz(ventana));
 		panel.add(cancelar, constraints);
 				
 		constraints.gridx=3;
-		constraints.gridy=6;
+		constraints.gridy=7;
 		constraints.fill=GridBagConstraints.NONE;
 		constraints.anchor=GridBagConstraints.WEST;
 		aceptar.addActionListener(e -> {
-			Integer id;
-			String titulo;
+			String titulo, tema;
 			Double costo = 0.0;
 			Integer duracion = 0;
 			Date fechaPublicacion = Calendar.getInstance().getTime();
@@ -161,11 +171,16 @@ public class ABMVideo {
 						return;
 					}
 				}
+				if(tTema.getText().isEmpty()) {
+					tema = "Otros";
+				}else {
+					tema = tTema.getText();
+				}
 				
 				relev = (Relevancia)lRelevancia.getSelectedItem();
 				
 				if(JOptionPane.showConfirmDialog(ventana, "¿Está seguro que desea guardar el nuevo video con los datos ingresados?","Confirmacion",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE)==0) {
-					controller.agregarVideo(titulo, costo, duracion, fechaPublicacion, relev);
+					controller.agregarVideo(titulo, costo, duracion, fechaPublicacion, relev, tema);
 //					Antes quedaba en la misma pantalla y vaciaba todo.
 //					tID.setText("");tTitulo.setText("");tCosto.setText("");
 //					tDuracion.setText("");
@@ -343,7 +358,6 @@ public class ABMVideo {
 				}else {
 					//buscar video con id Integer.parseInt(tID.getText());
 					Video nuevo = controller.buscarVideo(Integer.parseInt(tID.getText()));
-					System.out.println("Video a editar: "+nuevo);
 					edicionVideo(nuevo);
 				}
 			}catch(Exception e) {
@@ -369,7 +383,7 @@ public class ABMVideo {
 		JLabel encabezado = new JLabel("Editar video"), errorTitulo = new JLabel(),
 				errorCosto = new JLabel(), errorDuracion = new JLabel(), errorFecha = new JLabel();
 		JTextField tID = new JTextField(20), tTitulo = new JTextField(20), tCosto = new JTextField(20),
-				tDuracion = new JTextField(20), tFecha = new JTextField(20);
+				tDuracion = new JTextField(20), tFecha = new JTextField(20), tTema = new JTextField(20);
 		JButton aceptar = new JButton("Aceptar"), cancelar = new JButton("Cancelar");
 		GridBagConstraints constraints = new GridBagConstraints();
 		JComboBox<Relevancia> lRelevancia = new JComboBox<Relevancia>();
@@ -454,16 +468,25 @@ public class ABMVideo {
 		
 		constraints.gridx=0;
 		constraints.gridy=7;
+		constraints.gridwidth=2;
+		panel.add(new JLabel("Tema: "), constraints);
+		
+		constraints.gridx=2;
+		constraints.gridy=7;
+		constraints.gridwidth=1;
+		tTema.setText("Otros");
+		panel.add(tTema, constraints);
+		
+		constraints.gridx=0;
+		constraints.gridy=8;
 		cancelar.addActionListener(a -> this.editarVideo());
 		panel.add(cancelar, constraints);
 		
 		constraints.gridx=3;
-		constraints.gridy=7;
+		constraints.gridy=8;
 		constraints.fill=GridBagConstraints.NONE;
 		aceptar.addActionListener(a -> {
-			System.out.println("Pide confrimacion y guarda los cambios.");
-
-			String titulo;
+			String titulo, tema;
 			Double costo = 0.0;
 			Integer duracion = 0;
 			Date fechaPublicacion = Calendar.getInstance().getTime();
@@ -505,11 +528,16 @@ public class ABMVideo {
 						return;
 					}
 				}
+				if(tTema.getText().isEmpty()) {
+					tema = "Otros";
+				}else {
+					tema = tTema.getText();
+				}
 				
 				relevancia = (Relevancia)lRelevancia.getSelectedItem();
 			
 				if(JOptionPane.showConfirmDialog(ventana, "¿Está seguro que desea modificar el video con los datos ingresados?", "Confirmar edición", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE)==0){
-					controller.editarVideo(video, titulo, costo, duracion, fechaPublicacion, relevancia);
+					controller.editarVideo(video, titulo, costo, duracion, fechaPublicacion, relevancia, tema);
 					editarVideo();
 				}
 				
@@ -632,12 +660,10 @@ public class ABMVideo {
 	private void eliminacionVideo(Video video) {
 		
 		JPanel panel = new JPanel();
-		JLabel encabezado = new JLabel("Eliminar video"), errorID = new JLabel(), errorTitulo = new JLabel(),
-				errorCosto = new JLabel(), errorPrecio = new JLabel(), errorPaginas = new JLabel(), 
-				errorFecha = new JLabel();
+		JLabel encabezado = new JLabel("Eliminar video");
 		JTextField tID = new JTextField(20), tTitulo = new JTextField(20), tCosto = new JTextField(20),
 					tDuracion = new JTextField(20), tFecha = new JTextField(20),
-					lRelevancia = new JTextField(20);
+					lRelevancia = new JTextField(20), tTema = new JTextField(20);
 		JButton eliminar = new JButton("Eliminar"), cancelar = new JButton("Cancelar");
 		GridBagConstraints constraints = new GridBagConstraints();
 		
@@ -737,6 +763,18 @@ public class ABMVideo {
 		panel.add(lRelevancia, constraints);
 		
 		constraints.gridx=0;
+		constraints.gridy=8;
+		constraints.gridwidth=2;
+		panel.add(new JLabel("Tema: "), constraints);
+		
+		constraints.gridx=2;
+		constraints.gridy=8;
+		constraints.gridwidth=1;
+		tTema.setText(video.getTema());
+		tTema.setEditable(false);
+		panel.add(tTema, constraints);
+		
+		constraints.gridx=0;
 		constraints.gridy=9;
 		cancelar.addActionListener(a -> this.eliminarVideo());
 		panel.add(cancelar, constraints);
@@ -753,40 +791,7 @@ public class ABMVideo {
 			}				
 				
 		});
-		panel.add(eliminar,constraints);
-		
-		constraints.gridx=3;
-		constraints.gridy=1;
-		errorID.setPreferredSize(new Dimension(230, 16));
-		errorID.setForeground(Color.red);
-		panel.add(errorID,constraints);
-
-		constraints.gridy=2;
-		errorTitulo.setPreferredSize(new Dimension(230, 16));
-		errorTitulo.setForeground(Color.red);
-		panel.add(errorTitulo,constraints);
-		
-		constraints.gridy=3;
-		errorCosto.setPreferredSize(new Dimension(230, 16));
-		errorCosto.setForeground(Color.red);
-		panel.add(errorCosto,constraints);
-		
-		constraints.gridy=4;
-		errorPrecio.setPreferredSize(new Dimension(230, 16));
-		errorPrecio.setForeground(Color.red);
-		panel.add(errorPrecio,constraints);
-		
-		constraints.gridy=5;
-		errorPaginas.setPreferredSize(new Dimension(230, 16));
-		errorPaginas.setForeground(Color.red);
-		panel.add(errorPaginas,constraints);
-		
-		constraints.gridy=6;
-		errorFecha.setPreferredSize(new Dimension(230, 16));
-		errorFecha.setForeground(Color.red);
-		panel.add(errorFecha,constraints);
-		
-				
+		panel.add(eliminar,constraints);				
 		
 		ventana.setContentPane(panel);
 		ventana.pack();

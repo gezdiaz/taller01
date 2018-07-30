@@ -21,8 +21,8 @@ public class LibroController {
 		return (ArrayList<Libro>) dao.listaLibros();
 	}
 	
-	public Libro agregarLibro(Integer id, String titulo, Double costo, Double precioCompra, Integer paginas, Date fechaPublicacion, Relevancia relevancia) {
-		Libro nuevo = new Libro(id, titulo, costo, precioCompra, paginas, fechaPublicacion, relevancia);
+	public Libro agregarLibro(Integer id, String titulo, Double costo, Double precioCompra, Integer paginas, Date fechaPublicacion, Relevancia relevancia, String tema) {
+		Libro nuevo = new Libro(id, titulo, costo, precioCompra, paginas, fechaPublicacion, relevancia, tema);
 		System.out.println("Se creó el nuevo libro:"+nuevo);
 		//TODO guardar libro en almacenamiento
 		dao.agregarLibro(nuevo);
@@ -39,7 +39,7 @@ public class LibroController {
 	}
 
 	public void editarLibro(Libro libro, String titulo, double costo, double precioCompra, int paginas,
-			Date fechaPublicacion, Relevancia relevancia) {
+			Date fechaPublicacion, Relevancia relevancia, String tema) {
 		
 		libro.setTitulo(titulo);
 		libro.setCosto(costo);
@@ -47,6 +47,7 @@ public class LibroController {
 		libro.setCosto(costo);
 		libro.setFechaPublicacion(fechaPublicacion);
 		libro.setRelevancia(relevancia);
+		libro.setTema(tema);
 		
 		System.out.println("Se editó el libro: "+libro);
 		//TODO editar libro en el almacenamiento persistente

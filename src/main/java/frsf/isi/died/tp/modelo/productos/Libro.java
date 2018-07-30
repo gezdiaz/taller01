@@ -39,7 +39,7 @@ public class Libro extends MaterialCapacitacion {
 	 * @param titulo es el titulo del libro
 	 */
 	public Libro(Integer id, String titulo, Date fechaPublicacion) {
-		this(id, titulo,0.0,0.0,0, fechaPublicacion, Relevancia.MEDIA);
+		this(id, titulo,0.0,0.0,0, fechaPublicacion, Relevancia.MEDIA, "Otros");
 	}
 	
 	public Libro(Integer id, String titulo) {
@@ -54,13 +54,13 @@ public class Libro extends MaterialCapacitacion {
 	 * @param paginas cantidad de paginas del libro
 	 * @param relev 
 	 */
-	public Libro(Integer id, String titulo, Double costo, Double precioCompra, Integer paginas, Date fechaPublicacion, Relevancia relev) {
-		super(id, titulo, costo, fechaPublicacion, relev);
+	public Libro(Integer id, String titulo, Double costo, Double precioCompra, Integer paginas, Date fechaPublicacion, Relevancia relev, String tema) {
+		super(id, titulo, costo, fechaPublicacion, relev, tema);
 		this.precioCompra = precioCompra;
 		this.paginas = paginas;
 	}
 	public Libro(Integer id, String titulo, Double costo, Double precioCompra, Integer paginas) {
-		this(id, titulo, costo, precioCompra, paginas, Calendar.getInstance().getTime(), Relevancia.MEDIA);
+		this(id, titulo, costo, precioCompra, paginas, Calendar.getInstance().getTime(), Relevancia.MEDIA, "Otros");
 	}
 
 	/**
@@ -141,6 +141,7 @@ public class Libro extends MaterialCapacitacion {
 		lista.add(this.calificacion.toString());
 		lista.add(this.relevancia.toString());
 		lista.add(this.votantes.toString());
+		lista.add("\""+this.tema+"\"");
 		return lista;
 	}
 
@@ -156,6 +157,7 @@ public class Libro extends MaterialCapacitacion {
 			this.calificacion = Integer.valueOf(datos.get(6));
 			this.relevancia = Relevancia.valueOf(datos.get(7));
 			this.votantes = Integer.valueOf(datos.get(8));
+			this.tema = datos.get(9).substring(1, datos.get(9).length() - 1);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

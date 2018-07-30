@@ -34,11 +34,12 @@ public class ABMLibro {
 	public void agregarLibro() {
 		JPanel panel = new JPanel(new GridBagLayout());
 		GridBagConstraints constraints = new GridBagConstraints();
-		JLabel errorID = new JLabel(), errorTitulo = new JLabel(), errorCosto = new JLabel(),
+		JLabel errorTitulo = new JLabel(), errorCosto = new JLabel(),
 				errorPrecio = new JLabel(), errorPaginas = new JLabel(), 
 				errorFecha = new JLabel(), encabezado = new JLabel("Agregar Nuevo Libro");
-		JTextField tID = new JTextField(20), tTitulo = new JTextField(20), tCosto = new JTextField(20),
-					tPrecioCompra = new JTextField(20), tPaginas = new JTextField(20), tFecha = new JTextField(20);
+		JTextField tTitulo = new JTextField(20), tCosto = new JTextField(20),
+					tPrecioCompra = new JTextField(20), tPaginas = new JTextField(20),
+					tFecha = new JTextField(20), tTema = new JTextField(20);
 		JButton aceptar = new JButton("Aceptar"), cancelar = new JButton("Cancelar");
 		JComboBox<Relevancia> lRelevancia = new JComboBox<Relevancia>();
 		
@@ -57,79 +58,78 @@ public class ABMLibro {
 		
 		constraints.gridx=0;
 		constraints.gridy=1;
-		constraints.gridheight=1;
-		constraints.gridwidth=2;
-		panel.add(new JLabel("ID: "), constraints);
-		
-		constraints.gridx=2;
-		constraints.gridy=1;
-		constraints.gridwidth=1;
-		constraints.gridwidth=1;
-		panel.add(tID, constraints);
-		
-		constraints.gridx=0;
-		constraints.gridy=2;
 		constraints.gridwidth=2;
 		panel.add(new JLabel("Título: "), constraints);
 		
 		constraints.gridx=2;
-		constraints.gridy=2;
+		constraints.gridy=1;
 		constraints.gridwidth=1;
 		panel.add(tTitulo, constraints);
 		
 		constraints.gridx=0;
-		constraints.gridy=3;
+		constraints.gridy=2;
 		constraints.gridwidth=2;
 		panel.add(new JLabel("Costo: "), constraints);
 		
 		constraints.gridx=2;
-		constraints.gridy=3;
+		constraints.gridy=2;
 		constraints.gridwidth=1;
 		panel.add(tCosto, constraints);
 		
 		constraints.gridx=0;
-		constraints.gridy=4;
+		constraints.gridy=3;
 		constraints.gridwidth=2;
 		panel.add(new JLabel("Precio de Compra: "), constraints);
 		
 		constraints.gridx=2;
-		constraints.gridy=4;
+		constraints.gridy=3;
 		constraints.gridwidth=1;
 		panel.add(tPrecioCompra, constraints);
 		
 		constraints.gridx=0;
-		constraints.gridy=5;
+		constraints.gridy=4;
 		constraints.gridwidth=2;
 		panel.add(new JLabel("N° Páginas: "), constraints);
 		
 		constraints.gridx=2;
-		constraints.gridy=5;
+		constraints.gridy=4;
 		constraints.gridwidth=1;
 		panel.add(tPaginas, constraints);
 		
 		constraints.gridx=0;
-		constraints.gridy=6;
+		constraints.gridy=5;
 		constraints.gridwidth=2;
 		panel.add(new JLabel("Fecha de Publicación: "), constraints);
 		
 		constraints.gridx=2;
-		constraints.gridy=6;
+		constraints.gridy=5;
 		constraints.gridwidth=1;
 		panel.add(tFecha, constraints);
 		
 		constraints.gridx=0;
-		constraints.gridy=7;
+		constraints.gridy=6;
 		constraints.gridwidth=2;
 		panel.add(new JLabel("Relevancia: "), constraints);
 		
 		constraints.gridx=2;
-		constraints.gridy=7;
+		constraints.gridy=6;
 		constraints.gridwidth=1;
 		lRelevancia.addItem(Relevancia.BAJA);
 		lRelevancia.addItem(Relevancia.MEDIA);
 		lRelevancia.addItem(Relevancia.ALTA);
 		lRelevancia.setSelectedItem(Relevancia.MEDIA);
 		panel.add(lRelevancia, constraints);
+		
+		constraints.gridx=0;
+		constraints.gridy=7;
+		constraints.gridwidth=2;
+		panel.add(new JLabel("Tema: "), constraints);
+		
+		constraints.gridx=2;
+		constraints.gridy=7;
+		constraints.gridwidth=1;
+		tTema.setText("Otros");
+		panel.add(tTema, constraints);
 		
 		constraints.gridx=0;
 		constraints.gridy=8;
@@ -141,27 +141,18 @@ public class ABMLibro {
 		constraints.fill=GridBagConstraints.NONE;
 		constraints.anchor=GridBagConstraints.WEST;
 		aceptar.addActionListener(e -> {
-			Integer id;
-			String titulo;
+			String titulo, tema;
 			Double costo = 0.0, precioCompra = 0.0;
 			Integer paginas = 0;
 			Date fechaPublicacion = Calendar.getInstance().getTime();
 			Relevancia relevancia;
 			
-			errorID.setText("");
 			errorTitulo.setText("");
 			errorCosto.setText("");
 			errorPrecio.setText("");
 			errorPaginas.setText("");
 			errorFecha.setText("");
 			try {
-				if(tID.getText().isEmpty()){
-					System.out.println("El ID no puede ser vacio");
-					errorID.setText("Debe ingresar un ID");
-					return;
-				}else {
-					id = Integer.parseInt(tID.getText());
-				}
 				if(tTitulo.getText().isEmpty()) {
 					System.out.println("El título no puede ser vacío");
 					errorTitulo.setText("Debe ingresar un título");
@@ -198,11 +189,16 @@ public class ABMLibro {
 						return;
 					}
 				}
+				if(tTema.getText().isEmpty()) {
+					tema = "Otros";
+				}else {
+					tema = tTema.getText();
+				}
 				
 				relevancia = (Relevancia)lRelevancia.getSelectedItem();
 				
 				if(JOptionPane.showConfirmDialog(ventana, "¿Está seguro que desea guardar el nuevo libro con los datos ingresados?","Confirmacion",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE)==0) {
-					controller.agregarLibro(id, titulo, costo, precioCompra, paginas, fechaPublicacion, relevancia);
+					controller.agregarLibro(0, titulo, costo, precioCompra, paginas, fechaPublicacion, relevancia, tema);
 //					Antes quedaba en la misma pantalla y borraba todos los campos de texto
 //					tID.setText("");tTitulo.setText("");tCosto.setText("");
 //					tPrecioCompra.setText("");tPaginas.setText("");
@@ -228,31 +224,26 @@ public class ABMLibro {
 		
 		constraints.gridx=3;
 		constraints.gridy=1;
-		errorID.setPreferredSize(new Dimension(230, 16));
-		errorID.setForeground(Color.red);
-		panel.add(errorID,constraints);
-
-		constraints.gridy=2;
 		errorTitulo.setPreferredSize(new Dimension(230, 16));
 		errorTitulo.setForeground(Color.red);
 		panel.add(errorTitulo,constraints);
 		
-		constraints.gridy=3;
+		constraints.gridy=2;
 		errorCosto.setPreferredSize(new Dimension(230, 16));
 		errorCosto.setForeground(Color.red);
 		panel.add(errorCosto,constraints);
 		
-		constraints.gridy=4;
+		constraints.gridy=3;
 		errorPrecio.setPreferredSize(new Dimension(230, 16));
 		errorPrecio.setForeground(Color.red);
 		panel.add(errorPrecio,constraints);
 		
-		constraints.gridy=5;
+		constraints.gridy=4;
 		errorPaginas.setPreferredSize(new Dimension(230, 16));
 		errorPaginas.setForeground(Color.red);
 		panel.add(errorPaginas,constraints);
 		
-		constraints.gridy=6;
+		constraints.gridy=5;
 		errorFecha.setPreferredSize(new Dimension(230, 16));
 		errorFecha.setForeground(Color.red);
 		panel.add(errorFecha,constraints);
@@ -421,7 +412,8 @@ public class ABMLibro {
 				errorCosto = new JLabel(), errorPrecio = new JLabel(), errorPaginas = new JLabel(), 
 				errorFecha = new JLabel();
 		JTextField tID = new JTextField(20), tTitulo = new JTextField(20), tCosto = new JTextField(20),
-				tPrecio = new JTextField(20), tPaginas = new JTextField(20), tFecha = new JTextField(20);
+				tPrecio = new JTextField(20), tPaginas = new JTextField(20),
+				tFecha = new JTextField(20), tTema = new JTextField(20);
 		JButton aceptar = new JButton("Aceptar"), cancelar = new JButton("Cancelar");
 		GridBagConstraints constraints = new GridBagConstraints();
 		JComboBox<Relevancia> lRelevancia = new JComboBox<Relevancia>();
@@ -448,6 +440,8 @@ public class ABMLibro {
 		constraints.gridy=1;
 		constraints.gridwidth=1;
 		constraints.gridwidth=1;
+		tID.setEditable(false);
+		tID.setText(libro.getId().toString());
 		tID.setEditable(false);
 		panel.add(tID, constraints);
 		
@@ -516,16 +510,25 @@ public class ABMLibro {
 		
 		constraints.gridx=0;
 		constraints.gridy=8;
+		constraints.gridwidth=2;
+		panel.add(new JLabel("Tema: "), constraints);
+		
+		constraints.gridx=2;
+		constraints.gridy=8;
+		constraints.gridwidth=1;
+		tTema.setText("Otros");
+		panel.add(tTema, constraints);
+		
+		constraints.gridx=0;
+		constraints.gridy=9;
 		cancelar.addActionListener(a -> Principal.mostrarInterfaz(ventana));
 		panel.add(cancelar, constraints);
 		
 		constraints.gridx=3;
-		constraints.gridy=8;
+		constraints.gridy=9;
 		constraints.fill=GridBagConstraints.NONE;
-		aceptar.addActionListener(a -> {
-			System.out.println("Pide confrimacion y guarda los cambios.");
-			
-			String titulo;
+		aceptar.addActionListener(a -> {			
+			String titulo, tema;
 			Double costo = 0.0, precioCompra = 0.0;
 			Integer paginas = 0;
 			Date fechaPublicacion = Calendar.getInstance().getTime();
@@ -538,7 +541,6 @@ public class ABMLibro {
 			errorFecha.setText("");
 			try {
 				if(tTitulo.getText().isEmpty()) {
-					System.out.println("El título no puede ser vacío");
 					errorTitulo.setText("Debe ingresar un título");
 					return;
 				}else {
@@ -573,11 +575,16 @@ public class ABMLibro {
 						return;
 					}
 				}
+				if(tTema.getText().isEmpty()) {
+					tema = "Otros";
+				}else {
+					tema = tTema.getText();
+				}
 				
 				relevancia = (Relevancia)lRelevancia.getSelectedItem();
 			
 				if(JOptionPane.showConfirmDialog(ventana, "¿Está seguro que desea modificar el libro con los datos ingresados?", "Confirmar edición", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE)==0){
-					controller.editarLibro(libro, titulo, costo, precioCompra, paginas, fechaPublicacion, relevancia);
+					controller.editarLibro(libro, titulo, costo, precioCompra, paginas, fechaPublicacion, relevancia, tema);
 					editarLibro();
 				}
 				
@@ -629,6 +636,7 @@ public class ABMLibro {
 		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
 		tFecha.setText(formato.format(libro.getFechaPublicacion()));
 		lRelevancia.setSelectedItem(libro.getRelevancia());
+		tTema.setText(libro.getTema());
 		
 		
 		ventana.setContentPane(panel);
@@ -712,7 +720,7 @@ public class ABMLibro {
 				errorFecha = new JLabel();
 		JTextField tID = new JTextField(20), tTitulo = new JTextField(20), tCosto = new JTextField(20),
 					tPrecio = new JTextField(20), tPaginas = new JTextField(20), tFecha = new JTextField(20),
-					lRelevancia = new JTextField(20);
+					lRelevancia = new JTextField(20), tTema = new JTextField(20);
 		JButton eliminar = new JButton("Eliminar"), cancelar = new JButton("Cancelar");
 		GridBagConstraints constraints = new GridBagConstraints();
 		
@@ -824,11 +832,23 @@ public class ABMLibro {
 		
 		constraints.gridx=0;
 		constraints.gridy=9;
+		constraints.gridwidth=2;
+		panel.add(new JLabel("Tema: "), constraints);
+		
+		constraints.gridx=2;
+		constraints.gridy=9;
+		constraints.gridwidth=1;
+		tTema.setText(libro.getTema());
+		tTema.setEditable(false);
+		panel.add(tTema, constraints);
+		
+		constraints.gridx=0;
+		constraints.gridy=10;
 		cancelar.addActionListener(a -> this.eliminarLibro());
 		panel.add(cancelar, constraints);
 		
 		constraints.gridx=3;
-		constraints.gridy=9;
+		constraints.gridy=10;
 		constraints.fill=GridBagConstraints.NONE;
 		eliminar.addActionListener(a -> {
 			System.out.println("Pide confrimacion y elimina el libro.");
