@@ -131,9 +131,9 @@ public class ABMVideo {
 		constraints.anchor=GridBagConstraints.WEST;
 		aceptar.addActionListener(e -> {
 			String titulo, tema;
-			Double costo = 0.0;
-			Integer duracion = 0;
-			Date fechaPublicacion = Calendar.getInstance().getTime();
+			Double costo = null;
+			Integer duracion = null;
+			Date fechaPublicacion = null;
 			Relevancia relev;
 
 			errorTitulo.setText("");
@@ -189,33 +189,37 @@ public class ABMVideo {
 				}
 				
 			}catch(NumberFormatException nfex) {
-				System.out.println("Puso otra cosa en un campo numérico");
-				JOptionPane.showConfirmDialog(ventana, "Los campos ID, Costo, Precio Compra y Páginas deben ser numéricos.", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);	
+				if(costo == null) {
+					JOptionPane.showConfirmDialog(ventana, "El campo Costo debe ser numérico.", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);	
+				}else {
+					if(duracion == null) {
+						JOptionPane.showConfirmDialog(ventana, "El campo duración debe ser un número entero.", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);	
+					}
+				}
 				//nfex.printStackTrace();
 			}catch(ParseException pex) {
-				System.out.println("La fecha está mal escrita");
 				JOptionPane.showConfirmDialog(ventana, "La fecha debe ser escrita con formato dd/mm/aaaa", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 			}
 			
 		});
 		panel.add(aceptar, constraints);
 		
-		constraints.gridy=3;
+		constraints.gridy=1;
 		errorTitulo.setPreferredSize(new Dimension(230, 16));
 		errorTitulo.setForeground(Color.red);
 		panel.add(errorTitulo,constraints);
 		
-		constraints.gridy=4;
+		constraints.gridy=2;
 		errorCosto.setPreferredSize(new Dimension(230, 16));
 		errorCosto.setForeground(Color.red);
 		panel.add(errorCosto,constraints);
 		
-		constraints.gridy=5;
+		constraints.gridy=3;
 		errorDuracion.setPreferredSize(new Dimension(230, 16));
 		errorDuracion.setForeground(Color.red);
 		panel.add(errorDuracion,constraints);
 		
-		constraints.gridy=6;
+		constraints.gridy=4;
 		errorFecha.setPreferredSize(new Dimension(230, 16));
 		errorFecha.setForeground(Color.red);
 		panel.add(errorFecha,constraints);
@@ -355,8 +359,12 @@ public class ABMVideo {
 					errorID.setText("Debe ingresar un ID");
 				}else {
 					//buscar video con id Integer.parseInt(tID.getText());
-					Video nuevo = controller.buscarVideo(Integer.parseInt(tID.getText()));
-					edicionVideo(nuevo);
+					Video encontrado = controller.buscarVideo(Integer.parseInt(tID.getText()));
+					if(encontrado == null) {
+						JOptionPane.showConfirmDialog(ventana, "No se encontró un video con el id ingresado", "No existe Video", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);	
+					}else {
+						edicionVideo(encontrado);
+					}
 				}
 			}catch(Exception e) {
 				
@@ -485,8 +493,8 @@ public class ABMVideo {
 		constraints.fill=GridBagConstraints.NONE;
 		aceptar.addActionListener(a -> {
 			String titulo, tema;
-			Double costo = 0.0;
-			Integer duracion = 0;
+			Double costo = null;
+			Integer duracion = null;
 			Date fechaPublicacion = Calendar.getInstance().getTime();
 			Relevancia relevancia;
 			
@@ -510,7 +518,7 @@ public class ABMVideo {
 					costo = Double.parseDouble(tCosto.getText());
 				}
 				if(tDuracion.getText().isEmpty()) {
-					errorDuracion.setText("Debe ingresar una cantidad de páginas");
+					errorDuracion.setText("Debe ingresar una duración");
 					return;
 				}else{
 					duracion = Integer.parseInt(tDuracion.getText());
@@ -521,7 +529,6 @@ public class ABMVideo {
 				}else{
 					fechaPublicacion = (new SimpleDateFormat("dd/MM/yyyy")).parse(tFecha.getText());
 					if((fechaPublicacion.getTime() - Calendar.getInstance().getTime().getTime()) > 0) {
-						System.out.println("Puso una fecha futura");
 						JOptionPane.showConfirmDialog(ventana, "La fecha ingresada es futura", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 						return;
 					}
@@ -540,9 +547,13 @@ public class ABMVideo {
 				}
 				
 			}catch(NumberFormatException nfex) {
-				System.out.println("Puso otra cosa en un campo numérico");
-				JOptionPane.showConfirmDialog(ventana, "Los campos ID, Costo, Precio Compra y Páginas deben ser numéricos.", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);	
-				//nfex.printStackTrace();
+				if(costo == null) {
+					JOptionPane.showConfirmDialog(ventana, "El campo Costo debe ser numérico.", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);	
+				}else {
+					if(duracion == null) {
+						JOptionPane.showConfirmDialog(ventana, "El duracion de Compra debe ser numérico.", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);	
+					}
+				}
 			}catch(ParseException pex) {
 				System.out.println("La fecha está mal escrita");
 				JOptionPane.showConfirmDialog(ventana, "La fecha debe ser escrita con formato dd/mm/aaaa", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
@@ -633,8 +644,12 @@ public class ABMVideo {
 					//buscar video con id Integer.parseInt(tID.getText());
 					//creo un nuevo video para simular la busqueda
 					Video encontrado = controller.buscarVideo(Integer.parseInt(tID.getText()));
-					System.out.println("Video a eliminar: "+encontrado);
-					eliminacionVideo(encontrado);
+					if(encontrado == null) {
+						JOptionPane.showConfirmDialog(ventana, "No se encontró un video con el id ingresado", "No existe Video", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);	
+					}else {
+						eliminacionVideo(encontrado);
+					}
+					
 				}
 			}catch(Exception e) {
 				
