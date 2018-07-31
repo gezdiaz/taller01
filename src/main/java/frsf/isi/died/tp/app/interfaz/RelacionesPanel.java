@@ -14,6 +14,7 @@ import frsf.isi.died.tp.app.dao.MaterialCapacitacionDao;
 import frsf.isi.died.tp.app.interfaz.grafo.ControlPanel;
 import frsf.isi.died.tp.app.interfaz.grafo.GrafoPanel;
 import frsf.isi.died.tp.app.interfaz.grafo.VerticeView;
+import frsf.isi.died.tp.modelo.productos.MaterialCapacitacion;
 
 public class RelacionesPanel {
 	
@@ -25,12 +26,13 @@ public class RelacionesPanel {
 		this.ventana = ventana;
 	}
 	
-	public void armarRelacionesPanel() {
+	public void armarRelacionesPanel(MaterialCapacitacion material) {
 //		JPanel panel = new JPanel(new GridBagLayout());
 		ControlPanel controlPanel = new ControlPanel();
 		GrafoPanel grafoPanel = new GrafoPanel(this.ventana);
 		GrafoController grfController = new GrafoController(grafoPanel,controlPanel);
-		
+		grfController.setListaTema(material.getTema());
+		grfController.crearVertice(400, 300, Color.RED, material);
 		
 		ventana.setContentPane(grafoPanel);
 		ventana.pack();

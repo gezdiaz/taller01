@@ -366,9 +366,7 @@ public class BusquedaPanel {
 				JOptionPane.showConfirmDialog(ventana, "Por favor seleccione un material de la tabla.", "Seleccione un material",  JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 			}else {
 				MaterialCapacitacion material = tableModel.getMateriales().get(tabla.getSelectedRow());
-//				if(material.getTema()!=null)
-//					relacionesPanel.getController().setListaTema(material.getTema());
-				relacionesPanel.armarRelacionesPanel();
+				relacionesPanel.armarRelacionesPanel(material);
 			}
 		});
 		panel.add(boton, constraints);
