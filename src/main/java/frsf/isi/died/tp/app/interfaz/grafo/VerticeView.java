@@ -40,8 +40,9 @@ public class VerticeView {
     }
 
     public Paint getColor() {
-        if(color==null) color = new GradientPaint(coordenadaX,coordenadaY,colorBase,coordenadaX+RADIO, coordenadaY+RADIO,Color.WHITE);
-        return color;
+//        if(color==null) color = new GradientPaint(coordenadaX,coordenadaY,colorBase,coordenadaX+RADIO, coordenadaY+RADIO,Color.WHITE);
+        if(color == null) color = colorBase;
+    	return color;
     }
 
     public void setColor(Paint color) {

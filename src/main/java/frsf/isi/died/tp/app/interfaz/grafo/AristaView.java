@@ -1,6 +1,7 @@
 package frsf.isi.died.tp.app.interfaz.grafo;
 
 import java.awt.BasicStroke;
+import java.awt.Color;
 import java.awt.GradientPaint;
 import java.awt.Paint;
 import java.awt.Shape;
@@ -34,8 +35,9 @@ public class AristaView {
      * @return 
      */
     public Paint getColor() {
-        if(this.color==null) this.color = new GradientPaint(origen.getCoordenadaX() + 10,origen.getCoordenadaY() + 10,destino.getColorBase(),destino.getCoordenadaX() + 10, destino.getCoordenadaY() + 10,origen.getColorBase());
-        return color;
+//        if(this.color==null) this.color = new GradientPaint(origen.getCoordenadaX() + 10,origen.getCoordenadaY() + 10,destino.getColorBase(),destino.getCoordenadaX() + 10, destino.getCoordenadaY() + 10,origen.getColorBase());
+        if(this.color==null) this.color = Color.BLACK;
+    	return color;
     }
 
     public void setColor(Paint color) {

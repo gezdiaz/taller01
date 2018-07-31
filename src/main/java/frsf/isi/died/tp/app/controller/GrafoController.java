@@ -42,6 +42,7 @@ public class GrafoController {
 		v.setNombre(mc.getTitulo());
 		this.vistaGrafo.agregar(v);
 		this.vistaGrafo.repaint();
+		this.matMismoTema.remove(mc);
 	}
 
 	public void crearArista(AristaView arista) {

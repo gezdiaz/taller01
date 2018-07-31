@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.HeadlessException;
 import java.awt.Point;
 import java.awt.Polygon;
 import java.awt.event.MouseAdapter;
@@ -55,23 +56,31 @@ public class GrafoPanel extends JPanel {
             public void mouseClicked(MouseEvent event) {
                 if (event.getClickCount() == 2 && !event.isConsumed()) {
                     event.consume();
-                    Object[] mats = controller.listaVertices().toArray();
+                    Object[] mats = controller.getMatMismoTema().toArray();
                     //String text = JOptionPane.showInputDialog(, "ID del nodo");
-                    Object verticeMatSeleccionado= (MaterialCapacitacion) JOptionPane.showInputDialog(framePadre, 
-                            "Que material corresponde con el vertice?",
-                            "Agregar Vertice",
-                            JOptionPane.QUESTION_MESSAGE, 
-                            null, 
-                            mats, 
-                            mats[0]);
+                    Object verticeMatSeleccionado;
+					try {
+						verticeMatSeleccionado = (MaterialCapacitacion) JOptionPane.showInputDialog(framePadre, 
+						        "Que material corresponde con el vertice?",
+						        "Agregar Vertice",
+						        JOptionPane.QUESTION_MESSAGE, 
+						        null, 
+						        mats, 
+						        mats[0]);
+						if (verticeMatSeleccionado != null) {
+	                        // quito un color de la cola
+//	                        Color aux = colaColores.remove();
+							Color aux = ((MaterialCapacitacion)verticeMatSeleccionado).esLibro()?Color.RED:Color.BLUE;
+	                        controller.crearVertice(event.getX(), event.getY(), aux,(MaterialCapacitacion) verticeMatSeleccionado);
+	                        // pongo el color al final de la cola
+//	                        colaColores.add(aux);
+	                    }
+					} catch (ArrayIndexOutOfBoundsException e) {
+						// TODO Auto-generated catch block
+						JOptionPane.showConfirmDialog(ventana, "No quedan más materiales para agregar", "Sin materiales", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+					}
 
-                    if (verticeMatSeleccionado != null) {
-                        // quito un color de la cola
-                        Color aux = colaColores.remove();
-                        controller.crearVertice(event.getX(), event.getY(), aux,(MaterialCapacitacion) verticeMatSeleccionado);
-                        // pongo el color al final de la cola
-                        colaColores.add(aux);
-                    }
+                    
                 }
             }
 
