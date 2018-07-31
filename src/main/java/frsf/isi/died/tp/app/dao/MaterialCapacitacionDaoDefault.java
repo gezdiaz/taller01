@@ -1,5 +1,6 @@
 package frsf.isi.died.tp.app.dao;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +17,6 @@ public class MaterialCapacitacionDaoDefault implements MaterialCapacitacionDao{
 
 	private static Grafo<MaterialCapacitacion> GRAFO_MATERIAL  = new Grafo<MaterialCapacitacion>();
 	private static Integer SECUENCIA_ID;
-	private static Biblioteca biblioteca = new BibliotecaABB();
 	
 	private CsvDatasource dataSource;
 	
@@ -53,7 +53,6 @@ public class MaterialCapacitacionDaoDefault implements MaterialCapacitacionDao{
 	public void agregarLibro(Libro mat) {
 		mat.setId(++SECUENCIA_ID);
 		GRAFO_MATERIAL.addNodo(mat);	
-		biblioteca.agregar(mat);
 		try {
 			dataSource.agregarFilaAlFinal("libros.csv", mat);
 		} catch (IOException e) {
@@ -64,8 +63,7 @@ public class MaterialCapacitacionDaoDefault implements MaterialCapacitacionDao{
 	@Override
 	public void agregarVideo(Video mat) {
 		mat.setId(++SECUENCIA_ID);
-		GRAFO_MATERIAL.addNodo(mat);				
-		biblioteca.agregar(mat);
+		GRAFO_MATERIAL.addNodo(mat);		
 		try {
 			dataSource.agregarFilaAlFinal("videos.csv", mat);
 		} catch (IOException e) {
@@ -126,6 +124,60 @@ public class MaterialCapacitacionDaoDefault implements MaterialCapacitacionDao{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public void eliminarLibro(Libro mat) {
+		GRAFO_MATERIAL.eliminarNodo(mat);
+		actualizarArchivoLibros();
+		
+	}
+	
+	@Override
+	public void eliminarVideo(Video mat) {
+		GRAFO_MATERIAL.eliminarNodo(mat);
+		actualizarArchivoVideos();
+		
+	}
+
+	@Override
+	public void editarLibro(Integer id, Libro mat) {
+		Libro anterior = (Libro)findById(id);
+		GRAFO_MATERIAL.reemplazarNodo(anterior, mat);
+		actualizarArchivoLibros();
+	}
+
+	@Override
+	public void editarVideo(Integer id, Video mat) {
+		Video anterior = (Video)findById(id);
+		GRAFO_MATERIAL.reemplazarNodo(anterior, mat);
+		actualizarArchivoVideos();		
+	}
+
+	private void actualizarArchivoLibros() {
+		File archivoLibros = new File("libros.csv");
+		archivoLibros.delete();
+		for(Libro l: listaLibros()) {
+			try {
+				dataSource.agregarFilaAlFinal("libros.csv", l);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+	}
+	
+	private void actualizarArchivoVideos() {
+		File archivoLibros = new File("videos.csv");
+		archivoLibros.delete();
+		for(Video l: listaVideos()) {
+			try {
+				dataSource.agregarFilaAlFinal("videos.csv", l);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
 	}
 
 	

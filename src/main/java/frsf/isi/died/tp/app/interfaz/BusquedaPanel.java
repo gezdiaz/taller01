@@ -25,14 +25,17 @@ public class BusquedaPanel {
 	private MaterialCapacitacionDao dao;
 	private JFrame ventana;
 	private ListaDeseosPanel listaPanel;
-	ControlPanel controlPanel = new ControlPanel();
-	GrafoPanel grafoPanel = new GrafoPanel( ventana);
-	GrafoController grfController = new GrafoController(grafoPanel,controlPanel,dao);
+	ControlPanel controlPanel;
+	GrafoPanel grafoPanel;
+	GrafoController grfController;
 	
 	
 	public BusquedaPanel(MaterialCapacitacionDao dao, JFrame ventana) {
 		this.dao = dao;
 		this.ventana = ventana;
+		controlPanel = new ControlPanel();
+		grafoPanel = new GrafoPanel(ventana);
+		grfController = new GrafoController(grafoPanel,controlPanel,dao);
 	}
 	
 	public void setListaPanel(ListaDeseosPanel listaPanel) {

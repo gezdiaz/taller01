@@ -16,6 +16,8 @@ import java.util.List;
 import java.util.Queue;
 import java.util.Stack;
 
+import frsf.isi.died.tp.modelo.productos.Libro;
+
 public class Grafo<T> {
 
 	protected List<Arista<T>> aristas;
@@ -268,6 +270,24 @@ public class Grafo<T> {
         
         return resultado;
     }
+
+	public void eliminarNodo(T val) {
+		if(vertices.contains(new Vertice<T>(val))) {
+			aristas.removeIf(v -> v.getInicio().equals(new Vertice<T>(val)) || v.getFin().equals(new Vertice<T>(val)));
+			vertices.remove(new Vertice<T>(val));
+		}
+	}
+
+	public void reemplazarNodo(T anterior, T nuevo) {
+		if(vertices.contains(new Vertice<T>(anterior))) {
+			for(Vertice<T> v: vertices) {
+				if(v.equals(new Vertice<T>(anterior))) {
+					v.setValor(nuevo);
+				}
+			}
+		}
+		
+	}
 
 
 }

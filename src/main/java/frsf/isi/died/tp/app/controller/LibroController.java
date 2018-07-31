@@ -23,17 +23,13 @@ public class LibroController {
 	
 	public Libro agregarLibro(Integer id, String titulo, Double costo, Double precioCompra, Integer paginas, Date fechaPublicacion, Relevancia relevancia, String tema) {
 		Libro nuevo = new Libro(id, titulo, costo, precioCompra, paginas, fechaPublicacion, relevancia, tema);
-		System.out.println("Se creó el nuevo libro:"+nuevo);
-		//TODO guardar libro en almacenamiento
+
 		dao.agregarLibro(nuevo);
 		return nuevo;
 	}
 
 	public Libro buscarLibro(int id) {
-		//creo un nuevo libro para simular la busqueda
-		//TODO implementar busqueda de libro
-		Libro nuevo ;//= new Libro(id, "Java", 56.4, 41.6, 100, Calendar.getInstance().getTime(), Relevancia.ALTA);
-		//TODO buscar libro en el almacenamiento
+		Libro nuevo ;
 		nuevo = (Libro)dao.findById(id);
 		return nuevo;
 	}
@@ -49,13 +45,11 @@ public class LibroController {
 		libro.setRelevancia(relevancia);
 		libro.setTema(tema);
 		
-		System.out.println("Se editó el libro: "+libro);
-		//TODO editar libro en el almacenamiento persistente
+		dao.editarLibro(libro.getId(), libro);
 	}
 
 	public void eliminarLibro(Libro libro) {
-		// TODO eliminar libro del almacenamiento
-		System.out.println("Libro Eliminado: "+libro);
+		dao.eliminarLibro(libro);
 	}
 	
 }

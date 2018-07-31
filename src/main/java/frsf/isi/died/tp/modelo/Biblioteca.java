@@ -2,6 +2,7 @@ package frsf.isi.died.tp.modelo;
 
 
 import java.util.Collection;
+
 import frsf.isi.died.tp.modelo.productos.MaterialCapacitacion;
 
 /**
@@ -55,6 +56,8 @@ public interface Biblioteca {
 	public void ordenarPorPrecio(Boolean b);
 
 	public MaterialCapacitacion buscar(Integer costo);
+
+	
 
 	
 }

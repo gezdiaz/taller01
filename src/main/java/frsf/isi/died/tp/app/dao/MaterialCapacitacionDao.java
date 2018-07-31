@@ -15,5 +15,9 @@ public interface MaterialCapacitacionDao {
 	public MaterialCapacitacion findById(Integer id);
 	public void crearCamino(Integer idOrigen, Integer idDestino);
 	public List<MaterialCapacitacion> buscarCamino(Integer idOrigen, Integer idDestino, Integer saltos);
-
+	public void eliminarLibro(Libro mat);
+	public void eliminarVideo(Video mat);
+	public void editarLibro(Integer id, Libro mat);
+	public void editarVideo(Integer id, Video mat);
+	
 }

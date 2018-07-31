@@ -142,7 +142,6 @@ public class ABMVideo {
 			errorFecha.setText("");
 			try {
 				if(tTitulo.getText().isEmpty()) {
-					System.out.println("El título no puede ser vacío");
 					errorTitulo.setText("Debe ingresar un título");
 					return;
 				}else {
@@ -166,7 +165,6 @@ public class ABMVideo {
 				}else{
 					fechaPublicacion = (new SimpleDateFormat("dd/MM/yyyy")).parse(tFecha.getText());
 					if((fechaPublicacion.getTime() - Calendar.getInstance().getTime().getTime()) > 0) {
-						System.out.println("Puso una fecha futura");
 						JOptionPane.showConfirmDialog(ventana, "La fecha ingresada es futura", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 						return;
 					}

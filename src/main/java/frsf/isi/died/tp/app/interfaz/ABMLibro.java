@@ -154,7 +154,6 @@ public class ABMLibro {
 			errorFecha.setText("");
 			try {
 				if(tTitulo.getText().isEmpty()) {
-					System.out.println("El título no puede ser vacío");
 					errorTitulo.setText("Debe ingresar un título");
 					return;
 				}else {
@@ -184,7 +183,6 @@ public class ABMLibro {
 				}else{
 					fechaPublicacion = (new SimpleDateFormat("dd/MM/yyyy")).parse(tFecha.getText());
 					if((fechaPublicacion.getTime() - Calendar.getInstance().getTime().getTime()) > 0) {
-						System.out.println("Puso una fecha futura");
 						JOptionPane.showConfirmDialog(ventana, "La fecha ingresada es futura", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 						return;
 					}
@@ -211,11 +209,9 @@ public class ABMLibro {
 								
 				
 			}catch(NumberFormatException nfex) {
-				System.out.println("Puso otra cosa en un campo numérico");
 				JOptionPane.showConfirmDialog(ventana, "Los campos ID, Costo, Precio Compra y Páginas deben ser numéricos.", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);	
 				//nfex.printStackTrace();
 			}catch(ParseException pex) {
-				System.out.println("La fecha está mal escrita");
 				JOptionPane.showConfirmDialog(ventana, "La fecha debe ser escrita con formato dd/mm/aaaa", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 			}
 			
@@ -385,7 +381,6 @@ public class ABMLibro {
 					//buscar libro con id Integer.parseInt(tID.getText());
 					//creo un nuevo libro para simular la busqueda
 					Libro encontrado = controller.buscarLibro(Integer.parseInt(tID.getText()));
-					System.out.println("Libro a editar: "+encontrado);
 					edicionLibro(encontrado);
 				}
 			}catch(Exception e) {
@@ -570,7 +565,6 @@ public class ABMLibro {
 				}else{
 					fechaPublicacion = (new SimpleDateFormat("dd/MM/yyyy")).parse(tFecha.getText());
 					if((fechaPublicacion.getTime() - Calendar.getInstance().getTime().getTime()) > 0) {
-						System.out.println("Puso una fecha futura");
 						JOptionPane.showConfirmDialog(ventana, "La fecha ingresada es futura", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 						return;
 					}
@@ -589,11 +583,9 @@ public class ABMLibro {
 				}
 				
 			}catch(NumberFormatException nfex) {
-				System.out.println("Puso otra cosa en un campo numérico");
 				JOptionPane.showConfirmDialog(ventana, "Los campos ID, Costo, Precio Compra y Páginas deben ser numéricos.", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);	
 				//nfex.printStackTrace();
 			}catch(ParseException pex) {
-				System.out.println("La fecha está mal escrita");
 				JOptionPane.showConfirmDialog(ventana, "La fecha debe ser escrita con formato dd/mm/aaaa", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 			}
 				
@@ -690,7 +682,6 @@ public class ABMLibro {
 					//buscar libro con id Integer.parseInt(tID.getText());
 					//creo un nuevo libro para simular la busqueda
 					Libro encontrado = controller.buscarLibro(Integer.parseInt(tID.getText()));
-					System.out.println("Libro a eliminar: "+encontrado);
 					eliminacionLibro(encontrado);
 				}
 			}catch(Exception e) {
@@ -850,14 +841,11 @@ public class ABMLibro {
 		constraints.gridx=3;
 		constraints.gridy=10;
 		constraints.fill=GridBagConstraints.NONE;
-		eliminar.addActionListener(a -> {
-			System.out.println("Pide confrimacion y elimina el libro.");
-			
+		eliminar.addActionListener(a -> {			
 			if(JOptionPane.showConfirmDialog(ventana, "¿Está seguro que desea eliminar el libro con los datos ingresados?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE)==0){
 				controller.eliminarLibro(libro);
 				eliminarLibro();
 			}				
-				
 		});
 		panel.add(eliminar,constraints);
 		
