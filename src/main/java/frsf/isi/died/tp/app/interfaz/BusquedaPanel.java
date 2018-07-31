@@ -25,18 +25,27 @@ public class BusquedaPanel {
 	private MaterialCapacitacionDao dao;
 	private JFrame ventana;
 	private ListaDeseosPanel listaPanel;
-	ControlPanel controlPanel = new ControlPanel();
-	GrafoPanel grafoPanel = new GrafoPanel( ventana);
-	GrafoController grfController = new GrafoController(grafoPanel,controlPanel,dao);
+	private RelacionesPanel relacionesPanel;
+//	private GrafoPanel grafoPanel;
+	
 	
 	
 	public BusquedaPanel(MaterialCapacitacionDao dao, JFrame ventana) {
 		this.dao = dao;
 		this.ventana = ventana;
+		this.relacionesPanel = new RelacionesPanel(dao,ventana);
 	}
+	
+//	public void setGrafoPanel(GrafoPanel grafoPanel) {
+//		this.grafoPanel= grafoPanel;
+//	}
 	
 	public void setListaPanel(ListaDeseosPanel listaPanel) {
 		this.listaPanel= listaPanel;
+	}
+	
+	public void setRelacionesPanel(RelacionesPanel relacionesPanel) {
+		this.relacionesPanel = relacionesPanel;
 	}
 	
 	public void busqueda() {
@@ -357,12 +366,9 @@ public class BusquedaPanel {
 				JOptionPane.showConfirmDialog(ventana, "Por favor seleccione un material de la tabla.", "Seleccione un material",  JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 			}else {
 				MaterialCapacitacion material = tableModel.getMateriales().get(tabla.getSelectedRow());
-//				ControlPanel controlPanel = new ControlPanel();
-				GrafoPanel grafoPanel = new GrafoPanel(ventana);
-				GrafoController grfController = new GrafoController(grafoPanel,controlPanel,dao);
-				controlPanel.armarPanelRelaciones(material);
-//				panel.add(controlPanel , BorderLayout.PAGE_START);
-				panel.add(grafoPanel , BorderLayout.CENTER);
+//				if(material.getTema()!=null)
+//					relacionesPanel.getController().setListaTema(material.getTema());
+				relacionesPanel.armarRelacionesPanel();
 			}
 		});
 		panel.add(boton, constraints);

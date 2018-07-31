@@ -15,10 +15,21 @@ public class GrafoController {
 	private GrafoPanel vistaGrafo;
 	private ControlPanel vistaControl;
 	private MaterialCapacitacionDao dao;
+	private List<MaterialCapacitacion> matMismoTema;
+	
+	public void setListaTema(String tema){
+		List<MaterialCapacitacion> filtrados = this.dao.listaMateriales();
+		filtrados.removeIf(mat -> !mat.getTema().equalsIgnoreCase(tema));
+		matMismoTema=filtrados;
+	}
+	
+	public List<MaterialCapacitacion> getMatMismoTema() {
+		return matMismoTema;
+	}
 
-	public GrafoController(GrafoPanel panelGrf, ControlPanel panelCtrl, MaterialCapacitacionDao dao) {
+	public GrafoController(GrafoPanel panelGrf, ControlPanel panelCtrl) {
 		this.vistaGrafo = panelGrf;
-		this.dao = dao;
+		this.dao = new MaterialCapacitacionDaoDefault();
 		this.vistaGrafo.setController(this);
 		this.vistaControl = panelCtrl;
 		this.vistaControl.setController(this);
