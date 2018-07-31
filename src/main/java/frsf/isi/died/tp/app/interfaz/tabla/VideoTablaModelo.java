@@ -11,7 +11,7 @@ public class VideoTablaModelo extends AbstractTableModel {
 
 
 	private List<Video> videos;
-	private String[] columnas = {"ID","Titulo","Costo publicacion","Duración",
+	private String[] columnas = {"ID","Tema","Titulo","Costo publicacion","Duración",
 			"Fecha publicación","Calificación","Relevancia"};
 	
 	
@@ -46,21 +46,24 @@ public class VideoTablaModelo extends AbstractTableModel {
 			valor = this.videos.get(rowIndex).getId();
 			break;
 		case 1:
-			valor = this.videos.get(rowIndex).getTitulo();
+			valor = this.videos.get(rowIndex).getTema();
 			break;
 		case 2:
-			valor = this.videos.get(rowIndex).getCosto();
+			valor = this.videos.get(rowIndex).getTitulo();
 			break;
 		case 3:
-			valor = this.videos.get(rowIndex).getDuracion();
+			valor = this.videos.get(rowIndex).getCosto();
 			break;
 		case 4:
-			valor = (new SimpleDateFormat("dd/MM/yyyy")).format(this.videos.get(rowIndex).getFechaPublicacion());
+			valor = this.videos.get(rowIndex).getDuracion();
 			break;
 		case 5:
-			valor = this.videos.get(rowIndex).getCalificacion();
+			valor = (new SimpleDateFormat("dd/MM/yyyy")).format(this.videos.get(rowIndex).getFechaPublicacion());
 			break;
 		case 6:
+			valor = this.videos.get(rowIndex).getCalificacion();
+			break;
+		case 7:
 			valor = this.videos.get(rowIndex).getRelevancia();
 			break;
 		default:

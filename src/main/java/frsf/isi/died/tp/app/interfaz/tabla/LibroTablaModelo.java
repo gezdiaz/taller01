@@ -11,7 +11,7 @@ public class LibroTablaModelo extends AbstractTableModel {
 
 
 	private List<Libro> libros;
-	private String[] columnas = {"ID","Titulo","Precio Compra","Costo publicacion",
+	private String[] columnas = {"ID","Tema" ,"Titulo","Precio Compra","Costo publicacion",
 			"Paginas","Precio Suscripción","Fecha publicación","Calificación","Relevancia"};
 	
 	
@@ -46,27 +46,30 @@ public class LibroTablaModelo extends AbstractTableModel {
 			valor = this.libros.get(rowIndex).getId();
 			break;
 		case 1:
-			valor = this.libros.get(rowIndex).getTitulo();
+			valor = this.libros.get(rowIndex).getTema();
 			break;
 		case 2:
-			valor = this.libros.get(rowIndex).getPrecioCompra();
+			valor = this.libros.get(rowIndex).getTitulo();
 			break;
 		case 3:
-			valor = this.libros.get(rowIndex).getCosto();
+			valor = this.libros.get(rowIndex).getPrecioCompra();
 			break;
 		case 4:
-			valor = this.libros.get(rowIndex).getPaginas();
+			valor = this.libros.get(rowIndex).getCosto();
 			break;
 		case 5:
-			valor = this.libros.get(rowIndex).precio();
+			valor = this.libros.get(rowIndex).getPaginas();
 			break;
 		case 6:
-			valor = (new SimpleDateFormat("dd/MM/yyyy")).format(this.libros.get(rowIndex).getFechaPublicacion());
+			valor = this.libros.get(rowIndex).precio();
 			break;
 		case 7:
-			valor = this.libros.get(rowIndex).getCalificacion();
+			valor = (new SimpleDateFormat("dd/MM/yyyy")).format(this.libros.get(rowIndex).getFechaPublicacion());
 			break;
 		case 8:
+			valor = this.libros.get(rowIndex).getCalificacion();
+			break;
+		case 9:
 			valor = this.libros.get(rowIndex).getRelevancia();
 			break;
 		default:

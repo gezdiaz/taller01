@@ -10,7 +10,7 @@ import frsf.isi.died.tp.modelo.productos.*;
 public class MaterialesTablaModelo extends AbstractTableModel {
 
 	private List<MaterialCapacitacion> materiales;
-	private String[] columnas = {"ID","Tipo","Título","Costo publicación","Precio suscripción",
+	private String[] columnas = {"ID","Tipo","Tema","Título","Costo publicación","Precio suscripción",
 			"Fecha publicación","Calificación","Relevancia"};
 
 	@Override
@@ -51,21 +51,24 @@ public class MaterialesTablaModelo extends AbstractTableModel {
 			valor = this.materiales.get(rowIndex).esLibro()?"Libro":"Video";
 			break;
 		case 2:
-			valor = this.materiales.get(rowIndex).getTitulo();
+			valor = this.materiales.get(rowIndex).getTema();
 			break;
 		case 3:
-			valor = this.materiales.get(rowIndex).getCosto();
+			valor = this.materiales.get(rowIndex).getTitulo();
 			break;
 		case 4:
-			valor = this.materiales.get(rowIndex).precio();
+			valor = this.materiales.get(rowIndex).getCosto();
 			break;
 		case 5:
-			valor = (new SimpleDateFormat("dd/MM/yyyy")).format(this.materiales.get(rowIndex).getFechaPublicacion());
+			valor = this.materiales.get(rowIndex).precio();
 			break;
 		case 6:
-			valor = this.materiales.get(rowIndex).getCalificacion();
+			valor = (new SimpleDateFormat("dd/MM/yyyy")).format(this.materiales.get(rowIndex).getFechaPublicacion());
 			break;
 		case 7:
+			valor = this.materiales.get(rowIndex).getCalificacion();
+			break;
+		case 8:
 			valor = this.materiales.get(rowIndex).getRelevancia();
 			break;
 		default:

@@ -289,9 +289,9 @@ public class BusquedaPanel {
 		
 //		TITULO VENTANA
 		JLabel lblTitulo = new JLabel("Resultado de la búsqueda: ");
-		constraints.gridx = 1;
+		constraints.gridx = 0;
 		constraints.gridy = 0;
-		constraints.gridwidth = 7;
+		constraints.gridwidth = 4;
 		constraints.gridheight = 2;
 		constraints.weighty = 0.25;
 		constraints.anchor=GridBagConstraints.NORTH;
