@@ -212,17 +212,41 @@ public class Grafo<T> {
 		
 	}
 
-	public boolean existeCamino(T v) {
-		Vertice<T> vertice = this.getNodo(v);
-    	return true;
+	public List<T> buscarCamino(T i, T f) {
+		Vertice<T> origen = this.getNodo(i), destino = this.getNodo(f);
+    	List<T> camino = new ArrayList<T>();
+		HashSet<Vertice<T>> visitados = new HashSet<Vertice<T>>();
+    	
+    	return buscarCamino(origen, destino, visitados);
     }
     
-    /**
+    private List<T> buscarCamino(Vertice<T> origen, Vertice<T> destino, HashSet<Vertice<T>> visitados) {
+		List<T> resultado = new ArrayList<T>();
+		
+		if(origen.equals(destino)) {
+			visitados.add(destino);
+			resultado.add(destino.getValor());
+		}else {
+			for(Vertice<T> ady: this.getAdyacentes(origen)) {
+				ArrayList<T> aux = (ArrayList<T>) buscarCamino(ady, destino, visitados);
+				if(!aux.isEmpty()) {
+					visitados.add(origen);
+					resultado.add(origen.getValor());
+					resultado.addAll(aux);
+				}
+			}
+		}
+    	
+    	return resultado;
+	}
+
+	/**
      * @param n1
      * @param n2
      * @param valor
      */
     public List<T> buscarCaminoNSaltos(T n1,T n2,Integer saltos){
+    	if(saltos.equals(0)) return buscarCamino(n1, n2);
 		Vertice<T> origen = this.getNodo(n1);
 		Vertice<T> destino= this.getNodo(n2);
 		HashSet<Vertice<T>> visitados = new HashSet<Vertice<T>>();

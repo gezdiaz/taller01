@@ -6,7 +6,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.HeadlessException;
+import java.awt.Insets;
 import java.awt.Point;
 import java.awt.Polygon;
 import java.awt.event.MouseAdapter;
@@ -24,12 +24,11 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
-import javax.swing.JTable;
 import javax.swing.JTextField;
 
 import frsf.isi.died.tp.app.controller.GrafoController;
 import frsf.isi.died.tp.app.controller.MenuGrafoController;
-import frsf.isi.died.tp.estructuras.Arista;
+import frsf.isi.died.tp.app.interfaz.Principal;
 import frsf.isi.died.tp.modelo.productos.MaterialCapacitacion;
 
 /**
@@ -112,6 +111,9 @@ public class GrafoPanel extends JPanel {
                 		menu.add(menuItem);
                 		menuItem = new JMenuItem("Lista Tema");
                 		menuItem.addActionListener(a -> menuController.opcionPopUp(OpcionesPopUp.LISTA_TEMA));
+                		menu.add(menuItem);
+                		menuItem = new JMenuItem("Volver al inicio");
+                		menuItem.addActionListener(a -> Principal.mostrarInterfaz());
                 		menu.add(menuItem);
                 		menu.show(event.getComponent(), event.getX(), event.getY());
                 	}                	
@@ -250,6 +252,7 @@ public class GrafoPanel extends JPanel {
 		GridBagConstraints cons = new GridBagConstraints();
 		JButton aceptar = new JButton("Aceptar"), cancelar = new JButton("Cancelar");
 		
+		cons.insets = new Insets(5, 5, 5, 5);
 		cons.gridx = 0;
 		cons.gridx = 0;
 		label.setText("Seleccione vertice de inicio: ");
@@ -297,9 +300,9 @@ public class GrafoPanel extends JPanel {
 		});
 		panel.add(aceptar, cons);
 		
+		popup.pack();
 		popup.setLocationRelativeTo(null);
 		popup.setContentPane(panel);
-		popup.pack();
 		popup.setVisible(true);
 	}
     

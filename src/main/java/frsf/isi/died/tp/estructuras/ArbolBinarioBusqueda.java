@@ -5,11 +5,11 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class ArbolBinarioBusqueda extends Arbol {
+public class ArbolBinarioBusqueda extends ArbolBinario {
 
 	private MaterialCapacitacion valor;
-	private Arbol izquierdo;
-	private Arbol derecho;
+	private ArbolBinario izquierdo;
+	private ArbolBinario derecho;
 	private Comparator<MaterialCapacitacion> comparador;
 
 	public ArbolBinarioBusqueda(Comparator<MaterialCapacitacion> comparardor) {
@@ -30,12 +30,12 @@ public class ArbolBinarioBusqueda extends Arbol {
 	}
 
 	@Override
-	public Arbol izquierdo() {
+	public ArbolBinario izquierdo() {
 		return this.izquierdo;
 	}
 
 	@Override
-	public Arbol derecho() {
+	public ArbolBinario derecho() {
 		return this.derecho;
 	}
 
@@ -47,7 +47,7 @@ public class ArbolBinarioBusqueda extends Arbol {
 	}
 
 	@Override
-	public boolean equals(Arbol unArbol) {
+	public boolean equals(ArbolBinario unArbol) {
 		return unArbol instanceof ArbolBinarioBusqueda && this.valor.equals(((ArbolBinarioBusqueda) unArbol).valor)
 				&& this.izquierdo.equals(unArbol.izquierdo()) && this.derecho.equals(unArbol.derecho());
 	}

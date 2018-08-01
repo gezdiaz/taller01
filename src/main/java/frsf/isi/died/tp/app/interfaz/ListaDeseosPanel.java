@@ -1,8 +1,10 @@
 package frsf.isi.died.tp.app.interfaz;
 
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -43,9 +45,10 @@ public class ListaDeseosPanel {
 		JButton boton;
 		
 		JLabel lblTitulo = new JLabel("Lista de deseos: ");
+		constraints.insets = new Insets(5, 5, 5, 5);
 		constraints.gridx = 1;
 		constraints.gridy = 0;
-		constraints.gridwidth = 7;
+		constraints.gridwidth = 4;
 		constraints.gridheight = 1;
 		constraints.weighty = 0.25;
 		constraints.anchor=GridBagConstraints.NORTH;
@@ -58,29 +61,50 @@ public class ListaDeseosPanel {
 		JScrollPane scrollPane= new JScrollPane(tabla);
 		
 		constraints.gridx=0;
-		constraints.gridwidth=2;	
-		constraints.gridy=2;
+		constraints.gridwidth=4;	
+		constraints.gridy=1;
 		constraints.weighty=0.5;
 		constraints.weightx=1;
 		constraints.anchor = GridBagConstraints.CENTER;
-		constraints.fill=GridBagConstraints.HORIZONTAL;
+		constraints.fill=GridBagConstraints.BOTH;
 		panel.add(scrollPane, constraints);
 		
-		boton = new JButton("Inicio");
 		constraints.gridx = 0;
-		constraints.gridy = 3;
+		constraints.gridy = 2;
+		constraints.gridwidth=1;
 		constraints.weighty = 0.25;
-		constraints.anchor = GridBagConstraints.WEST;
+		constraints.weightx=0.75;
+		constraints.anchor = GridBagConstraints.CENTER;
+		constraints.fill=GridBagConstraints.HORIZONTAL;
+		constraints.weightx=0;
+		JLabel label = new JLabel();
+		label.setPreferredSize(new Dimension(35, 1));
+		panel.add(label, constraints);
+		
+		boton = new JButton("Inicio");
+		constraints.gridx = 1;
+		constraints.gridy = 2;
+		constraints.gridwidth=1;
+		constraints.weighty = 0.25;
+		constraints.weightx=0.25;
+		constraints.anchor = GridBagConstraints.CENTER;
 		constraints.fill=GridBagConstraints.NONE;
 		constraints.weightx=0;
 		boton.addActionListener( a -> Principal.mostrarInterfaz());
 		panel.add(boton,constraints);
 		
+		constraints.gridx=2;
+		constraints.weightx=0.75;
+		constraints.fill = GridBagConstraints.HORIZONTAL;
+		panel.add(new JLabel(""), constraints);
+		
 		boton = new JButton("Agregar Materiales");
-		constraints.gridx = 1;
-		constraints.gridy = 3;
+		constraints.gridx = 3;
+		constraints.gridy = 2;
 		constraints.weighty = 0.25;
-		constraints.anchor = GridBagConstraints.EAST;
+		constraints.weightx=0.25;
+		constraints.anchor = GridBagConstraints.CENTER;
+		constraints.fill=GridBagConstraints.NONE;
 		boton.addActionListener( a -> busquedaPanel.busqueda());
 		panel.add(boton,constraints);
 		

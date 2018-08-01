@@ -7,6 +7,7 @@ import java.util.List;
 
 import frsf.isi.died.tp.app.dao.util.CsvDatasource;
 import frsf.isi.died.tp.estructuras.Grafo;
+import frsf.isi.died.tp.estructuras.Vertice;
 import frsf.isi.died.tp.modelo.productos.Libro;
 import frsf.isi.died.tp.modelo.productos.MaterialCapacitacion;
 import frsf.isi.died.tp.modelo.productos.Video;
@@ -23,7 +24,20 @@ public class MaterialCapacitacionDaoDefault implements MaterialCapacitacionDao{
 		if(GRAFO_MATERIAL.esVacio()) {
 			cargarGrafo();
 		}
-		SECUENCIA_ID = GRAFO_MATERIAL.listaVertices().size();
+		SECUENCIA_ID = maxID();
+	}
+
+	private Integer maxID() {
+		List<MaterialCapacitacion> vertices = GRAFO_MATERIAL.listaVertices();
+		Integer max = 0;
+		
+		for(MaterialCapacitacion ver: vertices) {
+			if(ver.getId()>max) {
+				max = ver.getId();
+			}
+		}
+		
+		return max;
 	}
 
 	private void cargarGrafo() {

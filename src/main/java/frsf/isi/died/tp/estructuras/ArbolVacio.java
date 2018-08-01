@@ -6,7 +6,7 @@ import java.util.Comparator;
 import java.util.List;
 
 
-public class ArbolVacio extends Arbol {
+public class ArbolVacio extends ArbolBinario {
 
     public ArbolVacio() {    }
 
@@ -16,12 +16,12 @@ public class ArbolVacio extends Arbol {
     }
 
     @Override
-    public Arbol izquierdo() {
+    public ArbolBinario izquierdo() {
         return new ArbolVacio();
     }
 
     @Override
-    public Arbol derecho() {
+    public ArbolBinario derecho() {
         return new ArbolVacio();
     }
 
@@ -31,7 +31,7 @@ public class ArbolVacio extends Arbol {
     }
 
     @Override
-    public boolean equals(Arbol unArbol) {
+    public boolean equals(ArbolBinario unArbol) {
         return unArbol.esVacio();
     }
 

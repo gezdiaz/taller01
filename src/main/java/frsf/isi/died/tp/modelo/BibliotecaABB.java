@@ -6,14 +6,14 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
-import frsf.isi.died.tp.estructuras.Arbol;
+import frsf.isi.died.tp.estructuras.ArbolBinario;
 import frsf.isi.died.tp.estructuras.ArbolBinarioBusqueda;
 import frsf.isi.died.tp.estructuras.ArbolVacio;
 import frsf.isi.died.tp.modelo.productos.MaterialCapacitacion;
 
 public class BibliotecaABB implements Biblioteca {
 
-	private Arbol materiales;
+	private ArbolBinario materiales;
 	private Boolean flagOrdenarPorPrecio;
 	private Comparator<MaterialCapacitacion> comparaTitulo= (mc1,mc2)-> mc1.getTitulo().compareTo(mc2.getTitulo());
 	private Comparator<MaterialCapacitacion> comparaPrecio= (mc1,mc2)-> mc1.precio().intValue()- mc2.precio().intValue();
@@ -96,7 +96,7 @@ public class BibliotecaABB implements Biblioteca {
 		// BibliotecaABB el m�todo imprimir() o materiales()
 		if(materiales.esVacio()) return; //Si no hay materiales no tengo que ordenar nada
 		List<MaterialCapacitacion> lista = materiales.inOrden();
-		Arbol nuevoArbol = new ArbolBinarioBusqueda((m1,m2)->m1.precio().compareTo(m2.precio()));
+		ArbolBinario nuevoArbol = new ArbolBinarioBusqueda((m1,m2)->m1.precio().compareTo(m2.precio()));
 		for(MaterialCapacitacion m: lista) {
 			nuevoArbol.add(m);
 		}
@@ -113,7 +113,7 @@ public class BibliotecaABB implements Biblioteca {
 		// BibliotecaABB el m�todo imprimir() o materiales()
 		if(materiales.esVacio()) return; //Si no hay materiales no tengo que ordenar nada
 		List<MaterialCapacitacion> lista = materiales.inOrden();
-		Arbol nuevoArbol = new ArbolBinarioBusqueda((m1,m2)->m1.getTitulo().compareTo(m2.getTitulo()));
+		ArbolBinario nuevoArbol = new ArbolBinarioBusqueda((m1,m2)->m1.getTitulo().compareTo(m2.getTitulo()));
 		for(MaterialCapacitacion m: lista) {
 			nuevoArbol.add(m);
 		}
@@ -123,7 +123,7 @@ public class BibliotecaABB implements Biblioteca {
 	public void ordenarPorFecha() {
 		if(materiales.esVacio()) return; //Si no hay materiales no tengo que ordenar nada
 		List<MaterialCapacitacion> lista = materiales.inOrden();
-		Arbol nuevoArbol = new ArbolBinarioBusqueda((m1,m2)->m1.getFechaPublicacion().compareTo(m2.getFechaPublicacion()));
+		ArbolBinario nuevoArbol = new ArbolBinarioBusqueda((m1,m2)->m1.getFechaPublicacion().compareTo(m2.getFechaPublicacion()));
 		for(MaterialCapacitacion m: lista) {
 			nuevoArbol.add(m);
 		}
@@ -133,7 +133,7 @@ public class BibliotecaABB implements Biblioteca {
 	public void ordenarPorCalificacion() {	
 		if(materiales.esVacio()) return; //Si no hay materiales no tengo que ordenar nada
 		List<MaterialCapacitacion> lista = materiales.inOrden();
-		Arbol nuevoArbol = new ArbolBinarioBusqueda((m1,m2)->m1.getCalificacion().compareTo(m2.getCalificacion()));
+		ArbolBinario nuevoArbol = new ArbolBinarioBusqueda((m1,m2)->m1.getCalificacion().compareTo(m2.getCalificacion()));
 		for(MaterialCapacitacion m: lista) {
 			nuevoArbol.add(m);
 		}
@@ -143,7 +143,7 @@ public class BibliotecaABB implements Biblioteca {
 	public void ordenarPorRelevancia() {
 		if(materiales.esVacio()) return; //Si no hay materiales no tengo que ordenar nada
 		List<MaterialCapacitacion> lista = materiales.inOrden();
-		Arbol nuevoArbol = new ArbolBinarioBusqueda((m1,m2)->m1.getRelevancia().compareTo(m2.getRelevancia()));
+		ArbolBinario nuevoArbol = new ArbolBinarioBusqueda((m1,m2)->m1.getRelevancia().compareTo(m2.getRelevancia()));
 		for(MaterialCapacitacion m: lista) {
 			nuevoArbol.add(m);
 		}

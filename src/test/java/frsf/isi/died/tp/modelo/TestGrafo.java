@@ -9,7 +9,7 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import frsf.isi.died.tp.estructuras.Arbol;
+import frsf.isi.died.tp.estructuras.ArbolBinario;
 import frsf.isi.died.tp.estructuras.ArbolBinarioBusqueda;
 import frsf.isi.died.tp.estructuras.ArbolVacio;
 import frsf.isi.died.tp.estructuras.Grafo;
