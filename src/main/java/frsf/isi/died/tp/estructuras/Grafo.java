@@ -11,12 +11,9 @@ package frsf.isi.died.tp.estructuras;
  */
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
-import java.util.Stack;
 
-import frsf.isi.died.tp.modelo.productos.Libro;
+
 
 public class Grafo<T> {
 
@@ -102,8 +99,7 @@ public class Grafo<T> {
 			}
 		}
 		return salida;
-	}
-	
+	}	
 
 	/**
 	 * @param unNodo
@@ -125,15 +121,18 @@ public class Grafo<T> {
 	public void imprimirAristas(){
 		System.out.println(this.aristas.toString());
 	}
-
-
         
 	/**
 	 * @param v1
 	 * @param v2
 	 * @return
 	 */
-	protected boolean esAdyacente(Vertice<T> v1,Vertice<T> v2){
+	public boolean esAdyacente(T n1, T n2) {
+		Vertice<T> origen = this.getNodo(n1);
+		Vertice<T> destino = this.getNodo(n2);
+		return this.esAdyacente(origen, destino);
+	}
+	public boolean esAdyacente(Vertice<T> v1,Vertice<T> v2){
             List<Vertice<T>> ady = this.getAdyacentes(v1);
             for(Vertice<T> unAdy : ady){
                 if(unAdy.equals(v2)) return true;
@@ -189,7 +188,6 @@ public class Grafo<T> {
     	
     }
 
-
     private T primerVerticeGradoK(T v, Integer gradoK, HashSet<Vertice<T>> visitados) {
 		
     	Vertice<T> vertice = this.getNodo(v);
@@ -219,7 +217,6 @@ public class Grafo<T> {
     	return true;
     }
     
-    
     /**
      * @param n1
      * @param n2
@@ -233,20 +230,9 @@ public class Grafo<T> {
 		return this.buscarCaminoNSaltos(origen, destino, saltos, visitados);
          
     }
+    
     private List<T> buscarCaminoNSaltos(Vertice<T> n1,Vertice<T> n2,Integer saltos,HashSet<Vertice<T>> visitados){
         ArrayList<T> resultado = new ArrayList<>();
-//        Stack<Vertice<T>> porVisitar = new Stack<Vertice<T>>();
-//        Vertice<T> vertice;
-//        while(!porVisitar.isEmpty()) {
-//        	vertice = porVisitar.pop();
-//        	resultado.add(vertice.getValor());
-//        	for(Vertice<T> ady: this.getAdyacentes(vertice)){
-//        		if(!visitados.contains(ady)) {
-//        			visitados.add(ady);
-//        			porVisitar.push(ady);
-//        		}
-//        	}
-//        }
         if(!visitados.contains(n1)) {
         	
         	if(n1.equals(n2)) {
@@ -288,7 +274,6 @@ public class Grafo<T> {
 		}
 		
 	}
-
 
 }
 

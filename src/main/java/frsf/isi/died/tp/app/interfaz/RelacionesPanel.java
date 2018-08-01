@@ -2,8 +2,6 @@ package frsf.isi.died.tp.app.interfaz;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -14,7 +12,6 @@ import frsf.isi.died.tp.app.controller.RelacionesController;
 import frsf.isi.died.tp.app.dao.MaterialCapacitacionDao;
 import frsf.isi.died.tp.app.interfaz.grafo.ControlPanel;
 import frsf.isi.died.tp.app.interfaz.grafo.GrafoPanel;
-import frsf.isi.died.tp.app.interfaz.grafo.VerticeView;
 import frsf.isi.died.tp.modelo.productos.MaterialCapacitacion;
 
 public class RelacionesPanel {
@@ -34,6 +31,7 @@ public class RelacionesPanel {
 		GrafoController grfController = new GrafoController(grafoPanel,controlPanel);
 		grfController.setListaTema(material.getTema());
 		grfController.crearVertice(400, 300, Color.RED, material);
+		grafoPanel.setAuxiliarOrigen(grfController.buscarVertice(material));
 		
 		panel.add(new JLabel("Doble click: agregar nodo, Click secundario: ver opciones, Arrastrar y soltar: agregar arista."), BorderLayout.SOUTH);
 		panel.add(grafoPanel, BorderLayout.CENTER);

@@ -15,8 +15,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
-import java.util.function.BiPredicate;
-import java.util.function.Predicate;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -82,6 +80,20 @@ public class GrafoPanel extends JPanel {
 //	                        Color aux = colaColores.remove();
 							Color aux = ((MaterialCapacitacion)verticeMatSeleccionado).esLibro()?Color.RED:Color.BLUE;
 	                        controller.crearVertice(event.getX(), event.getY(), aux,(MaterialCapacitacion) verticeMatSeleccionado);
+		                    if (auxiliar!=null) {
+	                        	if (controller.existeArista(auxiliar.getOrigen().getId(),((MaterialCapacitacion)verticeMatSeleccionado).getId())) {
+		                        	AristaView existente = new AristaView();
+		                        	existente.setOrigen(auxiliar.getOrigen());
+		                        	existente.setDestino(controller.buscarVertice((MaterialCapacitacion)verticeMatSeleccionado));
+		                        	controller.dibujarAristaExistente(existente);
+//		                        	if(controller.existeArista(existente.getDestino().getId(), existente.getOrigen().getId())) {
+//		                        		VerticeView auxV = existente.getDestino();
+//		                        		existente.setDestino(existente.getOrigen());
+//		                        		existente.setOrigen(auxV);
+//		                        		controller.dibujarAristaExistente(existente);
+//		                        	}
+		                        }
+		                    }
 	                        // pongo el color al final de la cola
 //	                        colaColores.add(aux);
 	                    }
@@ -110,9 +122,11 @@ public class GrafoPanel extends JPanel {
             public void mouseReleased(MouseEvent event) {
                 VerticeView vDestino = clicEnUnNodo(event.getPoint());
                 if (auxiliar!=null && vDestino != null) {
-                    auxiliar.setDestino(vDestino);
-                    controller.crearArista(auxiliar);
-                    auxiliar = null;
+                	if (!controller.existeArista(auxiliar.getOrigen().getId(),vDestino.getId())) {
+                		auxiliar.setDestino(vDestino);
+                		controller.crearArista(auxiliar);
+                		auxiliar = null;
+                	}
                 }
             }
 
@@ -207,6 +221,11 @@ public class GrafoPanel extends JPanel {
 
     public GrafoController getController() {
         return controller;
+    }
+    
+    public void setAuxiliarOrigen(VerticeView v) {
+    	this.auxiliar = new AristaView();
+    	this.auxiliar.setOrigen(v);
     }
 
     public void setController(GrafoController controller) {

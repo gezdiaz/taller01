@@ -19,5 +19,6 @@ public interface MaterialCapacitacionDao {
 	public void eliminarVideo(Video mat);
 	public void editarLibro(Integer id, Libro mat);
 	public void editarVideo(Integer id, Video mat);
+	public boolean existeArista(Integer idOrigen, Integer idDestino);
 	
 }
