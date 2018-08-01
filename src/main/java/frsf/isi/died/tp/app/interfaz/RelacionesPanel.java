@@ -27,7 +27,7 @@ public class RelacionesPanel {
 		GrafoPanel grafoPanel = new GrafoPanel(this.ventana);
 		GrafoController grfController = new GrafoController(grafoPanel,controlPanel);
 		grfController.setListaTema(material.getTema());
-		grfController.crearVertice(400, 300, Color.RED, material);
+		grfController.crearVertice(400, 300, material.esLibro()?Color.RED:Color.BLUE, material);
 		grafoPanel.setAuxiliarOrigen(grfController.buscarVertice(material));
 		
 		ventana.setContentPane(grafoPanel);
