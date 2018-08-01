@@ -28,6 +28,15 @@ public abstract class MaterialCapacitacion implements Ordenable, Comparable<Mate
 	protected Integer votantes;
 	protected Date fechaPublicacion;
 	protected String tema;
+	protected Double pr;
+	
+	public void setPR(Double pr) {
+		this.pr = pr;
+	}
+	
+	public Double getPR() {
+		return pr;
+	}
 	
 	public String getTema() {
 		return tema;
@@ -132,6 +141,7 @@ public abstract class MaterialCapacitacion implements Ordenable, Comparable<Mate
 		this.calificacion = 0;
 		this.votantes = 0;
 		this.tema = tema;
+		this.pr = 1.0;
 	}
 
 

@@ -298,6 +298,16 @@ public class Grafo<T> {
 		}
 		
 	}
+	
+	public List<T> getReferentes(T valor){
+		List<T> referentes = new ArrayList<T>();
+		for(Arista arista: this.aristas) {
+			if(arista.getFin().equals(this.getNodo(valor))) {
+				referentes.add((T) arista.getInicio().getValor());
+			}
+		}
+		return referentes;
+	}
 
 }
 

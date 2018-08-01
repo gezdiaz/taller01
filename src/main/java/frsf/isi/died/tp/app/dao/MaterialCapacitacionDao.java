@@ -20,5 +20,6 @@ public interface MaterialCapacitacionDao {
 	public void editarLibro(Integer id, Libro mat);
 	public void editarVideo(Integer id, Video mat);
 	public boolean existeArista(Integer idOrigen, Integer idDestino);
+	public List<MaterialCapacitacion> ordenarPR(List<MaterialCapacitacion> materiales);
 	
 }

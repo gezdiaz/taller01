@@ -197,6 +197,30 @@ public class MaterialCapacitacionDaoDefault implements MaterialCapacitacionDao{
 		return GRAFO_MATERIAL.esAdyacente(this.findById(idOrigen),this.findById(idDestino) );
 		
 	}
+	
+	/*
+	 * calcula el PR de cada material
+	 */
+	private void calcularPR(MaterialCapacitacion mat) {
+		Double resul = 1.0,sumatoria=0.0;
+		if(!GRAFO_MATERIAL.getReferentes(mat).isEmpty()) {
+			for(MaterialCapacitacion matRef : GRAFO_MATERIAL.getReferentes(mat)) {
+				sumatoria = (double) (matRef.getPR()/GRAFO_MATERIAL.gradoSalida(matRef));
+			}
+			resul = 0.5+ (0.5 * sumatoria);
+		}
+		mat.setPR(resul);
+	}
+
+	/*
+	 * Calcula el PR para el orden de la lista
+	 */
+	@Override
+	public List<MaterialCapacitacion> ordenarPR(List<MaterialCapacitacion> materiales) {
+//		TODO while que se tiene que hacer hasta que haya una minima
+//		diferencia entre los PR que se van calculando
+		return null;
+	}
 
 	
 }

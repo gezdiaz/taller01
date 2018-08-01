@@ -54,12 +54,11 @@ public class GrafoController {
 		this.vistaGrafo.agregar(arista);
 		this.vistaGrafo.repaint();
 	}
+	
 	public void dibujarAristaExistente(AristaView arista) {
 		this.vistaGrafo.agregar(arista);
 		this.vistaGrafo.repaint();
 	}
-	
-	
 
 	public void buscarCamino(Integer nodo1, Integer nodo2, Integer saltos) {
 		List<MaterialCapacitacion> camino = this.dao.buscarCamino(nodo1, nodo2, saltos);
@@ -87,5 +86,10 @@ public class GrafoController {
 			}
 		}
 		return null;
+	}
+
+	public List<MaterialCapacitacion> ordenadosPR() {
+		return dao.ordenarPR(this.matMismoTema);
+		
 	}
 }
