@@ -1,6 +1,5 @@
 package frsf.isi.died.tp.app.interfaz;
 
-import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -12,9 +11,6 @@ import java.util.Date;
 
 import javax.swing.*;
 
-import frsf.isi.died.tp.app.controller.GrafoController;
-import frsf.isi.died.tp.app.interfaz.grafo.ControlPanel;
-import frsf.isi.died.tp.app.interfaz.grafo.GrafoPanel;
 import frsf.isi.died.tp.app.dao.MaterialCapacitacionDao;
 import frsf.isi.died.tp.app.interfaz.tabla.*;
 import frsf.isi.died.tp.modelo.BibliotecaABB;

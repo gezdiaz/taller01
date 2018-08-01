@@ -1,19 +1,14 @@
 package frsf.isi.died.tp.app.interfaz;
 
 import java.awt.Color;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 
 import frsf.isi.died.tp.app.controller.GrafoController;
 import frsf.isi.died.tp.app.controller.RelacionesController;
 import frsf.isi.died.tp.app.dao.MaterialCapacitacionDao;
 import frsf.isi.died.tp.app.interfaz.grafo.ControlPanel;
 import frsf.isi.died.tp.app.interfaz.grafo.GrafoPanel;
-import frsf.isi.died.tp.app.interfaz.grafo.VerticeView;
 import frsf.isi.died.tp.modelo.productos.MaterialCapacitacion;
 
 public class RelacionesPanel {
@@ -33,6 +28,7 @@ public class RelacionesPanel {
 		GrafoController grfController = new GrafoController(grafoPanel,controlPanel);
 		grfController.setListaTema(material.getTema());
 		grfController.crearVertice(400, 300, Color.RED, material);
+		grafoPanel.setAuxiliarOrigen(grfController.buscarVertice(material));
 		
 		ventana.setContentPane(grafoPanel);
 		ventana.pack();

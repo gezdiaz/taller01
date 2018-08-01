@@ -7,8 +7,6 @@ import java.util.List;
 
 import frsf.isi.died.tp.app.dao.util.CsvDatasource;
 import frsf.isi.died.tp.estructuras.Grafo;
-import frsf.isi.died.tp.modelo.Biblioteca;
-import frsf.isi.died.tp.modelo.BibliotecaABB;
 import frsf.isi.died.tp.modelo.productos.Libro;
 import frsf.isi.died.tp.modelo.productos.MaterialCapacitacion;
 import frsf.isi.died.tp.modelo.productos.Video;
@@ -177,6 +175,12 @@ public class MaterialCapacitacionDaoDefault implements MaterialCapacitacionDao{
 				e.printStackTrace();
 			}
 		}
+		
+	}
+
+	@Override
+	public boolean existeArista(Integer idOrigen, Integer idDestino) {
+		return GRAFO_MATERIAL.esAdyacente(this.findById(idOrigen),this.findById(idDestino) );
 		
 	}
 

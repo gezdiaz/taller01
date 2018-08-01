@@ -1,6 +1,7 @@
 package frsf.isi.died.tp.app.controller;
 
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.List;
 import frsf.isi.died.tp.app.dao.MaterialCapacitacionDao;
 import frsf.isi.died.tp.app.dao.MaterialCapacitacionDaoDefault;
@@ -16,6 +17,7 @@ public class GrafoController {
 	private ControlPanel vistaControl;
 	private MaterialCapacitacionDao dao;
 	private List<MaterialCapacitacion> matMismoTema;
+	private List<VerticeView> verticesDibujados;
 	
 	public void setListaTema(String tema){
 		List<MaterialCapacitacion> filtrados = this.dao.listaMateriales();
@@ -34,12 +36,14 @@ public class GrafoController {
 		this.vistaControl = panelCtrl;
 		this.vistaControl.setController(this);
 		this.vistaControl.armarPanelBuscarCaminos(dao.listaMateriales());
+		this.verticesDibujados = new ArrayList<VerticeView>();
 	}
 
 	public void crearVertice(Integer coordenadaX, Integer coordenadaY, Color color, MaterialCapacitacion mc) {
 		VerticeView v = new VerticeView(coordenadaX, coordenadaY, color);
 		v.setId(mc.getId());
 		v.setNombre(mc.getTitulo());
+		this.verticesDibujados.add(v);
 		this.vistaGrafo.agregar(v);
 		this.vistaGrafo.repaint();
 		this.matMismoTema.remove(mc);
@@ -47,6 +51,10 @@ public class GrafoController {
 
 	public void crearArista(AristaView arista) {
 		this.dao.crearCamino(arista.getOrigen().getId(), arista.getDestino().getId());
+		this.vistaGrafo.agregar(arista);
+		this.vistaGrafo.repaint();
+	}
+	public void dibujarAristaExistente(AristaView arista) {
 		this.vistaGrafo.agregar(arista);
 		this.vistaGrafo.repaint();
 	}
@@ -64,4 +72,16 @@ public class GrafoController {
 		return dao.listaMateriales();
 	}
 	
+	public boolean existeArista(Integer idOrigen, Integer idDestino) {
+		return dao.existeArista(idOrigen, idDestino);
+	}
+
+	public VerticeView buscarVertice(MaterialCapacitacion mc) {
+		if(!this.verticesDibujados.isEmpty()) {
+			for(VerticeView v : this.verticesDibujados) {
+				if(v.getId().equals(mc.getId())) return v;
+			}
+		}
+		return null;
+	}
 }
