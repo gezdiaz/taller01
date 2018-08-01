@@ -1,8 +1,11 @@
 package frsf.isi.died.tp.app.interfaz;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 import frsf.isi.died.tp.app.controller.GrafoController;
 import frsf.isi.died.tp.app.controller.RelacionesController;
@@ -22,7 +25,7 @@ public class RelacionesPanel {
 	}
 	
 	public void armarRelacionesPanel(MaterialCapacitacion material) {
-//		JPanel panel = new JPanel(new GridBagLayout());
+		JPanel panel = new JPanel(new BorderLayout());
 		ControlPanel controlPanel = new ControlPanel();
 		GrafoPanel grafoPanel = new GrafoPanel(this.ventana);
 		GrafoController grfController = new GrafoController(grafoPanel,controlPanel);
@@ -30,7 +33,10 @@ public class RelacionesPanel {
 		grfController.crearVertice(400, 300, material.esLibro()?Color.RED:Color.BLUE, material);
 		grafoPanel.setAuxiliarOrigen(grfController.buscarVertice(material));
 		
-		ventana.setContentPane(grafoPanel);
+		panel.add(new JLabel("Doble click: agregar nodo, Click secundario: ver opciones, Arrastrar y soltar: agregar arista."), BorderLayout.SOUTH);
+		panel.add(grafoPanel, BorderLayout.CENTER);
+		
+		ventana.setContentPane(panel);
 		ventana.pack();
 		ventana.setSize(800, 600);
 		
