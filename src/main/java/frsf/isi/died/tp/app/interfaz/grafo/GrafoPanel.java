@@ -29,6 +29,7 @@ import javax.swing.JTextField;
 
 import frsf.isi.died.tp.app.controller.GrafoController;
 import frsf.isi.died.tp.app.controller.MenuGrafoController;
+import frsf.isi.died.tp.app.interfaz.tabla.MaterialesTablaModelo;
 import frsf.isi.died.tp.estructuras.Arista;
 import frsf.isi.died.tp.modelo.productos.MaterialCapacitacion;
 
@@ -110,7 +111,7 @@ public class GrafoPanel extends JPanel {
                 		menuItem = new JMenuItem("Buscar caminos");
                 		menuItem.addActionListener(a -> menuController.opcionPopUp(OpcionesPopUp.BUSCAR_CAMINO));
                 		menu.add(menuItem);
-                		menuItem = new JMenuItem("Lista Tema");
+                		menuItem = new JMenuItem("Materiales por PR");
                 		menuItem.addActionListener(a -> menuController.opcionPopUp(OpcionesPopUp.LISTA_TEMA));
                 		menu.add(menuItem);
                 		menu.show(event.getComponent(), event.getX(), event.getY());
@@ -301,6 +302,24 @@ public class GrafoPanel extends JPanel {
 		popup.setContentPane(panel);
 		popup.pack();
 		popup.setVisible(true);
+	}
+	
+	public void mostrarListaTemaPR() {
+		JFrame popup = new JFrame("Lista de materiales ordenados por PageRank");
+		JPanel panel = new JPanel(new GridBagLayout());
+		ArrayList<MaterialCapacitacion> materiales = new ArrayList<MaterialCapacitacion>();
+		materiales = (ArrayList<MaterialCapacitacion>) controller.ordenadosPR();
+		MaterialesTablaModelo tableModel = new MaterialesTablaModelo();
+		JTable tabla = new JTable(tableModel);
+		GridBagConstraints constraints = new GridBagConstraints();
+		
+		
+		
+		popup.setLocationRelativeTo(null);
+		popup.setContentPane(panel);
+		popup.pack();
+		popup.setVisible(true);
+	
 	}
     
     
