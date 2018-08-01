@@ -133,7 +133,7 @@ public class ABMLibro {
 		
 		constraints.gridx=0;
 		constraints.gridy=8;
-		cancelar.addActionListener(a -> Principal.mostrarInterfaz(ventana));
+		cancelar.addActionListener(a -> Principal.mostrarInterfaz());
 		panel.add(cancelar, constraints);
 				
 		constraints.gridx=3;
@@ -308,7 +308,7 @@ public class ABMLibro {
 		constraints.gridwidth=1;
 		constraints.weightx=0;
 		constraints.anchor=GridBagConstraints.CENTER;
-		volver.addActionListener(a -> Principal.mostrarInterfaz(ventana));
+		volver.addActionListener(a -> Principal.mostrarInterfaz());
 		panel.add(volver,constraints);
 		
 		constraints.gridheight=1;
@@ -378,7 +378,7 @@ public class ABMLibro {
 		
 		constraints.gridx=0;
 		constraints.gridy=2;
-		cancelar.addActionListener(a -> Principal.mostrarInterfaz(ventana));
+		cancelar.addActionListener(a -> Principal.mostrarInterfaz());
 		panel.add(cancelar,constraints);
 		
 		constraints.gridx=3;
@@ -530,7 +530,7 @@ public class ABMLibro {
 		
 		constraints.gridx=0;
 		constraints.gridy=9;
-		cancelar.addActionListener(a -> Principal.mostrarInterfaz(ventana));
+		cancelar.addActionListener(a -> Principal.mostrarInterfaz());
 		panel.add(cancelar, constraints);
 		
 		constraints.gridx=3;
@@ -693,7 +693,7 @@ public class ABMLibro {
 		
 		constraints.gridx=0;
 		constraints.gridy=2;
-		cancelar.addActionListener(a -> Principal.mostrarInterfaz(ventana));
+		cancelar.addActionListener(a -> Principal.mostrarInterfaz());
 		panel.add(cancelar,constraints);
 		
 		constraints.gridx=3;

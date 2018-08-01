@@ -73,7 +73,7 @@ public class ListaDeseosPanel {
 		constraints.anchor = GridBagConstraints.WEST;
 		constraints.fill=GridBagConstraints.NONE;
 		constraints.weightx=0;
-		boton.addActionListener( a -> Principal.mostrarInterfaz(ventana));
+		boton.addActionListener( a -> Principal.mostrarInterfaz());
 		panel.add(boton,constraints);
 		
 		boton = new JButton("Agregar Materiales");

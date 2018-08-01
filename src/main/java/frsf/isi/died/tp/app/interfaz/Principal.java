@@ -16,15 +16,21 @@ import frsf.isi.died.tp.app.dao.MaterialCapacitacionDaoDefault;
 
 public class Principal {
 
-	public static void main(String[] args) {		
+	private static JFrame ventana;
+	private static MenuController controller;
+	
+	public static void main(String[] args) {
+		ventana = new JFrame();
+		MaterialCapacitacionDao dao = new MaterialCapacitacionDaoDefault();
+        controller = new MenuController(dao, ventana);
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
 	        public void run() {
-	          mostrarInterfaz(new JFrame());
+	        	mostrarInterfaz();
 	        }
 	    });
 	}
 	
-	public static void mostrarInterfaz(JFrame ventana) {
+	public static void mostrarInterfaz() {
 		
 		JPanel panel = new JPanel();
 		JLabel imagen = new JLabel(), vacio = new JLabel(), encabezado = new JLabel("    Sistema de suscripción a biblioteca.");
@@ -32,8 +38,6 @@ public class Principal {
         JMenu menu;
         JMenuItem menuItem;
         JMenu submenu;
-        MaterialCapacitacionDao dao = new MaterialCapacitacionDaoDefault();
-        MenuController controller = new MenuController(dao, ventana);
         
 //        configuracion del panel (imagen central)
         ventana.setContentPane(panel);

@@ -197,7 +197,7 @@ public class BusquedaPanel {
 		constraints.gridx=0;
 		constraints.gridy=15;
 		constraints.gridwidth=1;
-		boton.addActionListener( a -> Principal.mostrarInterfaz(ventana));
+		boton.addActionListener( a -> Principal.mostrarInterfaz());
 		panel.add(boton, constraints);
 		
 		boton = new JButton("Buscar");
@@ -319,7 +319,7 @@ public class BusquedaPanel {
 		constraints.weightx = 0.25;
 		constraints.weighty = 0.25;
 		constraints.anchor = GridBagConstraints.CENTER;
-		boton.addActionListener( a -> Principal.mostrarInterfaz(ventana));
+		boton.addActionListener( a -> Principal.mostrarInterfaz());
 		panel.add(boton,constraints);
 		
 		boton = new JButton("Atrás");
