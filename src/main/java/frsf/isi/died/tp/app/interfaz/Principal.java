@@ -66,7 +66,7 @@ public class Principal {
 		menu = new JMenu("Materiales Capacitación");
 		menuBar.add(menu);
 		
-        submenu = new JMenu("Libro..");
+        submenu = new JMenu("Libro");
         menu.add(submenu);
         menuItem = new JMenuItem("Agregar");
         menuItem.addActionListener(e -> controller.opcion(OpcionesMenu.AGREGAR_LIBRO, ventana));
@@ -79,7 +79,7 @@ public class Principal {
         menuItem.addActionListener(e -> controller.opcion(OpcionesMenu.ELIMINAR_LIBRO, ventana));
         submenu.add(menuItem);
         
-        submenu = new JMenu("Video..");
+        submenu = new JMenu("Video");
         menu.add(submenu);
         menuItem = new JMenuItem("Agregar");
         menuItem.addActionListener(e -> controller.opcion(OpcionesMenu.AGREGAR_VIDEO, ventana));

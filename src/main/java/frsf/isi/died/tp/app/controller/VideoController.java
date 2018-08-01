@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import frsf.isi.died.tp.app.dao.MaterialCapacitacionDao;
+import frsf.isi.died.tp.modelo.productos.MaterialCapacitacion;
 import frsf.isi.died.tp.modelo.productos.Relevancia;
 import frsf.isi.died.tp.modelo.productos.Video;
 
@@ -26,9 +27,14 @@ public class VideoController {
 	}
 
 	public Video buscarVideo(int id) {
-		Video existente;
-		existente = (Video)dao.findById(id);
-		return existente;
+		MaterialCapacitacion existente;
+		existente = dao.findById(id);
+		if(existente != null && existente.esVideo()) {
+			return (Video)existente;
+		}else {
+			return null;
+		}
+		
 	}
 	
 	public void editarVideo(Video video, String titulo, double costo, int duracion,

@@ -7,6 +7,7 @@ import java.util.Date;
 import frsf.isi.died.tp.app.dao.MaterialCapacitacionDao;
 import frsf.isi.died.tp.app.dao.MaterialCapacitacionDaoDefault;
 import frsf.isi.died.tp.modelo.productos.Libro;
+import frsf.isi.died.tp.modelo.productos.MaterialCapacitacion;
 import frsf.isi.died.tp.modelo.productos.Relevancia;
 
 public class LibroController {
@@ -29,9 +30,14 @@ public class LibroController {
 	}
 
 	public Libro buscarLibro(int id) {
-		Libro nuevo ;
-		nuevo = (Libro)dao.findById(id);
-		return nuevo;
+		MaterialCapacitacion nuevo;
+		nuevo = dao.findById(id);
+		if(nuevo != null && nuevo.esLibro()) {
+			return (Libro)nuevo;
+		}else {
+			return null;
+		}
+		
 	}
 
 	public void editarLibro(Libro libro, String titulo, double costo, double precioCompra, int paginas,

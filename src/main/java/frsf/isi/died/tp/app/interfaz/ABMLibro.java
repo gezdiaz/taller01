@@ -142,8 +142,8 @@ public class ABMLibro {
 		constraints.anchor=GridBagConstraints.WEST;
 		aceptar.addActionListener(e -> {
 			String titulo, tema;
-			Double costo = 0.0, precioCompra = 0.0;
-			Integer paginas = 0;
+			Double costo = null, precioCompra = null;
+			Integer paginas = null;
 			Date fechaPublicacion = Calendar.getInstance().getTime();
 			Relevancia relevancia;
 			
@@ -209,8 +209,17 @@ public class ABMLibro {
 								
 				
 			}catch(NumberFormatException nfex) {
-				JOptionPane.showConfirmDialog(ventana, "Los campos ID, Costo, Precio Compra y Páginas deben ser numéricos.", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);	
-				//nfex.printStackTrace();
+				if(costo == null) {
+					JOptionPane.showConfirmDialog(ventana, "El campo Costo debe ser numérico.", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);	
+				}else {
+					if(precioCompra == null) {
+						JOptionPane.showConfirmDialog(ventana, "El campo Precio de Compra debe ser numérico.", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);	
+					}else {
+						if(paginas == null) {
+							JOptionPane.showConfirmDialog(ventana, "El campo N° Páginas debe ser un número entero.", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);	
+						}
+					}
+				}
 			}catch(ParseException pex) {
 				JOptionPane.showConfirmDialog(ventana, "La fecha debe ser escrita con formato dd/mm/aaaa", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 			}
@@ -381,7 +390,12 @@ public class ABMLibro {
 					//buscar libro con id Integer.parseInt(tID.getText());
 					//creo un nuevo libro para simular la busqueda
 					Libro encontrado = controller.buscarLibro(Integer.parseInt(tID.getText()));
-					edicionLibro(encontrado);
+					if(encontrado == null) {
+						JOptionPane.showConfirmDialog(ventana, "No se encontró un libro con el id ingresado", "No existe Libro", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);	
+					}else {
+						edicionLibro(encontrado);
+					}
+					
 				}
 			}catch(Exception e) {
 				
@@ -524,8 +538,8 @@ public class ABMLibro {
 		constraints.fill=GridBagConstraints.NONE;
 		aceptar.addActionListener(a -> {			
 			String titulo, tema;
-			Double costo = 0.0, precioCompra = 0.0;
-			Integer paginas = 0;
+			Double costo = null, precioCompra = null;
+			Integer paginas = null;
 			Date fechaPublicacion = Calendar.getInstance().getTime();
 			Relevancia relevancia;
 			
@@ -583,8 +597,17 @@ public class ABMLibro {
 				}
 				
 			}catch(NumberFormatException nfex) {
-				JOptionPane.showConfirmDialog(ventana, "Los campos ID, Costo, Precio Compra y Páginas deben ser numéricos.", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);	
-				//nfex.printStackTrace();
+				if(costo == null) {
+					JOptionPane.showConfirmDialog(ventana, "El campo Costo debe ser numérico.", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);	
+				}else {
+					if(precioCompra == null) {
+						JOptionPane.showConfirmDialog(ventana, "El campo Precio de Compra debe ser numérico.", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);	
+					}else {
+						if(paginas == null) {
+							JOptionPane.showConfirmDialog(ventana, "El campo N° Páginas debe ser un número entero.", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);	
+						}
+					}
+				}
 			}catch(ParseException pex) {
 				JOptionPane.showConfirmDialog(ventana, "La fecha debe ser escrita con formato dd/mm/aaaa", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 			}
@@ -682,7 +705,12 @@ public class ABMLibro {
 					//buscar libro con id Integer.parseInt(tID.getText());
 					//creo un nuevo libro para simular la busqueda
 					Libro encontrado = controller.buscarLibro(Integer.parseInt(tID.getText()));
-					eliminacionLibro(encontrado);
+					if(encontrado == null) {
+						JOptionPane.showConfirmDialog(ventana, "No se encontró un libro con el id ingresado", "No existe Libro", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);	
+					}else {
+						eliminacionLibro(encontrado);
+					}
+					
 				}
 			}catch(Exception e) {
 				
