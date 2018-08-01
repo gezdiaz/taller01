@@ -1,5 +1,6 @@
 package frsf.isi.died.tp.app.interfaz;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -27,14 +28,17 @@ public class RelacionesPanel {
 	}
 	
 	public void armarRelacionesPanel(MaterialCapacitacion material) {
-//		JPanel panel = new JPanel(new GridBagLayout());
+		JPanel panel = new JPanel(new BorderLayout());
 		ControlPanel controlPanel = new ControlPanel();
 		GrafoPanel grafoPanel = new GrafoPanel(this.ventana);
 		GrafoController grfController = new GrafoController(grafoPanel,controlPanel);
 		grfController.setListaTema(material.getTema());
 		grfController.crearVertice(400, 300, Color.RED, material);
 		
-		ventana.setContentPane(grafoPanel);
+		panel.add(new JLabel("Doble click: agregar nodo, Click secundario: ver opciones, Arrastrar y soltar: agregar arista."), BorderLayout.SOUTH);
+		panel.add(grafoPanel, BorderLayout.CENTER);
+		
+		ventana.setContentPane(panel);
 		ventana.pack();
 		ventana.setSize(800, 600);
 		

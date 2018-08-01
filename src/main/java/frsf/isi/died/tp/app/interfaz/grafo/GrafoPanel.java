@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.HeadlessException;
 import java.awt.Point;
 import java.awt.Polygon;
@@ -16,11 +18,19 @@ import java.util.Queue;
 import java.util.function.BiPredicate;
 import java.util.function.Predicate;
 
+import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
+import javax.swing.JTable;
+import javax.swing.JTextField;
 
 import frsf.isi.died.tp.app.controller.GrafoController;
+import frsf.isi.died.tp.app.controller.MenuGrafoController;
 import frsf.isi.died.tp.estructuras.Arista;
 import frsf.isi.died.tp.modelo.productos.MaterialCapacitacion;
 
@@ -33,7 +43,7 @@ public class GrafoPanel extends JPanel {
     private JFrame framePadre;
     private Queue<Color> colaColores;
     private GrafoController controller;
-
+    private MenuGrafoController menuController;
     private List<VerticeView> vertices;
     private List<AristaView> aristas;
 
@@ -44,7 +54,7 @@ public class GrafoPanel extends JPanel {
         
         this.vertices = new ArrayList<>();
         this.aristas = new ArrayList<>();
-
+        this.menuController = new MenuGrafoController(controller, this);
         
         this.colaColores = new LinkedList<Color>();
         this.colaColores.add(Color.RED);
@@ -54,14 +64,14 @@ public class GrafoPanel extends JPanel {
 
         addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent event) {
-                if (event.getClickCount() == 2 && !event.isConsumed()) {
+                if (event.getButton() == MouseEvent.BUTTON1 && event.getClickCount() == 2 && !event.isConsumed()) {
                     event.consume();
                     Object[] mats = controller.getMatMismoTema().toArray();
                     //String text = JOptionPane.showInputDialog(, "ID del nodo");
                     Object verticeMatSeleccionado;
 					try {
 						verticeMatSeleccionado = (MaterialCapacitacion) JOptionPane.showInputDialog(framePadre, 
-						        "Que material corresponde con el vertice?",
+						        "¿Qué material corresponde con el vertice?",
 						        "Agregar Vertice",
 						        JOptionPane.QUESTION_MESSAGE, 
 						        null, 
@@ -76,12 +86,25 @@ public class GrafoPanel extends JPanel {
 //	                        colaColores.add(aux);
 	                    }
 					} catch (ArrayIndexOutOfBoundsException e) {
-						// TODO Auto-generated catch block
 						JOptionPane.showConfirmDialog(ventana, "No quedan más materiales para agregar", "Sin materiales", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
-					}
-
-                    
+					}  
+					System.out.println("vertices: "+vertices);
+                }else {
+                	if(event.getButton() == MouseEvent.BUTTON3 && event.getClickCount() == 1 && !event.isConsumed()) {
+                		event.consume();
+                		System.out.println("Mostrar Menu");
+                		JPopupMenu menu = new JPopupMenu();
+                		JMenuItem menuItem;
+                		menuItem = new JMenuItem("Buscar caminos");
+                		menuItem.addActionListener(a -> menuController.opcionPopUp(OpcionesPopUp.BUSCAR_CAMINO));
+                		menu.add(menuItem);
+                		menuItem = new JMenuItem("Lista Tema");
+                		menuItem.addActionListener(a -> menuController.opcionPopUp(OpcionesPopUp.LISTA_TEMA));
+                		menu.add(menuItem);
+                		menu.show(event.getComponent(), event.getX(), event.getY());
+                	}                	
                 }
+                
             }
 
             public void mouseReleased(MouseEvent event) {
@@ -97,6 +120,7 @@ public class GrafoPanel extends JPanel {
 
         addMouseMotionListener(new MouseAdapter() {
             public void mouseDragged(MouseEvent event) {
+            	System.out.println("Mouse dragged");
                 VerticeView vOrigen = clicEnUnNodo(event.getPoint());
                 if (auxiliar==null && vOrigen != null) {
                     auxiliar = new AristaView();                    
@@ -188,6 +212,77 @@ public class GrafoPanel extends JPanel {
     public void setController(GrafoController controller) {
         this.controller = controller;
     }
+
+	public void buscarCamino() {
+		JFrame popup = new JFrame("Buscar Camino");
+		JPanel panel = new JPanel(new GridBagLayout());
+		ArrayList<MaterialCapacitacion> materiales = new ArrayList<MaterialCapacitacion>();
+		for(VerticeView ver: vertices) {
+			materiales.add(controller.getMaterial(ver.getId()));
+		}
+		JComboBox<MaterialCapacitacion> listaInicio = new JComboBox<MaterialCapacitacion>(),
+										listaFin = new JComboBox<MaterialCapacitacion>();
+		for(MaterialCapacitacion mat: materiales) {
+			listaInicio.addItem(mat);
+			listaFin.addItem(mat);
+		}
+		JTextField tNumSaltos = new JTextField(5);
+		JLabel label = new JLabel();
+		GridBagConstraints cons = new GridBagConstraints();
+		JButton aceptar = new JButton("Aceptar"), cancelar = new JButton("Cancelar");
+		
+		cons.gridx = 0;
+		cons.gridx = 0;
+		label.setText("Seleccione vertice de inicio: ");
+		panel.add(label, cons);
+		
+		cons.gridx = 1;
+		panel.add(listaInicio, cons);
+		
+		cons.gridx=0;
+		cons.gridy=1;
+		label = new JLabel("Seleccione el vertice final: ");
+		panel.add(label, cons);
+		
+		cons.gridx=1;
+		panel.add(listaFin, cons);
+		
+		cons.gridx=0;
+		cons.gridy=2;
+		label = new JLabel("Número de saltos: ");
+		panel.add(label, cons);
+		
+		cons.gridx=1;
+		panel.add(tNumSaltos, cons);
+		
+		cons.gridx=0;
+		cons.gridy=3;
+		cancelar.addActionListener(a -> popup.dispose());
+		panel.add(cancelar, cons);
+		
+		cons.gridx=1;
+		aceptar.addActionListener(a -> {
+			MaterialCapacitacion inicio, fin;
+			Integer saltos = 0;
+			
+			try {
+				inicio = (MaterialCapacitacion) listaInicio.getSelectedItem();
+				fin = (MaterialCapacitacion) listaFin.getSelectedItem();
+				if(!tNumSaltos.getText().isEmpty()) {
+					saltos = Integer.parseInt(tNumSaltos.getText());
+				}
+				controller.buscarCamino(inicio.getId(), fin.getId(), saltos);
+			} catch (NumberFormatException e) {
+				JOptionPane.showConfirmDialog(popup, "El campo Número de saltos debe ser un número entero.", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+			}
+		});
+		panel.add(aceptar, cons);
+		
+		popup.setLocationRelativeTo(null);
+		popup.setContentPane(panel);
+		popup.pack();
+		popup.setVisible(true);
+	}
     
     
 }

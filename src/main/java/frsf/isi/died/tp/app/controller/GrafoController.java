@@ -63,5 +63,9 @@ public class GrafoController {
 	public List<MaterialCapacitacion> listaVertices() {
 		return dao.listaMateriales();
 	}
+
+	public MaterialCapacitacion getMaterial(Integer id) {
+		return dao.findById(id);
+	}
 	
 }
