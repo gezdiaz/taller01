@@ -9,6 +9,8 @@ import java.util.Calendar;
 import java.util.Date;
 
 import frsf.isi.died.tp.app.dao.util.CsvRecord;
+import frsf.isi.died.tp.estructuras.arbolContenido.ArbolContenido;
+import frsf.isi.died.tp.estructuras.arbolContenido.TipoNodo;
 import frsf.isi.died.tp.util.Ordenable;
 
 /**
@@ -29,6 +31,7 @@ public abstract class MaterialCapacitacion implements Ordenable, Comparable<Mate
 	protected Date fechaPublicacion;
 	protected String tema;
 	protected Double pr;
+	protected ArbolContenido contenido;
 	
 	public void setPR(Double pr) {
 		this.pr = pr;
@@ -87,6 +90,7 @@ public abstract class MaterialCapacitacion implements Ordenable, Comparable<Mate
 
 	public void setTitulo(String titulo) {
 		this.titulo = titulo;
+		this.contenido.setValor(titulo);
 	}
 
 	public Double getCosto() {
@@ -142,8 +146,12 @@ public abstract class MaterialCapacitacion implements Ordenable, Comparable<Mate
 		this.votantes = 0;
 		this.tema = tema;
 		this.pr = 1.0;
+		this.contenido = new ArbolContenido(titulo, TipoNodo.TITULO);
 	}
-
+	
+	public ArbolContenido getContenido(){
+		return contenido;
+	}
 
 	//TODO 01 implementar los metodos getters y setters y escribir el javadoc
 	// AYUDA: para implementar estos metodos usar un atajo del IDE 

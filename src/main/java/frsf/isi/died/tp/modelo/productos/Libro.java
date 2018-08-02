@@ -158,6 +158,7 @@ public class Libro extends MaterialCapacitacion {
 			this.relevancia = Relevancia.valueOf(datos.get(7));
 			this.votantes = Integer.valueOf(datos.get(8));
 			this.tema = datos.get(9).substring(1, datos.get(9).length() - 1);
+			this.contenido.setValor(titulo);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

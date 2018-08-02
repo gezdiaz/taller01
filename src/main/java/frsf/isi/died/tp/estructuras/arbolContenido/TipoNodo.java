@@ -1,4 +1,4 @@
-package frsf.isi.died.tp.estructuras;
+package frsf.isi.died.tp.estructuras.arbolContenido;
 
 public enum TipoNodo {
 

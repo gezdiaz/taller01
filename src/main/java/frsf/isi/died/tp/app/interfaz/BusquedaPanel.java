@@ -22,6 +22,7 @@ public class BusquedaPanel {
 	private JFrame ventana;
 	private ListaDeseosPanel listaPanel;
 	private RelacionesPanel relacionesPanel;
+	private ArbolContenidoPanel arbolContenido;
 //	private GrafoPanel grafoPanel;
 
 	
@@ -30,6 +31,7 @@ public class BusquedaPanel {
 		this.dao = dao;
 		this.ventana = ventana;
 		this.relacionesPanel = new RelacionesPanel(dao,ventana);
+		this.arbolContenido = new ArbolContenidoPanel(ventana);
 	}
 	
 //	public void setGrafoPanel(GrafoPanel grafoPanel) {
@@ -287,7 +289,7 @@ public class BusquedaPanel {
 		JLabel lblTitulo = new JLabel("Resultado de la búsqueda: ");
 		constraints.gridx = 0;
 		constraints.gridy = 0;
-		constraints.gridwidth = 4;
+		constraints.gridwidth = 5;
 		constraints.gridheight = 2;
 		constraints.weighty = 0.25;
 		constraints.anchor=GridBagConstraints.NORTH;
@@ -302,7 +304,7 @@ public class BusquedaPanel {
 		scrollPane= new JScrollPane(tabla);
 		
 		gridConst.gridx=0;
-		gridConst.gridwidth=4;	
+		gridConst.gridwidth=5;	
 		gridConst.gridy=2;
 		gridConst.weighty=0.5;
 		gridConst.weightx=1;
@@ -324,7 +326,7 @@ public class BusquedaPanel {
 		
 		boton = new JButton("Atrás");
 		constraints.gridwidth = 1;
-		constraints.gridx = 3;
+		constraints.gridx = 4;
 		constraints.gridy = 3;
 		constraints.weightx = 0.25;
 		constraints.weighty = 0.25;
@@ -363,6 +365,21 @@ public class BusquedaPanel {
 			}else {
 				MaterialCapacitacion material = tableModel.getMateriales().get(tabla.getSelectedRow());
 				relacionesPanel.armarRelacionesPanel(material);
+			}
+		});
+		panel.add(boton, constraints);
+		
+		boton = new JButton("Ver Contenido");
+		constraints.gridwidth = 1;
+		constraints.gridx=3;
+		constraints.weightx = 0.25;
+		constraints.anchor=GridBagConstraints.CENTER;
+		boton.addActionListener(a ->{
+			if(tabla.getSelectedRow()==-1) {
+				JOptionPane.showConfirmDialog(ventana, "Por favor seleccione un material de la tabla.", "Seleccione un material",  JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+			}else {
+				MaterialCapacitacion material = tableModel.getMateriales().get(tabla.getSelectedRow());
+				arbolContenido.mostrarArbolContenido(material);
 			}
 		});
 		panel.add(boton, constraints);

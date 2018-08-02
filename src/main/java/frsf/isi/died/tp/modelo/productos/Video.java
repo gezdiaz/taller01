@@ -84,6 +84,7 @@ public class Video extends MaterialCapacitacion{
 			this.relevancia = Relevancia.valueOf(datos.get(6));
 			this.votantes = Integer.valueOf(datos.get(7));
 			this.tema = datos.get(8).substring(1, datos.get(8).length() - 1);
+			this.contenido.setValor(titulo);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
