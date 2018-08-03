@@ -201,26 +201,45 @@ public class MaterialCapacitacionDaoDefault implements MaterialCapacitacionDao{
 	/*
 	 * calcula el PR de cada material
 	 */
-	private void calcularPR(MaterialCapacitacion mat) {
+	private Double calcularPR(MaterialCapacitacion mat) {
 		Double resul = 1.0,sumatoria=0.0;
 		if(!GRAFO_MATERIAL.getReferentes(mat).isEmpty()) {
 			for(MaterialCapacitacion matRef : GRAFO_MATERIAL.getReferentes(mat)) {
-				sumatoria = (double) (matRef.getPR()/GRAFO_MATERIAL.gradoSalida(matRef));
+				sumatoria = sumatoria + (double) (matRef.getPR()/GRAFO_MATERIAL.gradoSalida(matRef));
 			}
 			resul = 0.5+ (0.5 * sumatoria);
 		}
-		mat.setPR(resul);
+		return resul;
 	}
 
 	/*
 	 * Calcula el PR para el orden de la lista
 	 */
 	@Override
-	public List<MaterialCapacitacion> ordenarPR(List<MaterialCapacitacion> materiales) {
-//		TODO while que se tiene que hacer hasta que haya una minima
-//		diferencia entre los PR que se van calculando
-		return null;
+	public void setAllPR(List<MaterialCapacitacion> materiales) {
+
+		ArrayList<Double> actualesPR = new ArrayList<Double>();
+		Integer diferencia=0;
+		while(diferencia<12) {
+			for(MaterialCapacitacion mat: materiales) {
+				actualesPR.add(this.calcularPR(mat));
+//				Implementar con diferencia variable para mejorar complejidad temporal
+//				System.out.println(mat.toString());
+//				System.out.println(mat.getPR());
+//				diferencia = viejoPR-actualPR;
+//				if(diferencia<0)diferencia=diferencia*-1.00;
+			}
+			for(int i=0; i<materiales.size(); i++) {
+				materiales.get(i).setPR(actualesPR.get(i));
+			}
+			actualesPR.clear();
+			diferencia++;
+		}
 	}
 
+	public List<MaterialCapacitacion> actualizarPR(List<MaterialCapacitacion> materiales) {
+		this.setAllPR(materiales);
+		return materiales;
+	}
 	
 }

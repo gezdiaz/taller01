@@ -46,7 +46,7 @@ public class GrafoController {
 		this.verticesDibujados.add(v);
 		this.vistaGrafo.agregar(v);
 		this.vistaGrafo.repaint();
-		this.matMismoTema.remove(mc);
+//		this.matMismoTema.remove(mc);
 	}
 
 	public void crearArista(AristaView arista) {
@@ -78,6 +78,11 @@ public class GrafoController {
 	public boolean existeArista(Integer idOrigen, Integer idDestino) {
 		return dao.existeArista(idOrigen, idDestino);
 	}
+	
+	public boolean existeVertice(MaterialCapacitacion mc) {
+		if(this.buscarVertice(mc) != null) return true;
+		return false;
+	}
 
 	public VerticeView buscarVertice(MaterialCapacitacion mc) {
 		if(!this.verticesDibujados.isEmpty()) {
@@ -88,8 +93,8 @@ public class GrafoController {
 		return null;
 	}
 
-	public List<MaterialCapacitacion> ordenadosPR() {
-		return dao.ordenarPR(this.matMismoTema);
-		
+	public List<MaterialCapacitacion> actualizarPR() {
+		if(!this.matMismoTema.isEmpty() || this.matMismoTema.size()!=1)	return dao.actualizarPR(this.matMismoTema);
+		return null;
 	}
 }

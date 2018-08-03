@@ -149,6 +149,16 @@ public class BibliotecaABB implements Biblioteca {
 		}
 		materiales = nuevoArbol;
 	}
+	
+	public void ordenarPorPR() {
+		if(materiales.esVacio()) return; //Si no hay materiales no tengo que ordenar nada
+		List<MaterialCapacitacion> lista = materiales.inOrden();
+		ArbolBinario nuevoArbol = new ArbolBinarioBusqueda((m1,m2)->m2.getPR().compareTo(m1.getPR()));
+		for(MaterialCapacitacion m: lista) {
+			nuevoArbol.add(m);
+		}
+		materiales = nuevoArbol;
+	}
 
 	public void agregar(ArrayList<MaterialCapacitacion> materiales) {
 		for(MaterialCapacitacion material: materiales) {
