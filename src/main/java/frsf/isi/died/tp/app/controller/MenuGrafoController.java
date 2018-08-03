@@ -16,7 +16,7 @@ public class MenuGrafoController {
 	public void opcionPopUp(OpcionesPopUp op) {
 		switch(op) {
 		case BUSCAR_CAMINO: grafoPanel.buscarCamino(); break;
-		case LISTA_TEMA: System.out.println("Mostrar Lista Tema");
+		case LISTA_TEMA: grafoPanel.mostrarListaTemaPR(); break;
 		}
 	}
 	

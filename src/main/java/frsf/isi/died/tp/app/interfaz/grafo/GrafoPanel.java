@@ -24,6 +24,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
@@ -32,6 +33,7 @@ import frsf.isi.died.tp.app.controller.MenuGrafoController;
 import frsf.isi.died.tp.app.interfaz.Principal;
 import frsf.isi.died.tp.app.interfaz.tabla.MaterialesTablaModelo;
 import frsf.isi.died.tp.estructuras.Arista;
+import frsf.isi.died.tp.modelo.BibliotecaABB;
 import frsf.isi.died.tp.modelo.productos.MaterialCapacitacion;
 
 /**
@@ -44,6 +46,7 @@ public class GrafoPanel extends JPanel {
     private Queue<Color> colaColores;
     private GrafoController controller;
     private MenuGrafoController menuController;
+//    private MaterialesPRController matPRController;
     private List<VerticeView> vertices;
     private List<AristaView> aristas;
 
@@ -77,12 +80,11 @@ public class GrafoPanel extends JPanel {
 						        null, 
 						        mats, 
 						        mats[0]);
-						if (verticeMatSeleccionado != null) {
-	                        // quito un color de la cola
-//	                        Color aux = colaColores.remove();
-							Color aux = ((MaterialCapacitacion)verticeMatSeleccionado).esLibro()?Color.RED:Color.BLUE;
+						if (verticeMatSeleccionado != null & !controller.existeVertice((MaterialCapacitacion)verticeMatSeleccionado)) {
+	                        Color aux = ((MaterialCapacitacion)verticeMatSeleccionado).esLibro()?Color.RED:Color.BLUE;
 	                        controller.crearVertice(event.getX(), event.getY(), aux,(MaterialCapacitacion) verticeMatSeleccionado);
-		                    if (auxiliar!=null) {
+		                    //Confirmo que no haya una arista existente
+	                        if (auxiliar!=null) {
 	                        	if (controller.existeArista(auxiliar.getOrigen().getId(),((MaterialCapacitacion)verticeMatSeleccionado).getId())) {
 		                        	AristaView existente = new AristaView();
 		                        	existente.setOrigen(auxiliar.getOrigen());
@@ -96,8 +98,8 @@ public class GrafoPanel extends JPanel {
 //		                        	}
 		                        }
 		                    }
-	                        // pongo el color al final de la cola
-//	                        colaColores.add(aux);
+	                    }else {
+	                    	JOptionPane.showConfirmDialog(ventana, "Ese material ya fue añadido", "Material existente", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 	                    }
 					} catch (ArrayIndexOutOfBoundsException e) {
 						JOptionPane.showConfirmDialog(ventana, "No quedan más materiales para agregar", "Sin materiales", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
@@ -312,18 +314,37 @@ public class GrafoPanel extends JPanel {
 	public void mostrarListaTemaPR() {
 		JFrame popup = new JFrame("Lista de materiales ordenados por PageRank");
 		JPanel panel = new JPanel(new GridBagLayout());
-		ArrayList<MaterialCapacitacion> materiales = new ArrayList<MaterialCapacitacion>();
-		materiales = (ArrayList<MaterialCapacitacion>) controller.ordenadosPR();
-		MaterialesTablaModelo tableModel = new MaterialesTablaModelo();
-		JTable tabla = new JTable(tableModel);
-		GridBagConstraints constraints = new GridBagConstraints();
+		BibliotecaABB matOrdenados = new BibliotecaABB();
+		ArrayList<MaterialCapacitacion> aux = (ArrayList<MaterialCapacitacion>) controller.actualizarPR();
+		if(aux.isEmpty()) {
+			JOptionPane.showConfirmDialog(null,"No hay materiales suficientes con ese tema!","Faltan datos",JOptionPane.DEFAULT_OPTION,JOptionPane.ERROR_MESSAGE);
+		}else {
+//			Ordeno los materiales
+			matOrdenados.agregar(aux);
+			matOrdenados.ordenarPorPR();
+			
+//			Armo la ventana
+			MaterialesTablaModelo tableModel = new MaterialesTablaModelo();
+			JTable tabla = new JTable(tableModel);
+			GridBagConstraints constraints = new GridBagConstraints();
+			tableModel.setMateriales((ArrayList<MaterialCapacitacion>)matOrdenados.materiales());
+			tabla = new JTable(tableModel);
+			tabla.setFillsViewportHeight(true);
+			JScrollPane scroll = new JScrollPane(tabla);
+			constraints.gridx=0;
+			constraints.gridy=0;
+			constraints.anchor=GridBagConstraints.CENTER;
+			panel.add(scroll);
+			
+			popup.setLocationRelativeTo(null);
+			popup.setContentPane(panel);
+			popup.pack();
+			popup.setVisible(true);
+		}
 		
 		
 		
-		popup.setLocationRelativeTo(null);
-		popup.setContentPane(panel);
-		popup.pack();
-		popup.setVisible(true);
+		
 	
 	}
     
