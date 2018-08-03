@@ -199,6 +199,7 @@ public class BusquedaPanel {
 		constraints.gridx=0;
 		constraints.gridy=15;
 		constraints.gridwidth=1;
+		constraints.fill = GridBagConstraints.NONE;
 		boton.addActionListener( a -> Principal.mostrarInterfaz());
 		panel.add(boton, constraints);
 		

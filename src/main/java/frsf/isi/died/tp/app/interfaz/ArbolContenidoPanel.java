@@ -5,19 +5,29 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Insets;
+import java.awt.MenuItem;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.Enumeration;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JTree;
 import javax.swing.WindowConstants;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.MutableTreeNode;
+import javax.swing.tree.TreeNode;
 
 import frsf.isi.died.tp.app.controller.LibroController;
 import frsf.isi.died.tp.app.controller.VideoController;
@@ -40,32 +50,86 @@ public class ArbolContenidoPanel {
 		DefaultTreeModel treeModel = new DefaultTreeModel(raiz);
 		JTree arbol = new JTree(treeModel);
 		JScrollPane scroll = new JScrollPane(arbol);
-		JFrame interna = new JFrame("Contenido");
-		JButton boton;
+		JFrame interna = new JFrame((mat.esLibro()?"Libro":"Video")+": "+mat.getTitulo());
+		JPopupMenu menu = new JPopupMenu();
+		JMenuItem menuItem;
+//		JButton boton;
+//		
+//		boton = new JButton("Agregar Contenido");
+//		boton.addActionListener(a -> {
+//			try {
+//				DefaultMutableTreeNode seleccionado = (DefaultMutableTreeNode)arbol.getLastSelectedPathComponent();
+//				ArbolContenido contenido = (ArbolContenido)seleccionado.getUserObject();
+//				agregarContenido(contenido, arbol, seleccionado);
+//			}catch(Exception e) {
+//				JOptionPane.showConfirmDialog(ventana, "Por favor seleccione un elemento del árbol para agregar hijos.", "Seleccione un elemento",  JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+//			}
+//		});
 		
-		boton = new JButton("Agregar");
-		boton.addActionListener(a -> {
+		menuItem = new JMenuItem("Agregar Hijo");
+		menuItem.addActionListener(a -> {
 			try {
-				ArbolContenido contenido = (ArbolContenido)((DefaultMutableTreeNode)arbol.getLastSelectedPathComponent()).getUserObject();
-				agregarContenido(contenido);
+				DefaultMutableTreeNode seleccionado = (DefaultMutableTreeNode)arbol.getLastSelectedPathComponent();
+				ArbolContenido contenido = (ArbolContenido)seleccionado.getUserObject();
+				agregarContenido(contenido, arbol, seleccionado, interna);
+				System.out.print("En el material: ");
+				mat.getContenido().imprimirArbol("");
+				System.out.print("Raiz: ");
+				((ArbolContenido)raiz.getUserObject()).imprimirArbol("");;
 			}catch(Exception e) {
-				JOptionPane.showConfirmDialog(ventana, "Por favor seleccione un elemento del árbol para agregar hijos.", "Seleccione un elemento",  JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showConfirmDialog(interna, "Por favor seleccione un elemento del árbol para agregar hijos.", "Seleccione un elemento",  JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 			}
 		});
-		panel.add(boton,BorderLayout.SOUTH);
-		scroll.setPreferredSize(new Dimension(100, 200));
+		menu.add(menuItem);
+		
+		menuItem = new JMenuItem("Eliminar Contenido");
+		menuItem.addActionListener(a -> {
+			try {
+				DefaultMutableTreeNode seleccionado = (DefaultMutableTreeNode)arbol.getLastSelectedPathComponent();
+				ArbolContenido contenido = (ArbolContenido)seleccionado.getUserObject();
+				if(contenido.getTipo().equals(TipoNodo.TITULO)) {
+					JOptionPane.showConfirmDialog(interna, "No puede eliminar el Título", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+				}else {
+					if(JOptionPane.showConfirmDialog(ventana, "¿Está seguro que desea eliminar el contenido seleccionado y todos sus hijos?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE)==0) {
+						treeModel.removeNodeFromParent(seleccionado);
+						mat.getContenido().eliminarNodo(contenido);
+					}
+				}
+				
+			}catch(Exception e) {
+				JOptionPane.showConfirmDialog(interna, "Por favor seleccione un elemento del árbol para eliminar.", "Seleccione un elemento",  JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+			}
+		});
+		menu.add(menuItem);
+		
+		menuItem = new JMenuItem("Salir");
+		menuItem.addActionListener(a -> interna.dispose());
+		menu.add(menuItem);
+		
+		arbol.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent event) {
+            	if(event.getButton() == MouseEvent.BUTTON3 && event.getClickCount() == 1 && !event.isConsumed()) {
+            		event.consume();
+            		menu.show(interna, event.getX(), event.getY()-10);
+            	}
+
+			}
+		});
+		
+//		panel.add(boton,BorderLayout.SOUTH);
 		panel.add(scroll, BorderLayout.CENTER);
 		interna.setContentPane(panel);
 		interna.pack();
+		interna.setSize(new Dimension(400, 400));
 		interna.setLocationRelativeTo(ventana);
 		interna.setVisible(true);
 		interna.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);		
 	}
 
-	private void agregarContenido(ArbolContenido contenido) {
-		JFrame nueva = new JFrame("Agregar Contenido a: "+contenido.toString());
-		JPanel panel = new JPanel(new GridBagLayout());
-		TipoNodo[] array = {TipoNodo.TITULO, TipoNodo.METADATO, TipoNodo.AUTOR, TipoNodo.SECCION,
+	private void agregarContenido(ArbolContenido contenido, JTree arbol, DefaultMutableTreeNode padre, JFrame ventanaArbol) {
+		JFrame nueva = new JFrame("Agregar Contenido");
+		JPanel panelAgregar = new JPanel(new GridBagLayout());
+		TipoNodo[] array = {TipoNodo.METADATO, TipoNodo.AUTOR, TipoNodo.SECCION,
 				TipoNodo.PARRAFO, TipoNodo.CAPITULO, TipoNodo.EDITORIAL, TipoNodo.RESUMEN,
 				TipoNodo.PALABRA_CLAVE};
 		JComboBox<TipoNodo> tipo = new JComboBox<>(array);
@@ -74,46 +138,57 @@ public class ArbolContenidoPanel {
 		JButton boton;
 		GridBagConstraints cons = new GridBagConstraints();
 		
+		cons.insets = new Insets(5, 5, 5, 5);
 		cons.gridheight=1;
 		cons.gridwidth=1;
 		cons.gridx=0;
 		cons.gridy=0;
 		label = new JLabel("Valor: ");
-		panel.add(label,cons);
+		panelAgregar.add(label,cons);
 		
 		cons.gridx=1;
-		panel.add(valor);
+		panelAgregar.add(valor);
 		
 		cons.gridx=0;
 		cons.gridy=1;
 		label = new JLabel("Tipo: ");
-		panel.add(label, cons);
+		panelAgregar.add(label, cons);
 		
 		cons.gridx=1;
-		panel.add(tipo, cons);
+		cons.fill=GridBagConstraints.BOTH;
+		panelAgregar.add(tipo, cons);
 		
 		cons.gridx=0;
 		cons.gridy=2;
+		cons.fill=GridBagConstraints.NONE;
+		cons.anchor=GridBagConstraints.WEST;
 		boton = new JButton("Cancelar");
 		boton.addActionListener(a -> {
 			nueva.dispose();
 		});
-		panel.add(boton, cons);
+		panelAgregar.add(boton, cons);
 		
 		cons.gridx=1;
+		cons.anchor = GridBagConstraints.EAST;
 		boton = new JButton("Aceptar");
 		boton.addActionListener(a -> {
 			if(valor.getText().isEmpty()) {
-				JOptionPane.showConfirmDialog(ventana, "Por favor ingrese un valor para agregar al contenido", "Ingrese un valor",  JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showConfirmDialog(ventanaArbol, "Por favor ingrese un valor para agregar al contenido", "Ingrese un valor",  JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 			}else {
-				contenido.addHijo(new ArbolContenido(valor.getText(), (TipoNodo)tipo.getSelectedItem()));
+				ArbolContenido hijo = new ArbolContenido(valor.getText(), (TipoNodo)tipo.getSelectedItem()); 
+				contenido.addHijo(hijo);
+				padre.add(new DefaultMutableTreeNode(hijo));
+				arbol.updateUI();
+				nueva.dispose();
+				System.out.print("En la ventanita: ");
+				contenido.imprimirArbol("");
 			}
 		});
-		panel.add(boton, cons);
+		panelAgregar.add(boton, cons);
 		
-		nueva.setContentPane(panel);
+		nueva.setContentPane(panelAgregar);
 		nueva.pack();
-		nueva.setLocationRelativeTo(ventana);
+		nueva.setLocationRelativeTo(ventanaArbol);
 		nueva.setVisible(true);
 		nueva.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);		
 	}

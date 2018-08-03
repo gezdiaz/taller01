@@ -62,8 +62,21 @@ public class ArbolContenido {
 			return false;
 		return true;
 	}
-	
-	
+	public void eliminarNodo(ArbolContenido nodo) {
+		if(hijos.contains(nodo)) {
+			hijos.remove(nodo);
+		}else {
+			for(ArbolContenido h: hijos) {
+				h.eliminarNodo(nodo);
+			}
+		}
+	}
+	public void imprimirArbol(String tab) {
+		System.out.println(tab+this.toString());
+		for(ArbolContenido h: hijos) {
+			h.imprimirArbol(tab+"\t");
+		}
+	}
 	
 	
 }
