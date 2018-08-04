@@ -30,7 +30,7 @@ public class RelacionesPanel {
 		GrafoPanel grafoPanel = new GrafoPanel(this.ventana);
 		GrafoController grfController = new GrafoController(grafoPanel,controlPanel);
 		grfController.setListaTema(material.getTema());
-		grfController.crearVertice(400, 300, material.esLibro()?Color.RED:Color.BLUE, material);
+		grfController.crearVertice(300, 200, material.esLibro()?Color.RED:Color.BLUE, material);
 		grafoPanel.setAuxiliarOrigen(grfController.buscarVertice(material));
 		
 		panel.add(new JLabel("Doble click: agregar nodo, Click secundario: ver opciones, Arrastrar y soltar: agregar arista."), BorderLayout.SOUTH);

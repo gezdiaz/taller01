@@ -84,20 +84,20 @@ public class GrafoPanel extends JPanel {
 	                        Color aux = ((MaterialCapacitacion)verticeMatSeleccionado).esLibro()?Color.RED:Color.BLUE;
 	                        controller.crearVertice(event.getX(), event.getY(), aux,(MaterialCapacitacion) verticeMatSeleccionado);
 		                    //Confirmo que no haya una arista existente
-	                        if (auxiliar!=null) {
-	                        	if (controller.existeArista(auxiliar.getOrigen().getId(),((MaterialCapacitacion)verticeMatSeleccionado).getId())) {
-		                        	AristaView existente = new AristaView();
-		                        	existente.setOrigen(auxiliar.getOrigen());
-		                        	existente.setDestino(controller.buscarVertice((MaterialCapacitacion)verticeMatSeleccionado));
-		                        	controller.dibujarAristaExistente(existente);
+//	                        if (auxiliar!=null) {
+//	                        	if (controller.existeArista(auxiliar.getOrigen().getId(),((MaterialCapacitacion)verticeMatSeleccionado).getId())) {
+//		                        	AristaView existente = new AristaView();
+//		                        	existente.setOrigen(auxiliar.getOrigen());
+//		                        	existente.setDestino(controller.buscarVertice((MaterialCapacitacion)verticeMatSeleccionado));
+//		                        	controller.dibujarAristaExistente(existente);
 //		                        	if(controller.existeArista(existente.getDestino().getId(), existente.getOrigen().getId())) {
 //		                        		VerticeView auxV = existente.getDestino();
 //		                        		existente.setDestino(existente.getOrigen());
 //		                        		existente.setOrigen(auxV);
 //		                        		controller.dibujarAristaExistente(existente);
 //		                        	}
-		                        }
-		                    }
+//		                        }
+//		                    }
 	                    }else {
 	                    	JOptionPane.showConfirmDialog(ventana, "Ese material ya fue añadido", "Material existente", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 	                    }
@@ -129,11 +129,13 @@ public class GrafoPanel extends JPanel {
             public void mouseReleased(MouseEvent event) {
                 VerticeView vDestino = clicEnUnNodo(event.getPoint());
                 if (auxiliar!=null && vDestino != null) {
-                	if (!controller.existeArista(auxiliar.getOrigen().getId(),vDestino.getId())) {
+//                	if (!controller.existeArista(auxiliar.getOrigen().getId(),vDestino.getId())) {
                 		auxiliar.setDestino(vDestino);
                 		controller.crearArista(auxiliar);
                 		auxiliar = null;
-                	}
+//                	}else {
+//                		controller.dibujarAristaExistente(auxiliar);
+//                	}
                 }
             }
 
@@ -171,8 +173,8 @@ public class GrafoPanel extends JPanel {
     			for(AristaView av : this.aristas) {
     				if(av.getOrigen().getId().equals(idOrigen) && av.getDestino().getId().equals(idDestino) ) {
     	    			av.setColor(Color.RED);
-    	    			av.getOrigen().setColor(Color.BLUE);
-    	    			av.getDestino().setColor(Color.BLUE);
+    	    			av.getOrigen().setColor(Color.GREEN);
+    	    			av.getDestino().setColor(Color.GREEN);
     				}
     			}
     			idOrigen = idDestino;
