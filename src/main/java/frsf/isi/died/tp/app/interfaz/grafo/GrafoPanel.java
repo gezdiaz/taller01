@@ -143,7 +143,6 @@ public class GrafoPanel extends JPanel {
 
         addMouseMotionListener(new MouseAdapter() {
             public void mouseDragged(MouseEvent event) {
-            	System.out.println("Mouse dragged");
                 VerticeView vOrigen = clicEnUnNodo(event.getPoint());
                 if (auxiliar==null && vOrigen != null) {
                     auxiliar = new AristaView();                    
@@ -301,15 +300,17 @@ public class GrafoPanel extends JPanel {
 					saltos = Integer.parseInt(tNumSaltos.getText());
 				}
 				controller.buscarCamino(inicio.getId(), fin.getId(), saltos);
+				popup.dispose();
 			} catch (NumberFormatException e) {
 				JOptionPane.showConfirmDialog(popup, "El campo Número de saltos debe ser un número entero.", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 			}
 		});
 		panel.add(aceptar, cons);
 		
-		popup.pack();
-		popup.setLocationRelativeTo(null);
+
 		popup.setContentPane(panel);
+		popup.pack();
+		popup.setLocationRelativeTo(framePadre);
 		popup.setVisible(true);
 	}
 	
@@ -338,9 +339,10 @@ public class GrafoPanel extends JPanel {
 			constraints.anchor=GridBagConstraints.CENTER;
 			panel.add(scroll);
 			
-			popup.setLocationRelativeTo(null);
+			
 			popup.setContentPane(panel);
 			popup.pack();
+			popup.setLocationRelativeTo(framePadre);
 			popup.setVisible(true);
 		}
 		
