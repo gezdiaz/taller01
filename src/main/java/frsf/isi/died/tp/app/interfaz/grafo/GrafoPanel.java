@@ -70,7 +70,6 @@ public class GrafoPanel extends JPanel {
                 if (event.getButton() == MouseEvent.BUTTON1 && event.getClickCount() == 2 && !event.isConsumed()) {
                     event.consume();
                     Object[] mats = controller.getMatMismoTema().toArray();
-                    //String text = JOptionPane.showInputDialog(, "ID del nodo");
                     Object verticeMatSeleccionado;
 					try {
 						verticeMatSeleccionado = (MaterialCapacitacion) JOptionPane.showInputDialog(framePadre, 
@@ -183,7 +182,7 @@ public class GrafoPanel extends JPanel {
     
     private void dibujarVertices(Graphics2D g2d) {
         for (VerticeView v : this.vertices) {
-            g2d.setPaint(Color.BLUE);
+//            g2d.setPaint(Color.BLUE);
             g2d.drawString(v.etiqueta(),v.getCoordenadaX()-5,v.getCoordenadaY()-5);
             g2d.setPaint(v.getColor());
             g2d.fill(v.getNodo());
@@ -338,18 +337,11 @@ public class GrafoPanel extends JPanel {
 			constraints.gridy=0;
 			constraints.anchor=GridBagConstraints.CENTER;
 			panel.add(scroll);
-			
-			
 			popup.setContentPane(panel);
 			popup.pack();
 			popup.setLocationRelativeTo(framePadre);
 			popup.setVisible(true);
 		}
-		
-		
-		
-		
-	
 	}
     
     
