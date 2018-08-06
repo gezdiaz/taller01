@@ -18,16 +18,7 @@ public class GrafoController {
 	private MaterialCapacitacionDao dao;
 	private List<MaterialCapacitacion> matMismoTema;
 	private List<VerticeView> verticesDibujados;
-	
-	public void setListaTema(String tema){
-		List<MaterialCapacitacion> filtrados = this.dao.listaMateriales();
-		filtrados.removeIf(mat -> !mat.getTema().equalsIgnoreCase(tema));
-		matMismoTema=filtrados;
-	}
-	
-	public List<MaterialCapacitacion> getMatMismoTema() {
-		return matMismoTema;
-	}
+
 
 	public GrafoController(GrafoPanel panelGrf, ControlPanel panelCtrl) {
 		this.vistaGrafo = panelGrf;
@@ -37,6 +28,16 @@ public class GrafoController {
 		this.vistaControl.setController(this);
 		this.vistaControl.armarPanelBuscarCaminos(dao.listaMateriales());
 		this.verticesDibujados = new ArrayList<VerticeView>();
+	}
+	
+	public void setListaTema(String tema){
+		List<MaterialCapacitacion> filtrados = this.dao.listaMateriales();
+		filtrados.removeIf(mat -> !mat.getTema().equalsIgnoreCase(tema));
+		matMismoTema=filtrados;
+	}
+	
+	public List<MaterialCapacitacion> getMatMismoTema() {
+		return matMismoTema;
 	}
 
 	public void crearVertice(Integer coordenadaX, Integer coordenadaY, Color color, MaterialCapacitacion mc) {
@@ -65,7 +66,6 @@ public class GrafoController {
 		this.vistaGrafo.caminoPintar(camino);
 		this.vistaGrafo.repaint();
 	}
-
 
 	public List<MaterialCapacitacion> listaVertices() {
 		return dao.listaMateriales();
