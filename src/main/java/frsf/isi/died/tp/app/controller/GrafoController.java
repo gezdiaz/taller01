@@ -51,16 +51,17 @@ public class GrafoController {
 	}
 
 	public void crearArista(AristaView arista) {
-		this.dao.crearCamino(arista.getOrigen().getId(), arista.getDestino().getId());
+		if(!dao.existeArista(arista.getOrigen().getId(), arista.getDestino().getId())) {
+			if(arista.getOrigen().equals(arista.getDestino())) {
+				System.out.println("Bucle.");
+				return;
+			}
+			this.dao.crearCamino(arista.getOrigen().getId(), arista.getDestino().getId());
+		}
 		this.vistaGrafo.agregar(arista);
 		this.vistaGrafo.repaint();
 	}
 	
-	public void dibujarAristaExistente(AristaView arista) {
-		this.vistaGrafo.agregar(arista);
-		this.vistaGrafo.repaint();
-	}
-
 	public void buscarCamino(Integer nodo1, Integer nodo2, Integer saltos) {
 		List<MaterialCapacitacion> camino = this.dao.buscarCamino(nodo1, nodo2, saltos);
 		this.vistaGrafo.caminoPintar(camino);

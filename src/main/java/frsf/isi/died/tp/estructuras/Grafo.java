@@ -228,11 +228,13 @@ public class Grafo<T> {
 			resultado.add(destino.getValor());
 		}else {
 			for(Vertice<T> ady: this.getAdyacentes(origen)) {
-				ArrayList<T> aux = (ArrayList<T>) buscarCamino(ady, destino, visitados);
-				if(!aux.isEmpty()) {
-					visitados.add(origen);
-					resultado.add(origen.getValor());
-					resultado.addAll(aux);
+				if(!visitados.contains(ady)) {
+					ArrayList<T> aux = (ArrayList<T>) buscarCamino(ady, destino, visitados);
+					if(!aux.isEmpty()) {
+						visitados.add(origen);
+						resultado.add(origen.getValor());
+						resultado.addAll(aux);
+					}
 				}
 			}
 		}

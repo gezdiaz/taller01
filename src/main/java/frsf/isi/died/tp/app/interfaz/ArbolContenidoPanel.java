@@ -175,13 +175,31 @@ public class ArbolContenidoPanel {
 			if(valor.getText().isEmpty()) {
 				JOptionPane.showConfirmDialog(ventanaArbol, "Por favor ingrese un valor para agregar al contenido", "Ingrese un valor",  JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 			}else {
-				ArbolContenido hijo = new ArbolContenido(valor.getText(), (TipoNodo)tipo.getSelectedItem()); 
-				contenido.addHijo(hijo);
-				padre.add(new DefaultMutableTreeNode(hijo));
-				arbol.updateUI();
-				nueva.dispose();
-				System.out.print("En la ventanita: ");
-				contenido.imprimirArbol("");
+				if(((ArbolContenido)padre.getUserObject()).getTipo() == TipoNodo.TITULO 
+						&& ((TipoNodo)tipo.getSelectedItem() == TipoNodo.METADATO 
+							|| (TipoNodo)tipo.getSelectedItem() == TipoNodo.RESUMEN
+							|| (TipoNodo)tipo.getSelectedItem() == TipoNodo.CAPITULO)) {
+					ArbolContenido hijo = new ArbolContenido(valor.getText(), (TipoNodo)tipo.getSelectedItem()); 
+					contenido.addHijo(hijo);
+					padre.add(new DefaultMutableTreeNode(hijo));
+					arbol.updateUI();
+					nueva.dispose();
+					System.out.print("En la ventanita: ");
+					contenido.imprimirArbol("");
+				}else {
+					if(((ArbolContenido)padre.getUserObject()).getTipo() == TipoNodo.TITULO) {
+						JOptionPane.showConfirmDialog(ventanaArbol, "Los hijos de título solo pueden ser: METADATO, RESUMEN o CAPÍTULO", "Error en tipo de contenido",  JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+					}else {
+						ArbolContenido hijo = new ArbolContenido(valor.getText(), (TipoNodo)tipo.getSelectedItem()); 
+						contenido.addHijo(hijo);
+						padre.add(new DefaultMutableTreeNode(hijo));
+						arbol.updateUI();
+						nueva.dispose();
+						System.out.print("En la ventanita: ");
+						contenido.imprimirArbol("");
+					}
+				}
+				
 			}
 		});
 		panelAgregar.add(boton, cons);
