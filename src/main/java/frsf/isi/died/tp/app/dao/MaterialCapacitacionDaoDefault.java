@@ -221,16 +221,25 @@ public class MaterialCapacitacionDaoDefault implements MaterialCapacitacionDao{
 	public void setAllPR(List<MaterialCapacitacion> materiales) {
 
 		ArrayList<Double> actualesPR = new ArrayList<Double>();
-		Integer diferencia=0;
-		while(diferencia<15) {
+		Double diferencia;
+		boolean hayDiferencia = true;
+		
+		while(hayDiferencia) {
+			
 			for(MaterialCapacitacion mat: materiales) {
 				actualesPR.add(this.calcularPR(mat));
 			}
+			
+			hayDiferencia = false;
+			
 			for(int i=0; i<materiales.size(); i++) {
+				diferencia = actualesPR.get(i) - materiales.get(i).getPR();
+				if(diferencia < 0) diferencia = diferencia * -1.0;
+				if(diferencia > 0.00000001) hayDiferencia = true;
 				materiales.get(i).setPR(actualesPR.get(i));
 			}
+			
 			actualesPR.clear();
-			diferencia++;
 		}
 	}
 
