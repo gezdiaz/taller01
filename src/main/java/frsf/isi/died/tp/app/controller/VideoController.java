@@ -38,7 +38,7 @@ public class VideoController {
 	}
 	
 	public void editarVideo(Video video, String titulo, double costo, int duracion,
-			Date fechaPublicacion, Relevancia relevancia, String tema) {
+			Date fechaPublicacion, Relevancia relevancia, String tema, Integer calificacion) {
 
 		video.setTitulo(titulo);
 		video.setCosto(costo);
@@ -46,6 +46,7 @@ public class VideoController {
 		video.setFechaPublicacion(fechaPublicacion);
 		video.setRelevancia(relevancia);
 		video.setTema(tema);
+		video.agregarCalificacion(calificacion);
 		
 		dao.editarVideo(video.getId(), video);
 		
