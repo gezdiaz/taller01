@@ -14,7 +14,9 @@ import java.util.Enumeration;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
@@ -127,7 +129,7 @@ public class ArbolContenidoPanel {
 	}
 
 	private void agregarContenido(ArbolContenido contenido, JTree arbol, DefaultMutableTreeNode padre, JFrame ventanaArbol) {
-		JFrame nueva = new JFrame("Agregar Contenido");
+		JDialog nueva = new JDialog();
 		JPanel panelAgregar = new JPanel(new GridBagLayout());
 		TipoNodo[] array = {TipoNodo.METADATO, TipoNodo.AUTOR, TipoNodo.SECCION,
 				TipoNodo.PARRAFO, TipoNodo.CAPITULO, TipoNodo.EDITORIAL, TipoNodo.RESUMEN,
@@ -203,10 +205,10 @@ public class ArbolContenidoPanel {
 			}
 		});
 		panelAgregar.add(boton, cons);
-		
+//		
+//		ventanaArbol.add(nueva);
 		nueva.setContentPane(panelAgregar);
 		nueva.pack();
-		nueva.setLocationRelativeTo(ventanaArbol);
 		nueva.setVisible(true);
 		nueva.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);		
 	}
