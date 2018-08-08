@@ -77,6 +77,14 @@ public class ArbolContenido {
 			h.imprimirArbol(tab+"\t");
 		}
 	}
-	
+	public Integer cantHijosDirectosTipo(TipoNodo t) {
+		Integer cant = 0;
+		for(ArbolContenido h: hijos) {
+			if(h.getTipo().equals(t)) {
+				cant++;
+			}
+		}
+		return cant;
+	}
 	
 }

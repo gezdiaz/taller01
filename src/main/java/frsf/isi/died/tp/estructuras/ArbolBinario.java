@@ -2,7 +2,6 @@ package frsf.isi.died.tp.estructuras;
 
 import java.util.List;
 import frsf.isi.died.tp.modelo.productos.MaterialCapacitacion;
-import java.util.Comparator;
 
 public abstract class ArbolBinario {
 

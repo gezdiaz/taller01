@@ -4,19 +4,13 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.Insets;
-import java.awt.MenuItem;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.util.Enumeration;
-
+import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
-import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
@@ -28,11 +22,6 @@ import javax.swing.JTree;
 import javax.swing.WindowConstants;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.MutableTreeNode;
-import javax.swing.tree.TreeNode;
-
-import frsf.isi.died.tp.app.controller.LibroController;
-import frsf.isi.died.tp.app.controller.VideoController;
 import frsf.isi.died.tp.estructuras.arbolContenido.ArbolContenido;
 import frsf.isi.died.tp.estructuras.arbolContenido.TipoNodo;
 import frsf.isi.died.tp.modelo.productos.MaterialCapacitacion;
@@ -79,6 +68,7 @@ public class ArbolContenidoPanel {
 				System.out.print("Raiz: ");
 				((ArbolContenido)raiz.getUserObject()).imprimirArbol("");;
 			}catch(Exception e) {
+				e.printStackTrace();
 				JOptionPane.showConfirmDialog(interna, "Por favor seleccione un elemento del árbol para agregar hijos.", "Seleccione un elemento",  JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 			}
 		});
@@ -129,12 +119,44 @@ public class ArbolContenidoPanel {
 	}
 
 	private void agregarContenido(ArbolContenido contenido, JTree arbol, DefaultMutableTreeNode padre, JFrame ventanaArbol) {
-		JDialog nueva = new JDialog();
+		JFrame nueva = new JFrame(padre.getUserObject().toString());
 		JPanel panelAgregar = new JPanel(new GridBagLayout());
-		TipoNodo[] array = {TipoNodo.METADATO, TipoNodo.AUTOR, TipoNodo.SECCION,
-				TipoNodo.PARRAFO, TipoNodo.CAPITULO, TipoNodo.EDITORIAL, TipoNodo.RESUMEN,
-				TipoNodo.PALABRA_CLAVE};
-		JComboBox<TipoNodo> tipo = new JComboBox<>(array);
+		Object[] array;
+		ArrayList<TipoNodo> lista = new ArrayList<TipoNodo>();
+		switch (((ArbolContenido)padre.getUserObject()).getTipo()) {
+		case TITULO:
+			lista.add(TipoNodo.METADATO);
+			lista.add(TipoNodo.CAPITULO);
+			lista.add(TipoNodo.RESUMEN);
+			break;
+		case METADATO:
+			if(((ArbolContenido)((DefaultMutableTreeNode)padre.getParent()).getUserObject()).getTipo().equals(TipoNodo.TITULO)) {
+				lista.add(TipoNodo.AUTOR);
+				lista.add(TipoNodo.EDITORIAL);
+				lista.add(TipoNodo.FECHA_PUBLICACION);
+				lista.add(TipoNodo.PALABRA_CLAVE);
+			}else {
+				lista.add(TipoNodo.PALABRA_CLAVE);
+				lista.add(TipoNodo.SITIO_WEB);
+			}			
+			break;
+		case RESUMEN:
+			lista.add(TipoNodo.PARRAFO);
+			break;
+		case CAPITULO:
+			lista.add(TipoNodo.METADATO);
+			lista.add(TipoNodo.SECCION);
+			break;
+		case SECCION:
+			lista.add(TipoNodo.PARRAFO);
+			break;
+		default:
+			JOptionPane.showConfirmDialog(ventanaArbol, "Los nodos de tipo "+((ArbolContenido)padre.getUserObject()).getTipo()+" no pueden tener hijos.", "No se pueden agregar Hijos",  JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		array = lista.toArray();
+		
+		JComboBox<Object> tipo = new JComboBox<>(array);
 		JTextField valor = new JTextField(20);
 		JLabel label;
 		JButton boton;
@@ -174,13 +196,64 @@ public class ArbolContenidoPanel {
 		cons.anchor = GridBagConstraints.EAST;
 		boton = new JButton("Aceptar");
 		boton.addActionListener(a -> {
+			Integer maxHijos = Integer.MAX_VALUE;
+			TipoNodo tipoPadre = ((ArbolContenido)padre.getUserObject()).getTipo(),
+					 tipoHijo = (TipoNodo)tipo.getSelectedItem();
 			if(valor.getText().isEmpty()) {
 				JOptionPane.showConfirmDialog(ventanaArbol, "Por favor ingrese un valor para agregar al contenido", "Ingrese un valor",  JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 			}else {
-				if(((ArbolContenido)padre.getUserObject()).getTipo() == TipoNodo.TITULO 
-						&& ((TipoNodo)tipo.getSelectedItem() == TipoNodo.METADATO 
-							|| (TipoNodo)tipo.getSelectedItem() == TipoNodo.RESUMEN
-							|| (TipoNodo)tipo.getSelectedItem() == TipoNodo.CAPITULO)) {
+				switch (tipoPadre) {
+				case TITULO:
+					switch (tipoHijo) {
+					case CAPITULO: 
+						maxHijos = Integer.MAX_VALUE;
+						break;
+					case METADATO:
+					case RESUMEN:
+						maxHijos = 1;
+						break;
+					default:
+						System.out.println("No deberia llegar acá, esta poniendo un hijo mal");
+					}				
+					break;
+				case METADATO:
+					switch ((TipoNodo)tipo.getSelectedItem()) {
+					case AUTOR:
+					case SITIO_WEB:
+						maxHijos = Integer.MAX_VALUE;
+						break;
+					case EDITORIAL:
+					case FECHA_PUBLICACION:
+					case PALABRA_CLAVE:
+						maxHijos = 1;
+						break;
+					default:
+						System.out.println("No deberia llegar acá, esta poniendo un hijo mal");	
+					}				
+					break;
+				case CAPITULO:
+					switch ((TipoNodo)tipo.getSelectedItem()) {
+					case SECCION:
+						maxHijos = Integer.MAX_VALUE;
+						break;
+					case METADATO:
+						maxHijos = 1;
+						break;
+					default:
+						System.out.println("No deberia llegar acá, esta poniendo un hijo mal");	
+					}				
+					break;
+				case RESUMEN:
+				case SECCION:
+					maxHijos = Integer.MAX_VALUE;
+				default:
+					System.out.println("No puede llegar acá\nsi llegó es porque esta poniendo un hijo donde no debe");
+					break;
+				}
+				if(((ArbolContenido)padre.getUserObject()).cantHijosDirectosTipo((TipoNodo)tipo.getSelectedItem()) >= maxHijos) {
+					JOptionPane.showConfirmDialog(ventanaArbol, "Los nodos de tipo "+tipoPadre+" solo puenden tener "+maxHijos+" nodo/s de tipo "+tipoHijo,
+							"No puede ingresar más hijos",  JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+				}else {
 					ArbolContenido hijo = new ArbolContenido(valor.getText(), (TipoNodo)tipo.getSelectedItem()); 
 					contenido.addHijo(hijo);
 					padre.add(new DefaultMutableTreeNode(hijo));
@@ -188,27 +261,15 @@ public class ArbolContenidoPanel {
 					nueva.dispose();
 					System.out.print("En la ventanita: ");
 					contenido.imprimirArbol("");
-				}else {
-					if(((ArbolContenido)padre.getUserObject()).getTipo() == TipoNodo.TITULO) {
-						JOptionPane.showConfirmDialog(ventanaArbol, "Los hijos de título solo pueden ser: METADATO, RESUMEN o CAPÍTULO", "Error en tipo de contenido",  JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
-					}else {
-						ArbolContenido hijo = new ArbolContenido(valor.getText(), (TipoNodo)tipo.getSelectedItem()); 
-						contenido.addHijo(hijo);
-						padre.add(new DefaultMutableTreeNode(hijo));
-						arbol.updateUI();
-						nueva.dispose();
-						System.out.print("En la ventanita: ");
-						contenido.imprimirArbol("");
-					}
 				}
-				
+								
 			}
 		});
 		panelAgregar.add(boton, cons);
-//		
-//		ventanaArbol.add(nueva);
+
 		nueva.setContentPane(panelAgregar);
 		nueva.pack();
+		nueva.setLocationRelativeTo(ventanaArbol);
 		nueva.setVisible(true);
 		nueva.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);		
 	}
