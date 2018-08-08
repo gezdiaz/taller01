@@ -3,6 +3,9 @@ package frsf.isi.died.tp.app.controller;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.JOptionPane;
+
 import frsf.isi.died.tp.app.dao.MaterialCapacitacionDao;
 import frsf.isi.died.tp.app.dao.MaterialCapacitacionDaoDefault;
 import frsf.isi.died.tp.app.interfaz.grafo.AristaView;
@@ -64,8 +67,12 @@ public class GrafoController {
 	
 	public void buscarCamino(Integer nodo1, Integer nodo2, Integer saltos) {
 		List<MaterialCapacitacion> camino = this.dao.buscarCamino(nodo1, nodo2, saltos);
-		this.vistaGrafo.caminoPintar(camino);
-		this.vistaGrafo.repaint();
+		if(camino!=null) {
+			this.vistaGrafo.caminoPintar(camino);
+			this.vistaGrafo.repaint();
+		}else {
+			JOptionPane.showConfirmDialog(this.vistaGrafo.getParent(), "No se encontro un camino de "+saltos+" saltos.", "Información", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+		}
 	}
 
 	public List<MaterialCapacitacion> listaVertices() {
