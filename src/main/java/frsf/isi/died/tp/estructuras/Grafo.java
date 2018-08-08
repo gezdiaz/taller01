@@ -248,7 +248,7 @@ public class Grafo<T> {
      * @param valor
      */
     public List<T> buscarCaminoNSaltos(T n1,T n2,Integer saltos){
-    	if(saltos.equals(0)) return buscarCamino(n1, n2);
+    	if(saltos.equals(0)) return null;
 		Vertice<T> origen = this.getNodo(n1);
 		Vertice<T> destino= this.getNodo(n2);
 		HashSet<Vertice<T>> visitados = new HashSet<Vertice<T>>();

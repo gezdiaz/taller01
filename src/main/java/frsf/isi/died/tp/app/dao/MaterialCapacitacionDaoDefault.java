@@ -118,7 +118,9 @@ public class MaterialCapacitacionDaoDefault implements MaterialCapacitacionDao{
 	public List<MaterialCapacitacion> buscarCamino(Integer idOrigen, Integer idDestino, Integer saltos) {
 		MaterialCapacitacion n1 = this.findById(idOrigen);
 		MaterialCapacitacion n2 = this.findById(idDestino);
-		return GRAFO_MATERIAL.buscarCaminoNSaltos(n1, n2, saltos);
+		List<MaterialCapacitacion> aux = GRAFO_MATERIAL.buscarCaminoNSaltos(n1, n2, saltos);
+		if(aux!=null) return aux;
+		return null;
 	}
 
 	@Override
@@ -220,14 +222,9 @@ public class MaterialCapacitacionDaoDefault implements MaterialCapacitacionDao{
 
 		ArrayList<Double> actualesPR = new ArrayList<Double>();
 		Integer diferencia=0;
-		while(diferencia<12) {
+		while(diferencia<15) {
 			for(MaterialCapacitacion mat: materiales) {
 				actualesPR.add(this.calcularPR(mat));
-//				Implementar con diferencia variable para mejorar complejidad temporal
-//				System.out.println(mat.toString());
-//				System.out.println(mat.getPR());
-//				diferencia = viejoPR-actualPR;
-//				if(diferencia<0)diferencia=diferencia*-1.00;
 			}
 			for(int i=0; i<materiales.size(); i++) {
 				materiales.get(i).setPR(actualesPR.get(i));

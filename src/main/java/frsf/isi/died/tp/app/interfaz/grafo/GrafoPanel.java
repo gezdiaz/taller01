@@ -298,8 +298,11 @@ public class GrafoPanel extends JPanel {
 				if(!tNumSaltos.getText().isEmpty()) {
 					saltos = Integer.parseInt(tNumSaltos.getText());
 				}
-				controller.buscarCamino(inicio.getId(), fin.getId(), saltos);
-				popup.dispose();
+				if(saltos>0) {
+					controller.buscarCamino(inicio.getId(), fin.getId(), saltos);
+					popup.dispose();
+				}
+				else JOptionPane.showConfirmDialog(popup, "Ingrese la cantidad de saltos", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 			} catch (NumberFormatException e) {
 				JOptionPane.showConfirmDialog(popup, "El campo Número de saltos debe ser un número entero.", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 			}

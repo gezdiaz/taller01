@@ -41,7 +41,7 @@ public class LibroController {
 	}
 
 	public void editarLibro(Libro libro, String titulo, double costo, double precioCompra, int paginas,
-			Date fechaPublicacion, Relevancia relevancia, String tema) {
+			Date fechaPublicacion, Relevancia relevancia, String tema, Integer calificacion) {
 		
 		libro.setTitulo(titulo);
 		libro.setCosto(costo);
@@ -50,6 +50,7 @@ public class LibroController {
 		libro.setFechaPublicacion(fechaPublicacion);
 		libro.setRelevancia(relevancia);
 		libro.setTema(tema);
+		libro.agregarCalificacion(calificacion);
 		
 		dao.editarLibro(libro.getId(), libro);
 	}

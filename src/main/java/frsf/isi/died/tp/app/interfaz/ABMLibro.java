@@ -497,20 +497,36 @@ public class ABMLibro {
 		constraints.gridx=0;
 		constraints.gridy=6;
 		constraints.gridwidth=2;
-		panel.add(new JLabel("Fecha de Publicación: "), constraints);
+		panel.add(new JLabel("Calificación: "), constraints);
 		
 		constraints.gridx=2;
 		constraints.gridy=6;
 		constraints.gridwidth=1;
-		panel.add(tFecha, constraints);
+		JSlider sldrCalificacion = new JSlider(JSlider.HORIZONTAL,0,100,50);
+		sldrCalificacion.setFont(new Font("Serif", Font.ITALIC, 15));
+		sldrCalificacion.setMajorTickSpacing(20);
+		sldrCalificacion.setMinorTickSpacing(10);
+		sldrCalificacion.setPaintTicks(true);
+		sldrCalificacion.setPaintLabels(true);
+		panel.add(sldrCalificacion,constraints);
 		
 		constraints.gridx=0;
 		constraints.gridy=7;
 		constraints.gridwidth=2;
-		panel.add(new JLabel("Relevancia: "), constraints);
+		panel.add(new JLabel("Fecha de Publicación: "), constraints);
 		
 		constraints.gridx=2;
 		constraints.gridy=7;
+		constraints.gridwidth=1;
+		panel.add(tFecha, constraints);
+		
+		constraints.gridx=0;
+		constraints.gridy=8;
+		constraints.gridwidth=2;
+		panel.add(new JLabel("Relevancia: "), constraints);
+		
+		constraints.gridx=2;
+		constraints.gridy=8;
 		constraints.gridwidth=1;
 		lRelevancia.addItem(Relevancia.BAJA);
 		lRelevancia.addItem(Relevancia.MEDIA);
@@ -518,23 +534,23 @@ public class ABMLibro {
 		panel.add(lRelevancia, constraints);
 		
 		constraints.gridx=0;
-		constraints.gridy=8;
+		constraints.gridy=9;
 		constraints.gridwidth=2;
 		panel.add(new JLabel("Tema: "), constraints);
 		
 		constraints.gridx=2;
-		constraints.gridy=8;
+		constraints.gridy=9;
 		constraints.gridwidth=1;
 		tTema.setText("Otros");
 		panel.add(tTema, constraints);
 		
 		constraints.gridx=0;
-		constraints.gridy=9;
+		constraints.gridy=10;
 		cancelar.addActionListener(a -> Principal.mostrarInterfaz());
 		panel.add(cancelar, constraints);
 		
 		constraints.gridx=3;
-		constraints.gridy=9;
+		constraints.gridy=10;
 		constraints.fill=GridBagConstraints.NONE;
 		aceptar.addActionListener(a -> {			
 			String titulo, tema;
@@ -592,7 +608,7 @@ public class ABMLibro {
 				relevancia = (Relevancia)lRelevancia.getSelectedItem();
 			
 				if(JOptionPane.showConfirmDialog(ventana, "¿Está seguro que desea modificar el libro con los datos ingresados?", "Confirmar edición", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE)==0){
-					controller.editarLibro(libro, titulo, costo, precioCompra, paginas, fechaPublicacion, relevancia, tema);
+					controller.editarLibro(libro, titulo, costo, precioCompra, paginas, fechaPublicacion, relevancia, tema, sldrCalificacion.getValue());
 					editarLibro();
 				}
 				
@@ -637,7 +653,7 @@ public class ABMLibro {
 		errorPaginas.setForeground(Color.red);
 		panel.add(errorPaginas,constraints);
 		
-		constraints.gridy=6;
+		constraints.gridy=7;
 		errorFecha.setPreferredSize(new Dimension(230, 16));
 		errorFecha.setForeground(Color.red);
 		panel.add(errorFecha,constraints);
@@ -648,6 +664,7 @@ public class ABMLibro {
 		tCosto.setText(libro.getCosto().toString());
 		tPrecio.setText(libro.getPrecioCompra().toString());
 		tPaginas.setText(libro.getPaginas().toString());
+		sldrCalificacion.setValue(libro.getCalificacion());
 		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
 		tFecha.setText(formato.format(libro.getFechaPublicacion()));
 		lRelevancia.setSelectedItem(libro.getRelevancia());

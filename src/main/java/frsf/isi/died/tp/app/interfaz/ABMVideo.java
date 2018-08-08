@@ -452,20 +452,37 @@ public class ABMVideo {
 		constraints.gridx=0;
 		constraints.gridy=5;
 		constraints.gridwidth=2;
-		panel.add(new JLabel("Fecha de Publicación: "), constraints);
+		panel.add(new JLabel("Calificación: "), constraints);
 		
 		constraints.gridx=2;
 		constraints.gridy=5;
 		constraints.gridwidth=1;
-		panel.add(tFecha, constraints);
+		JSlider sldrCalificacion = new JSlider(JSlider.HORIZONTAL,0,100,50);
+		sldrCalificacion.setFont(new Font("Serif", Font.ITALIC, 15));
+		sldrCalificacion.setMajorTickSpacing(20);
+		sldrCalificacion.setMinorTickSpacing(10);
+		sldrCalificacion.setPaintTicks(true);
+		sldrCalificacion.setPaintLabels(true);
+		panel.add(sldrCalificacion,constraints);
+		
 		
 		constraints.gridx=0;
 		constraints.gridy=6;
 		constraints.gridwidth=2;
-		panel.add(new JLabel("Relevancia: "), constraints);
+		panel.add(new JLabel("Fecha de Publicación: "), constraints);
 		
 		constraints.gridx=2;
 		constraints.gridy=6;
+		constraints.gridwidth=1;
+		panel.add(tFecha, constraints);
+		
+		constraints.gridx=0;
+		constraints.gridy=7;
+		constraints.gridwidth=2;
+		panel.add(new JLabel("Relevancia: "), constraints);
+		
+		constraints.gridx=2;
+		constraints.gridy=7;
 		constraints.gridwidth=1;
 		lRelevancia.addItem(Relevancia.BAJA);
 		lRelevancia.addItem(Relevancia.MEDIA);
@@ -473,23 +490,23 @@ public class ABMVideo {
 		panel.add(lRelevancia, constraints);
 		
 		constraints.gridx=0;
-		constraints.gridy=7;
+		constraints.gridy=8;
 		constraints.gridwidth=2;
 		panel.add(new JLabel("Tema: "), constraints);
 		
 		constraints.gridx=2;
-		constraints.gridy=7;
+		constraints.gridy=8;
 		constraints.gridwidth=1;
 		tTema.setText("Otros");
 		panel.add(tTema, constraints);
 		
 		constraints.gridx=0;
-		constraints.gridy=8;
+		constraints.gridy=9;
 		cancelar.addActionListener(a -> this.editarVideo());
 		panel.add(cancelar, constraints);
 		
 		constraints.gridx=3;
-		constraints.gridy=8;
+		constraints.gridy=9;
 		constraints.fill=GridBagConstraints.NONE;
 		aceptar.addActionListener(a -> {
 			String titulo, tema;
@@ -542,7 +559,7 @@ public class ABMVideo {
 				relevancia = (Relevancia)lRelevancia.getSelectedItem();
 			
 				if(JOptionPane.showConfirmDialog(ventana, "¿Está seguro que desea modificar el video con los datos ingresados?", "Confirmar edición", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE)==0){
-					controller.editarVideo(video, titulo, costo, duracion, fechaPublicacion, relevancia, tema);
+					controller.editarVideo(video, titulo, costo, duracion, fechaPublicacion, relevancia, tema, sldrCalificacion.getValue());
 					editarVideo();
 				}
 				
@@ -578,7 +595,7 @@ public class ABMVideo {
 		panel.add(errorDuracion,constraints);
 		
 		
-		constraints.gridy=5;
+		constraints.gridy=6;
 		errorFecha.setPreferredSize(new Dimension(230, 16));
 		errorFecha.setForeground(Color.red);
 		panel.add(errorFecha,constraints);
@@ -588,6 +605,7 @@ public class ABMVideo {
 		tTitulo.setText(video.getTitulo());
 		tCosto.setText(video.getCosto().toString());
 		tDuracion.setText(video.getDuracion().toString());
+		sldrCalificacion.setValue(video.getCalificacion());
 		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
 		tFecha.setText(formato.format(video.getFechaPublicacion()));
 		lRelevancia.setSelectedItem(video.getRelevancia());
