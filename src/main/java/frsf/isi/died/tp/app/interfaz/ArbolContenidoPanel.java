@@ -65,7 +65,7 @@ public class ArbolContenidoPanel {
 				agregarContenido(contenido, arbol, seleccionado, interna);
 				System.out.print("En el material: ");
 				mat.getContenido().imprimirArbol("");
-				System.out.print("Raiz: ");
+				System.out.print("Raíz: ");
 				((ArbolContenido)raiz.getUserObject()).imprimirArbol("");;
 			}catch(Exception e) {
 				e.printStackTrace();
@@ -259,8 +259,6 @@ public class ArbolContenidoPanel {
 					padre.add(new DefaultMutableTreeNode(hijo));
 					arbol.updateUI();
 					nueva.dispose();
-					System.out.print("En la ventanita: ");
-					contenido.imprimirArbol("");
 				}
 								
 			}
