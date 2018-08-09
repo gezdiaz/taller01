@@ -129,6 +129,7 @@ public class BusquedaContenidoPanel {
 		cons.gridx=1;
 		cons.gridy=3;
 		cons.gridwidth=1;
+		cons.anchor=GridBagConstraints.EAST;
 		panel.add(boton, cons);
 		
 		boton = new JButton("Buscar");
@@ -137,23 +138,22 @@ public class BusquedaContenidoPanel {
 			nodos.clear();
 			busquedaPanel.mostrarMaterialesTabla(materiales);
 		});
-		
-		label = new JLabel("");
-		cons.gridx=0;
-		cons.gridy=4;
-		label.setPreferredSize(new Dimension(0, 15));
-		panel.add(label, cons);
-		label = new JLabel("");
-		cons.gridx=0;
-		cons.gridy=5;
-		label.setPreferredSize(new Dimension(0, 15));
-		panel.add(label, cons);
-		
 		cons.gridx=2;
 		cons.gridy=6;
 		cons.anchor=GridBagConstraints.EAST;
 		cons.gridwidth=1;
 		panel.add(boton, cons);
+		
+		label = new JLabel(" ");
+		cons.gridx=0;
+		cons.gridy=4;
+		label.setPreferredSize(new Dimension(24, 16));
+		panel.add(label, cons);
+		label = new JLabel(" ");
+		cons.gridx=0;
+		cons.gridy=5;
+		label.setPreferredSize(new Dimension(24, 16));
+		panel.add(label, cons);
 		
 		label = new JLabel("Filtros seleccionados: ");
 		cons.gridx=2;

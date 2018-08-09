@@ -91,7 +91,7 @@ public class ArbolContenido {
 	public Boolean contieneNodo(String valor, TipoNodo tipo) {
 		Boolean contiene = false;
 		
-		if(this.valor.equals(valor) && this.tipo.equals(tipo)) {
+		if(this.tipo.equals(tipo) && this.valor.toLowerCase().contains(valor.toLowerCase())) {
 			contiene = true;
 		}else {
 			for(ArbolContenido h: this.hijos) {
