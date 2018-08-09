@@ -1,6 +1,5 @@
 package frsf.isi.died.tp.app.dao;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import frsf.isi.died.tp.estructuras.arbolContenido.ArbolContenido;

@@ -78,7 +78,7 @@ public class ABMVideo {
 		constraints.gridx=0;
 		constraints.gridy=3;
 		constraints.gridwidth=2;
-		panel.add(new JLabel("Duracion: "), constraints);
+		panel.add(new JLabel("Duración: "), constraints);
 		
 		constraints.gridx=2;
 		constraints.gridy=3;
@@ -154,7 +154,7 @@ public class ABMVideo {
 					costo = Double.parseDouble(tCosto.getText());
 				}
 				if(tDuracion.getText().isEmpty()) {
-					errorDuracion.setText("Debe ingresar una duracion");
+					errorDuracion.setText("Debe ingresar una duración");
 					return;
 				}else{
 					duracion = Integer.parseInt(tDuracion.getText());
@@ -239,7 +239,7 @@ public class ABMVideo {
 		JTable tabla = new JTable(tableModel);
 		ArrayList<Video> videos = new ArrayList<Video>();
 		GridBagConstraints constraints = new GridBagConstraints();
-		JButton volver = new JButton("Volver al inicio."), agregar = new JButton("Agregar otro.");
+		JButton volver = new JButton("Volver al inicio"), agregar = new JButton("Agregar otro");
 		JScrollPane scroll = new JScrollPane(tabla);
 		
 		videos = controller.listaVideos();
@@ -522,7 +522,7 @@ public class ABMVideo {
 			try {
 				
 				if(tTitulo.getText().isEmpty()) {
-					System.out.println("El título no puede ser vacío");
+//					System.out.println("El título no puede ser vacío");
 					errorTitulo.setText("Debe ingresar un título");
 					return;
 				}else {
@@ -568,11 +568,11 @@ public class ABMVideo {
 					JOptionPane.showConfirmDialog(ventana, "El campo Costo debe ser numérico.", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);	
 				}else {
 					if(duracion == null) {
-						JOptionPane.showConfirmDialog(ventana, "El duracion de Compra debe ser numérico.", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);	
+						JOptionPane.showConfirmDialog(ventana, "El duración de Compra debe ser numérico.", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);	
 					}
 				}
 			}catch(ParseException pex) {
-				System.out.println("La fecha está mal escrita");
+//				System.out.println("La fecha está mal escrita");
 				JOptionPane.showConfirmDialog(ventana, "La fecha debe ser escrita con formato dd/mm/aaaa", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 			}
 		});
@@ -759,7 +759,7 @@ public class ABMVideo {
 		constraints.gridx=0;
 		constraints.gridy=5;
 		constraints.gridwidth=2;
-		panel.add(new JLabel("Duracion: "), constraints);
+		panel.add(new JLabel("Duración: "), constraints);
 		
 		constraints.gridx=2;
 		constraints.gridy=5;
@@ -814,7 +814,7 @@ public class ABMVideo {
 		constraints.gridy=9;
 		constraints.fill=GridBagConstraints.NONE;
 		eliminar.addActionListener(a -> {
-			System.out.println("Pide confrimacion y elimina el video.");
+//			System.out.println("Pide confrimacion y elimina el video.");
 			
 			if(JOptionPane.showConfirmDialog(ventana, "¿Está seguro que desea eliminar el video con los datos ingresados?", "Confirmar edición", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE)==0){
 				controller.eliminarVideo(video);

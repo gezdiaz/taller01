@@ -1,9 +1,6 @@
 package frsf.isi.died.tp.app.interfaz.grafo;
 
-import frsf.isi.died.tp.estructuras.Vertice;
-import frsf.isi.died.tp.modelo.productos.MaterialCapacitacion;
 import java.awt.Color;
-import java.awt.GradientPaint;
 import java.awt.Paint;
 import java.awt.Shape;
 import java.awt.geom.Ellipse2D;

@@ -172,7 +172,7 @@ public class ABMLibro {
 					precioCompra = Double.parseDouble(tPrecioCompra.getText());
 				}
 				if(tPaginas.getText().isEmpty()) {
-					errorPaginas.setText("Debe ingresar una cantidad de páginas");
+					errorPaginas.setText("Debe ingresar un número de páginas");
 					return;
 				}else{
 					paginas = Integer.parseInt(tPaginas.getText());
@@ -584,7 +584,7 @@ public class ABMLibro {
 					precioCompra = Double.parseDouble(tPrecio.getText());
 				}
 				if(tPaginas.getText().isEmpty()) {
-					errorPaginas.setText("Debe ingresar una cantidad de páginas");
+					errorPaginas.setText("Debe ingresar un número de páginas");
 					return;
 				}else{
 					paginas = Integer.parseInt(tPaginas.getText());

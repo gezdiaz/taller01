@@ -266,11 +266,9 @@ public class BusquedaPanel {
 						mostrarMaterialesTabla((ArrayList<MaterialCapacitacion>) ordenados.materiales());
 					}
 				}catch(NumberFormatException nfex) {
-					System.out.println("Puso otra cosa en un campo numérico");
 					JOptionPane.showConfirmDialog(ventana, "El campo CALIFICACIÓN debe llevar un número entre 1 y 100.", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);	
 					//nfex.printStackTrace();
 				}catch(ParseException pex) {
-					System.out.println("La fecha está mal escrita");
 					JOptionPane.showConfirmDialog(ventana, "La fecha debe ser escrita con formato dd/MM/aaaa", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 				}
 			

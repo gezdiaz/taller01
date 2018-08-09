@@ -44,7 +44,7 @@ public class ArbolContenidoPanel {
 		JFrame interna = new JFrame((mat.esLibro()?"Libro":"Video")+": "+mat.getTitulo());
 		JPopupMenu menu = new JPopupMenu();
 		JMenuItem menuItem;
-//		JButton boton;
+		JLabel label;
 //		
 //		boton = new JButton("Agregar Contenido");
 //		boton.addActionListener(a -> {
@@ -63,10 +63,10 @@ public class ArbolContenidoPanel {
 				DefaultMutableTreeNode seleccionado = (DefaultMutableTreeNode)arbol.getLastSelectedPathComponent();
 				ArbolContenido contenido = (ArbolContenido)seleccionado.getUserObject();
 				agregarContenido(contenido, arbol, seleccionado, interna);
-				System.out.print("En el material: ");
-				mat.getContenido().imprimirArbol("");
-				System.out.print("Raiz: ");
-				((ArbolContenido)raiz.getUserObject()).imprimirArbol("");;
+//				System.out.print("En el material: ");
+//				mat.getContenido().imprimirArbol("");
+//				System.out.print("Raiz: ");
+//				((ArbolContenido)raiz.getUserObject()).imprimirArbol("");;
 			}catch(Exception e) {
 				e.printStackTrace();
 				JOptionPane.showConfirmDialog(interna, "Por favor seleccione un elemento del árbol para agregar hijos.", "Seleccione un elemento",  JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
@@ -102,14 +102,19 @@ public class ArbolContenidoPanel {
 			public void mouseClicked(MouseEvent event) {
             	if(event.getButton() == MouseEvent.BUTTON3 && event.getClickCount() == 1 && !event.isConsumed()) {
             		event.consume();
-            		menu.show(interna, event.getX(), event.getY()-10);
+            		menu.show(interna, event.getX(), event.getY());
             	}
 
 			}
 		});
 		
-//		panel.add(boton,BorderLayout.SOUTH);
+		
 		panel.add(scroll, BorderLayout.CENTER);
+		
+		label = new JLabel("Click derecho para ver opciones");
+		panel.add(label, BorderLayout.SOUTH);
+		
+		
 		interna.setContentPane(panel);
 		interna.pack();
 		interna.setSize(new Dimension(400, 400));
@@ -259,8 +264,8 @@ public class ArbolContenidoPanel {
 					padre.add(new DefaultMutableTreeNode(hijo));
 					arbol.updateUI();
 					nueva.dispose();
-					System.out.print("En la ventanita: ");
-					contenido.imprimirArbol("");
+//					System.out.print("En la ventanita: ");
+//					contenido.imprimirArbol("");
 				}
 								
 			}

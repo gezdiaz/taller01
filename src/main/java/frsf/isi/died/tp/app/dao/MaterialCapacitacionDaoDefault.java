@@ -7,7 +7,6 @@ import java.util.List;
 
 import frsf.isi.died.tp.app.dao.util.CsvDatasource;
 import frsf.isi.died.tp.estructuras.Grafo;
-import frsf.isi.died.tp.estructuras.Vertice;
 import frsf.isi.died.tp.estructuras.arbolContenido.ArbolContenido;
 import frsf.isi.died.tp.modelo.productos.Libro;
 import frsf.isi.died.tp.modelo.productos.MaterialCapacitacion;

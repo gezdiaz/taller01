@@ -32,7 +32,6 @@ import frsf.isi.died.tp.app.controller.GrafoController;
 import frsf.isi.died.tp.app.controller.MenuGrafoController;
 import frsf.isi.died.tp.app.interfaz.Principal;
 import frsf.isi.died.tp.app.interfaz.tabla.MaterialesTablaModelo;
-import frsf.isi.died.tp.estructuras.Arista;
 import frsf.isi.died.tp.modelo.BibliotecaABB;
 import frsf.isi.died.tp.modelo.productos.MaterialCapacitacion;
 
@@ -103,11 +102,11 @@ public class GrafoPanel extends JPanel {
 					} catch (ArrayIndexOutOfBoundsException e) {
 						JOptionPane.showConfirmDialog(ventana, "No quedan más materiales para agregar", "Sin materiales", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
 					}  
-					System.out.println("vertices: "+vertices);
+//					System.out.println("vertices: "+vertices);
                 }else {
                 	if(event.getButton() == MouseEvent.BUTTON3 && event.getClickCount() == 1 && !event.isConsumed()) {
                 		event.consume();
-                		System.out.println("Mostrar Menu");
+//                		System.out.println("Mostrar Menu");
                 		JPopupMenu menu = new JPopupMenu();
                 		JMenuItem menuItem;
                 		menuItem = new JMenuItem("Buscar caminos");
@@ -190,7 +189,7 @@ public class GrafoPanel extends JPanel {
     }
 
     private void dibujarAristas(Graphics2D g2d) {
-        System.out.println(this.aristas);
+//        System.out.println(this.aristas);
         for (AristaView a : this.aristas) {
             g2d.setPaint(a.getColor());
             g2d.setStroke ( a.getFormatoLinea());

@@ -2,15 +2,12 @@ package frsf.isi.died.tp.app.interfaz.grafo;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.GradientPaint;
 import java.awt.Paint;
 import java.awt.Shape;
 import java.awt.Stroke;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 
-import frsf.isi.died.tp.estructuras.Arista;
-import frsf.isi.died.tp.modelo.productos.MaterialCapacitacion;
 
 /**
  * 
