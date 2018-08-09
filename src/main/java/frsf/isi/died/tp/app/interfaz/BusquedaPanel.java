@@ -23,7 +23,7 @@ public class BusquedaPanel {
 	private ListaDeseosPanel listaPanel;
 	private RelacionesPanel relacionesPanel;
 	private ArbolContenidoPanel arbolContenido;
-//	private GrafoPanel grafoPanel;
+	private BusquedaContenidoPanel busquedaContenido;
 
 	
 	
@@ -32,6 +32,7 @@ public class BusquedaPanel {
 		this.ventana = ventana;
 		this.relacionesPanel = new RelacionesPanel(dao,ventana);
 		this.arbolContenido = new ArbolContenidoPanel(ventana);
+		this.busquedaContenido = new BusquedaContenidoPanel(ventana, this, dao);
 	}
 	
 //	public void setGrafoPanel(GrafoPanel grafoPanel) {
@@ -75,14 +76,13 @@ public class BusquedaPanel {
 //			e.printStackTrace();
 //		}
 		
-//		TODO deberia agregar todos los materiales que hay en el almacenamiento
 		
 		constraints.insets=new Insets(5, 5, 5, 5);
 		label = new JLabel("Búsqueda");	
 		constraints.gridx=0;
 		constraints.gridy=0;
 		constraints.gridheight=1;
-		constraints.gridwidth=5;
+		constraints.gridwidth=4;
 		constraints.anchor=GridBagConstraints.NORTH;
 		label.setFont(new Font(label.getFont().getName(), label.getFont().getStyle(), 40));
 		panel.add(label,constraints);
@@ -103,7 +103,7 @@ public class BusquedaPanel {
 		constraints.anchor = GridBagConstraints.WEST;
 		panel.add(label,constraints);
 		
-		constraints.gridx=2;
+		constraints.gridx=1;
 		constraints.gridy=5;
 		constraints.gridwidth=3;
 		constraints.anchor = GridBagConstraints.CENTER;
@@ -117,20 +117,20 @@ public class BusquedaPanel {
 		constraints.anchor = GridBagConstraints.WEST;
 		panel.add(label, constraints);
 		
-		constraints.gridx=2;
+		constraints.gridx=1;
 		constraints.gridy=7;
 		constraints.gridwidth=1;
 		constraints.anchor = GridBagConstraints.CENTER;
 		panel.add(tCalificacion1, constraints);
 		
 		label = new JLabel(" hasta: ");
-		constraints.gridx=3;
+		constraints.gridx=2;
 		constraints.gridy=7;
 		constraints.gridwidth=1;
 		constraints.anchor = GridBagConstraints.CENTER;
 		panel.add(label, constraints);
 		
-		constraints.gridx=4;
+		constraints.gridx=3;
 		constraints.gridy=7;
 		constraints.gridwidth=1;
 		constraints.anchor = GridBagConstraints.CENTER;
@@ -144,7 +144,7 @@ public class BusquedaPanel {
 		constraints.anchor = GridBagConstraints.WEST;
 		panel.add(label,constraints);
 		
-		constraints.gridx=2;
+		constraints.gridx=1;
 		constraints.gridy=9;
 		constraints.gridwidth=3;
 		constraints.anchor = GridBagConstraints.CENTER;
@@ -158,20 +158,20 @@ public class BusquedaPanel {
 		constraints.anchor = GridBagConstraints.WEST;
 		panel.add(label, constraints);
 		
-		constraints.gridx=2;
+		constraints.gridx=1;
 		constraints.gridy=11;
 		constraints.gridwidth=1;
 		constraints.anchor = GridBagConstraints.CENTER;
 		panel.add(tFecha1, constraints);
 		
 		label = new JLabel(" hasta: ");
-		constraints.gridx=3;
+		constraints.gridx=2;
 		constraints.gridy=11;
 		constraints.gridwidth=1;
 		constraints.anchor = GridBagConstraints.CENTER;
 		panel.add(label, constraints);
 		
-		constraints.gridx=4;
+		constraints.gridx=3;
 		constraints.gridy=11;
 		constraints.gridwidth=1;
 		constraints.anchor = GridBagConstraints.CENTER;
@@ -190,7 +190,7 @@ public class BusquedaPanel {
 		combo.addItem(TipoOrdenamiento.FECHA);
 		combo.addItem(TipoOrdenamiento.CALIFICACION);
 		combo.addItem(TipoOrdenamiento.RELEVANCIA);
-		constraints.gridx=2;
+		constraints.gridx=1;
 		constraints.gridwidth=3;
 		constraints.anchor = GridBagConstraints.CENTER;
 		panel.add(combo, constraints);
@@ -200,11 +200,21 @@ public class BusquedaPanel {
 		constraints.gridy=15;
 		constraints.gridwidth=1;
 		constraints.fill = GridBagConstraints.NONE;
+		constraints.anchor = GridBagConstraints.WEST;
 		boton.addActionListener( a -> Principal.mostrarInterfaz());
+		panel.add(boton, constraints);
+		
+		boton = new JButton("Bucar por contenido");
+		constraints.gridx=1;
+		constraints.gridwidth=2;
+		constraints.anchor = GridBagConstraints.CENTER;
+		boton.addActionListener(a -> busquedaContenido.buscarPorContenido());
 		panel.add(boton, constraints);
 		
 		boton = new JButton("Buscar");
 		constraints.gridx=3;
+		constraints.gridwidth=1;
+		constraints.anchor = GridBagConstraints.EAST;
 		boton.addActionListener( a -> {
 			ArrayList<MaterialCapacitacion> filtrados = new ArrayList<MaterialCapacitacion>();
 			String titulo = null, tema = null;
@@ -266,7 +276,6 @@ public class BusquedaPanel {
 			
 			
 		});
-		
 		panel.add(boton,constraints);
 		
 		ventana.setContentPane(panel);
@@ -276,7 +285,7 @@ public class BusquedaPanel {
         ventana.setVisible(true);
 	}
 
-	private void mostrarMaterialesTabla(ArrayList<MaterialCapacitacion> materiales) {
+	protected void mostrarMaterialesTabla(ArrayList<MaterialCapacitacion> materiales) {
 		JPanel panel = new JPanel(new GridBagLayout());
 		GridBagConstraints gridConst = new GridBagConstraints();
 		GridBagConstraints constraints = new GridBagConstraints();

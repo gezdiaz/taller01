@@ -1,7 +1,9 @@
 package frsf.isi.died.tp.app.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import frsf.isi.died.tp.estructuras.arbolContenido.ArbolContenido;
 import frsf.isi.died.tp.modelo.productos.Libro;
 import frsf.isi.died.tp.modelo.productos.MaterialCapacitacion;
 import frsf.isi.died.tp.modelo.productos.Video;
@@ -22,5 +24,6 @@ public interface MaterialCapacitacionDao {
 	public boolean existeArista(Integer idOrigen, Integer idDestino);
 	public List<MaterialCapacitacion> actualizarPR(List<MaterialCapacitacion> materiales);
 	void setAllPR(List<MaterialCapacitacion> materiales);
+	public List<MaterialCapacitacion> filtrarContenido(List<ArbolContenido> nodos);
 	
 }

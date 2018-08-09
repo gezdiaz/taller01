@@ -8,6 +8,7 @@ import java.util.List;
 import frsf.isi.died.tp.app.dao.util.CsvDatasource;
 import frsf.isi.died.tp.estructuras.Grafo;
 import frsf.isi.died.tp.estructuras.Vertice;
+import frsf.isi.died.tp.estructuras.arbolContenido.ArbolContenido;
 import frsf.isi.died.tp.modelo.productos.Libro;
 import frsf.isi.died.tp.modelo.productos.MaterialCapacitacion;
 import frsf.isi.died.tp.modelo.productos.Video;
@@ -246,6 +247,19 @@ public class MaterialCapacitacionDaoDefault implements MaterialCapacitacionDao{
 	public List<MaterialCapacitacion> actualizarPR(List<MaterialCapacitacion> materiales) {
 		this.setAllPR(materiales);
 		return materiales;
+	}
+
+	@Override
+	public List<MaterialCapacitacion> filtrarContenido(List<ArbolContenido> nodos) {
+		List<MaterialCapacitacion> resultado = new ArrayList<MaterialCapacitacion>();
+		
+		for(MaterialCapacitacion mat: listaMateriales()) {
+			if(mat.getContenido().contieneTodos(nodos)) {
+				resultado.add(mat);
+			}
+		}
+		
+		return resultado;
 	}
 	
 }

@@ -3,6 +3,8 @@ package frsf.isi.died.tp.estructuras.arbolContenido;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.omg.CORBA.ARG_IN;
+
 public class ArbolContenido {
 
 	private String valor;
@@ -85,6 +87,33 @@ public class ArbolContenido {
 			}
 		}
 		return cant;
+	}
+	public Boolean contieneNodo(String valor, TipoNodo tipo) {
+		Boolean contiene = false;
+		
+		if(this.valor.equals(valor) && this.tipo.equals(tipo)) {
+			contiene = true;
+		}else {
+			for(ArbolContenido h: this.hijos) {
+				if(h.contieneNodo(valor, tipo)) {
+					contiene = true;
+					break;
+				}
+			}
+		}
+		
+		return contiene;
+	}
+	public Boolean contieneTodos(List<ArbolContenido> nodos) {
+		Boolean res = true;
+		
+		for(ArbolContenido n: nodos) {
+			if(!this.contieneNodo(n.getValor(), n.getTipo())) {
+				res=false;
+			}
+		}
+		
+		return res;
 	}
 	
 }
