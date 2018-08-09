@@ -204,7 +204,7 @@ public class BusquedaPanel {
 		boton.addActionListener( a -> Principal.mostrarInterfaz());
 		panel.add(boton, constraints);
 		
-		boton = new JButton("Bucar por contenido");
+		boton = new JButton("Buscar por contenido");
 		constraints.gridx=1;
 		constraints.gridwidth=2;
 		constraints.anchor = GridBagConstraints.CENTER;

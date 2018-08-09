@@ -67,6 +67,7 @@ public class ArbolContenidoPanel {
 //				mat.getContenido().imprimirArbol("");
 //				System.out.print("Raiz: ");
 //				((ArbolContenido)raiz.getUserObject()).imprimirArbol("");;
+
 			}catch(Exception e) {
 				e.printStackTrace();
 				JOptionPane.showConfirmDialog(interna, "Por favor seleccione un elemento del árbol para agregar hijos.", "Seleccione un elemento",  JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
@@ -264,8 +265,10 @@ public class ArbolContenidoPanel {
 					padre.add(new DefaultMutableTreeNode(hijo));
 					arbol.updateUI();
 					nueva.dispose();
+
 //					System.out.print("En la ventanita: ");
 //					contenido.imprimirArbol("");
+
 				}
 								
 			}
