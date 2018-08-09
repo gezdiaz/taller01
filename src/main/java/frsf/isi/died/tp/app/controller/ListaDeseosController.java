@@ -1,14 +1,10 @@
 package frsf.isi.died.tp.app.controller;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.PriorityQueue;
 
 import frsf.isi.died.tp.app.dao.MaterialCapacitacionDao;
-import frsf.isi.died.tp.modelo.productos.Libro;
 import frsf.isi.died.tp.modelo.productos.MaterialCapacitacion;
-import frsf.isi.died.tp.modelo.productos.Relevancia;
-import frsf.isi.died.tp.modelo.productos.Video;
 
 public class ListaDeseosController {
 

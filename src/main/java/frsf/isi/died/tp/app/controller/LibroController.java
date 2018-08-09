@@ -1,11 +1,9 @@
 package frsf.isi.died.tp.app.controller;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 
 import frsf.isi.died.tp.app.dao.MaterialCapacitacionDao;
-import frsf.isi.died.tp.app.dao.MaterialCapacitacionDaoDefault;
 import frsf.isi.died.tp.modelo.productos.Libro;
 import frsf.isi.died.tp.modelo.productos.MaterialCapacitacion;
 import frsf.isi.died.tp.modelo.productos.Relevancia;
