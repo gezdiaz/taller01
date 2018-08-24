@@ -103,7 +103,7 @@ public class ArbolContenidoPanel {
 			public void mouseClicked(MouseEvent event) {
             	if(event.getButton() == MouseEvent.BUTTON3 && event.getClickCount() == 1 && !event.isConsumed()) {
             		event.consume();
-            		menu.show(interna, event.getX(), event.getY());
+            		menu.show(arbol, event.getX(), event.getY());
             	}
 
 			}
