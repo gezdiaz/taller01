@@ -4,6 +4,8 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -291,6 +293,8 @@ public class BusquedaPanel {
 		JScrollPane scrollPane;
 		JTable tabla;
 		JButton boton;
+		JPopupMenu menu = new JPopupMenu();
+		JMenuItem menuItem;
 		
 		
 //		TITULO VENTANA
@@ -321,6 +325,18 @@ public class BusquedaPanel {
 		panel.add(scrollPane, gridConst);
 		
 		
+//		MOUSE LISTENER
+		tabla.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent event) {
+            	if(event.getButton() == MouseEvent.BUTTON3 && event.getClickCount() == 1 && !event.isConsumed()) {
+            		event.consume();
+            		menu.show(tabla, event.getX(), event.getY());
+            	}
+
+			}
+		});
+		
+		
 //		BOTONES
 		boton = new JButton("Inicio");
 		constraints.gridwidth = 1;
@@ -342,12 +358,28 @@ public class BusquedaPanel {
 		boton.addActionListener( a -> busqueda());
 		panel.add(boton,constraints);
 		
-		boton = new JButton("Agregar a la lista de deseos");
-		constraints.gridwidth = 1;
-		constraints.gridx=1;
-		constraints.weightx = 0.25;
-		constraints.anchor=GridBagConstraints.CENTER;
-		boton.addActionListener(a -> {
+//		boton = new JButton("Agregar a la lista de deseos");
+//		constraints.gridwidth = 1;
+//		constraints.gridx=1;
+//		constraints.weightx = 0.25;
+//		constraints.anchor=GridBagConstraints.CENTER;
+//		boton.addActionListener(a -> {
+//			if(tabla.getSelectedRow()==-1) {
+//				JOptionPane.showConfirmDialog(ventana, "Por favor seleccione un material de la tabla.", "Seleccione un material", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+//			}else {
+//				MaterialCapacitacion material = tableModel.getMateriales().get(tabla.getSelectedRow());
+//				listaPanel.getController().agregar(material);
+//				if(JOptionPane.showConfirmDialog(ventana, "Se agregó el "+(material.esLibro()? "Libro": "Video")+": "+material.getTitulo()+" a la lista de deseos. \n ¿Desea ver la lista de deseados?",
+//						"Agregado a lista de deseados", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE) ==0) {
+//					listaPanel.mostrarLista();
+//				}
+//			}
+//			
+//		});
+//		panel.add(boton, constraints);
+		
+		menuItem = new JMenuItem("Agregar a la lista de deseos");
+		menuItem.addActionListener(a -> {
 			if(tabla.getSelectedRow()==-1) {
 				JOptionPane.showConfirmDialog(ventana, "Por favor seleccione un material de la tabla.", "Seleccione un material", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 			}else {
@@ -360,14 +392,25 @@ public class BusquedaPanel {
 			}
 			
 		});
-		panel.add(boton, constraints);
+		menu.add(menuItem);
 		
-		boton = new JButton("Agregar relación");
-		constraints.gridwidth = 1;
-		constraints.gridx=2;
-		constraints.weightx = 0.25;
-		constraints.anchor=GridBagConstraints.CENTER;
-		boton.addActionListener(a -> {
+//		boton = new JButton("Agregar relación");
+//		constraints.gridwidth = 1;
+//		constraints.gridx=2;
+//		constraints.weightx = 0.25;
+//		constraints.anchor=GridBagConstraints.CENTER;
+//		boton.addActionListener(a -> {
+//			if(tabla.getSelectedRow()==-1) {
+//				JOptionPane.showConfirmDialog(ventana, "Por favor seleccione un material de la tabla.", "Seleccione un material",  JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+//			}else {
+//				MaterialCapacitacion material = tableModel.getMateriales().get(tabla.getSelectedRow());
+//				relacionesPanel.armarRelacionesPanel(material);
+//			}
+//		});
+//		panel.add(boton, constraints);
+		
+		menuItem = new JMenuItem("Agregar relación");
+		menuItem.addActionListener(a -> {
 			if(tabla.getSelectedRow()==-1) {
 				JOptionPane.showConfirmDialog(ventana, "Por favor seleccione un material de la tabla.", "Seleccione un material",  JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 			}else {
@@ -375,14 +418,25 @@ public class BusquedaPanel {
 				relacionesPanel.armarRelacionesPanel(material);
 			}
 		});
-		panel.add(boton, constraints);
+		menu.add(menuItem);
 		
-		boton = new JButton("Ver Contenido");
-		constraints.gridwidth = 1;
-		constraints.gridx=3;
-		constraints.weightx = 0.25;
-		constraints.anchor=GridBagConstraints.CENTER;
-		boton.addActionListener(a ->{
+//		boton = new JButton("Ver Contenido");
+//		constraints.gridwidth = 1;
+//		constraints.gridx=3;
+//		constraints.weightx = 0.25;
+//		constraints.anchor=GridBagConstraints.CENTER;
+//		boton.addActionListener(a ->{
+//			if(tabla.getSelectedRow()==-1) {
+//				JOptionPane.showConfirmDialog(ventana, "Por favor seleccione un material de la tabla.", "Seleccione un material",  JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+//			}else {
+//				MaterialCapacitacion material = tableModel.getMateriales().get(tabla.getSelectedRow());
+//				arbolContenido.mostrarArbolContenido(material);
+//			}
+//		});
+//		panel.add(boton, constraints);
+		
+		menuItem = new JMenuItem("Ver contenido");
+		menuItem.addActionListener(a ->{
 			if(tabla.getSelectedRow()==-1) {
 				JOptionPane.showConfirmDialog(ventana, "Por favor seleccione un material de la tabla.", "Seleccione un material",  JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 			}else {
@@ -390,7 +444,7 @@ public class BusquedaPanel {
 				arbolContenido.mostrarArbolContenido(material);
 			}
 		});
-		panel.add(boton, constraints);
+		menu.add(menuItem);
 		
 		ventana.setContentPane(panel);
 		ventana.pack();
