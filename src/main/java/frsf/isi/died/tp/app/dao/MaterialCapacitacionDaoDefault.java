@@ -237,6 +237,7 @@ public class MaterialCapacitacionDaoDefault implements MaterialCapacitacionDao{
 				if(diferencia < 0) diferencia = diferencia * -1.0;
 				if(diferencia > 0.00000001) hayDiferencia = true;
 				materiales.get(i).setPR(actualesPR.get(i));
+				System.out.println(materiales.get(i).getTitulo()+" PR: "+materiales.get(i).getPR());
 			}
 			
 			actualesPR.clear();
